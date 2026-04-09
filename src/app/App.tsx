@@ -134,7 +134,7 @@ function App() {
               border: "1px solid rgba(255,255,255,0.06)",
             }}
           >
-            <h1 className="text-[24px] text-white font-bold mb-2">Figma基礎講座</h1>
+            <h1 className="text-[24px] text-white font-bold mb-2">🎨 Figma基礎講座</h1>
             <p className="text-[14px] text-gray-400 mb-6">新卒デザイナー向けコンテンツ</p>
 
             <form onSubmit={handleLogin} className="space-y-4">
