@@ -164,7 +164,7 @@ function App() {
                   background: "linear-gradient(135deg, #7c3aed, #a855f7)",
                 }}
               >
-                ログイン
+                Let's GO !
               </button>
             </form>
           </div>
