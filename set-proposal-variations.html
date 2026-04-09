@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>セット提案 - デザインバリエーション</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .variation-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .variation-header {
+            margin-bottom: 20px;
+        }
+
+        .variation-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .reason-box {
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .reason-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #2e7d32;
+        }
+
+        .reason-list {
+            list-style: none;
+            padding-left: 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .reason-list li {
+            padding: 4px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .reason-list li:before {
+            content: "✓";
+            color: #4CAF50;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        /* モバイルビュー共通 */
+        .mobile-frame {
+            width: 390px;
+            background: #FFFFFF;
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .mobile-content {
+            padding: 16px;
+        }
+
+        /* セクションヘッダー共通 */
+        .section-header {
+            margin-bottom: 16px;
+        }
+
+        /* カード共通スタイル */
+        .category-card {
+            width: 174px;
+            height: 174px;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .category-card-wide {
+            width: 358px;
+            height: 174px;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .card-gradient-overlay {
+            position: absolute;
+            height: 87px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 30.49%, rgba(0, 0, 0, 0.2) 100%);
+        }
+
+        .card-category {
+            position: absolute;
+            left: 16px;
+            top: 12px;
+            font-weight: 700;
+            font-size: 11px;
+            line-height: 13px;
+            color: #FFFFFF;
+        }
+
+        .card-text {
+            position: absolute;
+            left: 16px;
+            bottom: 16px;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 17px;
+            color: #FFFFFF;
+            max-width: 70%;
+        }
+
+        .card-text-large {
+            font-size: 16px;
+            line-height: 19px;
+        }
+
+        /* バリエーション1: パステルグラデーション + 区切り線 */
+        .var1-separator {
+            height: 8px;
+            background: linear-gradient(90deg, #FFE5EC 0%, #FFF0DC 33%, #E5F5FF 66%, #F0E5FF 100%);
+            margin: 16px -16px;
+            position: relative;
+        }
+
+        .var1-separator::before {
+            content: '✨';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            background: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .var1-header {
+            text-align: center;
+            padding: 16px;
+            background: linear-gradient(135deg, #FFF5F7 0%, #FFF9E6 100%);
+            border-radius: 16px;
+            margin-bottom: 16px;
+        }
+
+        .var1-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #FF6B9D;
+            margin-bottom: 4px;
+        }
+
+        .var1-subtitle {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* バリエーション2: 鮮やかなグラデーション背景 */
+        .var2-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px 16px;
+            margin: 0 -16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .var2-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .var2-header {
+            color: white;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .var2-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .var2-subtitle {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .var2-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* バリエーション3: ソフトシャドウ + アイコン装飾 */
+        .var3-header {
+            background: #F8FAFE;
+            padding: 16px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            border: 2px solid #E3EEFF;
+            position: relative;
+        }
+
+        .var3-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 32px;
+        }
+
+        .var3-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #4A90E2;
+            margin-bottom: 4px;
+        }
+
+        .var3-subtitle {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .var3-card {
+            box-shadow: 0 4px 16px rgba(74, 144, 226, 0.15);
+        }
+
+        /* バリエーション4: カラフルな付箋風 */
+        .var4-header {
+            background: linear-gradient(to right, #FFE5E5 0%, #FFE5CC 25%, #FFFACD 50%, #E5F5E5 75%, #E5E5FF 100%);
+            padding: 3px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+        }
+
+        .var4-header-inner {
+            background: white;
+            padding: 16px;
+            border-radius: 14px;
+        }
+
+        .var4-title {
+            font-size: 16px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #FF6B9D 0%, #FFA500 25%, #FFD700 50%, #4CAF50 75%, #667eea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 4px;
+        }
+
+        .var4-subtitle {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* バリエーション5: ミニマル + アクセントカラー */
+        .var5-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .var5-badge {
+            background: #FFD700;
+            color: #333;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+        }
+
+        .var5-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        /* 比較表 */
+        .comparison-table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e0e0e0;
+        }
+
+        .comparison-table th {
+            background: #f5f5f5;
+            font-weight: 700;
+        }
+
+        .score {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .score-high {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .score-medium {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .score-low {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 セット提案セクション - デザインバリエーション（白背景ベース）</h1>
+
+        <!-- バリエーション1 -->
+        <div class="variation-section">
+            <div class="variation-header">
+                <div class="variation-title">
+                    バリエーション 1: パステルグラデーション区切り + 装飾
+                    <span class="tag">推奨</span>
+                </div>
+            </div>
+            <div class="reason-box">
+                <div class="reason-title">💡 採用理由</div>
+                <ul class="reason-list">
+                    <li><strong>明確な視覚的区切り:</strong> カラフルな区切り線でセクションの変わり目を明示</li>
+                    <li><strong>ポジティブな印象:</strong> パステルグラデーションが明るく楽しい雰囲気を演出</li>
+                    <li><strong>既存デザインとの調和:</strong> 白背景を維持しながら差別化</li>
+                    <li><strong>実装の容易さ:</strong> シンプルな追加要素のみで実現可能</li>
+                    <li><strong>ユーザー体験:</strong> 「新しいセクションが始まる」ことを自然に伝える</li>
+                </ul>
+            </div>
+            <div class="mobile-frame">
+                <div class="mobile-content">
+                    <!-- 上部のYahoo Shopping AI -->
+                    <div style="margin-bottom: 16px;">
+                        <div class="category-card" style="background: linear-gradient(135deg, #78909c 0%, #546e7a 100%);">
+                            <div class="card-gradient-overlay"></div>
+                            <div class="card-category">アクセサリー</div>
+                            <div class="card-text">最近購入した<br>Apple Watchと...</div>
+                        </div>
+                        <div class="category-card" style="background: linear-gradient(135deg, #5c6bc0 0%, #3949ab 100%);">
+                            <div class="card-gradient-overlay"></div>
+                            <div class="card-category">ファッション</div>
+                            <div class="card-text">スーツ最新<br>流行特集</div>
+                        </div>
+                    </div>
+
+                    <!-- 区切り線 -->
+                    <div class="var1-separator"></div>
+
+                    <!-- セット提案セクション -->
+                    <div class="var1-header">
+                        <div class="var1-title">あなたにおすすめのセット提案</div>
+                        <div class="var1-subtitle">複数のサイトから最適な組み合わせをご提案</div>
+                    </div>
+
+                    <div class="category-card-wide" style="background: radial-gradient(96.79% 100% at 3.21% 100%, #758E73 0%, rgba(166, 180, 165, 0.5) 100%);">
+                        <div class="card-gradient-overlay"></div>
+                        <div style="position: absolute; right: 20px; top: 20px; width: 180px; height: 140px; background: linear-gradient(135deg, #a8d5ba 0%, #7bc393 100%); border-radius: 12px; opacity: 0.5;"></div>
+                        <div class="card-category" style="top: 98px;">キャンプ</div>
+                        <div class="card-text card-text-large">この春、キャンプを<br>始めてみませんか？</div>
+                    </div>
+
+                    <div class="category-card-wide" style="background: radial-gradient(100% 100% at 0% 100%, #B4C4E8 0%, rgba(211, 217, 232, 0.5) 100%);">
+                        <div class="card-gradient-overlay"></div>
+                        <div style="position: absolute; right: 20px; top: 20px; width: 180px; height: 140px; background: linear-gradient(135deg, #c5d9f2 0%, #9bb8e0 100%); border-radius: 12px; opacity: 0.5;"></div>
+                        <div class="card-category" style="top: 98px;">ランニング</div>
+                        <div class="card-text card-text-large">春風を感じて、<br>走ってみませんか？</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- バリエーション2 -->
+        <div class="variation-section">
+            <div class="variation-header">
+                <div class="variation-title">バリエーション 2: 鮮やかなグラデーション背景</div>
+            </div>
+            <div class="reason-box">
+                <div class="reason-title">💡 採用理由</div>
+                <ul class="reason-list">
+                    <li><strong>最も強い差別化:</strong> 上部との視覚的コントラストが最大</li>
+                    <li><strong>プレミアム感:</strong> 特別なAI提案であることを強調</li>
+                    <li><strong>目を引く効果:</strong> スクロール中でも確実に注目される</li>
+                    <li><strong>注意点:</strong> 白背景から大きく離れるため、統一感に配慮が必要</li>
+                </ul>
+            </div>
+            <div class="mobile-frame">
+                <div class="mobile-content">
+                    <!-- 上部のYahoo Shopping AI -->
+                    <div style="margin-bottom: 16px;">
+                        <div class="category-card" style="background: linear-gradient(135deg, #78909c 0%, #546e7a 100%);">
+                            <div class="card-gradient-overlay"></div>
+                            <div class="card-category">アクセサリー</div>
+                            <div class="card-text">最近購入した<br>Apple Watchと...</div>
+                        </div>
+                        <div class="category-card" style="background: linear-gradient(135deg, #5c6bc0 0%, #3949ab 100%);">
+                            <div class="card-gradient-overlay"></div>
+                            <div class="card-category">ファッション</div>
+                            <div class="card-text">スーツ最新<br>流行特集</div>
+                        </div>
+                    </div>
+
+                    <!-- グラデーション背景のセクション -->
+                    <div class="var2-container">
+                        <div class="var2-header">
+                            <div class="var2-title">あなたにおすすめのセット提案</div>
+                            <div class="var2-subtitle">複数のサイトから最適な組み合わせをご提案</div>
+                        </div>
+
+                        <div class="category-card-wide var2-card" style="background: white;">
+                            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(96.79% 100% at 3.21% 100%, #758E73 0%, rgba(166, 180, 165, 0.5) 100%);"></div>
+                            <div class="card-gradient-overlay"></div>
+                            <div style="position: absolute; right: 20px; top: 20px; width: 180px; height: 140px; background: linear-gradient(135deg, #a8d5ba 0%, #7bc393 100%); border-radius: 12px; opacity: 0.5;"></div>
+                            <div class="card-category" style="top: 98px;">キャンプ</div>
+                            <div class="card-text card-text-large">この春、キャンプを<br>始めてみませんか？</div>
+                        </div>
+
+                        <div class="category-card-wide var2-card" style="background: white; margin-bottom: 0;">
+                            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(100% 100% at 0% 100%, #B4C4E8 0%, rgba(211, 217, 232, 0.5) 100%);"></div>
+                            <div class="card-gradient-overlay"></div>
+                            <div style="position: absolute; right: 20px; top: 20px; width: 180px; height: 140px; background: linear-gradient(135deg, #c5d9f2 0%, #9bb8e0 100%); border-radius: 12px; opacity: 0.5;"></div>
+                            <div class="card-category" style="top: 98px;">ランニング</div>
+                            <div class="card-text card-text-large">春風を感じて、<br>走ってみませんか？</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- バリエーション3 -->
+        <div class="variation-section">
+            <div class="variation-header">
+                <div class="variation-title">バリエーション 3: ソフトシャドウ + アイコン装飾</div>
+            </div>
+            <div class="reason-box">
+                <div class="reason-title">💡 採用理由</div>
+                <ul class="reason-list">
+                    <li><strong>控えめな差別化:</strong> 白背景を維持しながら視覚的アクセント</li>
+                    <li><strong>プロフェッショナル:</strong> 洗練された印象を与える</li>
+                    <li><strong>ブランド親和性:</strong> Yahoo!の清潔感あるイメージと調和</li>
+                    <li><strong>柔軟性:</strong> 既存デザインシステムに組み込みやすい</li>
+                </ul>
+            </div>
+            <div class="mobile-frame">
+                <div class="mobile-content">
+                    <!-- 上部のYahoo Shopping AI -->
+                    <div style="margin-bottom: 16px;">
+                        <div class="category-card" style="background: linear-gradient(135deg, #78909c 0%, #546e7a 100%);">
+                            <div class="card-gradient-overlay"></div>
+                            <div class="card-category">アクセサリー</div>
+                            <div class="card-text">最近購入した<br>Apple Watchと...</div>
+                        </div>
+                        <div class="category-card" style="background: linear-gradient(135deg, #5c6bc0 0%, #3949ab 100%);">
+                            <div class="card-gradient-overlay"></div>
+                            <div class="card-category">ファッション</div>
+                            <div class="card-text">スーツ最新<br>流行特集</div>
+                        </div>
+                    </div>
+
+                    <!-- ヘッダー -->
+                    <div class="var3-header">
+                        <div class="var3-icon">🎁</div>
+                        <div class="var3-title">あなたにおすすめのセット提案</div>
+                        <div class="var3-subtitle">複数のサイトから最適な組み合わせをご提案</div>
+                    </div>
+
+                    <div class="category-card-wide var3-card" style="background: radial-gradient(96.79% 100% at 3.21% 100%, #758E73 0%, rgba(166, 180, 165, 0.5) 100%);">
+                        <div class="card-gradient-overlay"></div>
+                        <div style="position: absolute; right: 20px; top: 20px; width: 180px; height: 140px; background: linear-gradient(135deg, #a8d5ba 0%, #7bc393 100%); border-radius: 12px; opacity: 0.5;"></div>
+                        <div class="card-category" style="top: 98px;">キャンプ</div>
+                        <div class="card-text card-text-large">この春、キャンプを<br>始めてみませんか？</div>
+                    </div>
+
+                    <div class="category-card-wide var3-card" style="background: radial-gradient(100% 100% at 0% 100%, #B4C4E8 0%, rgba(211, 217, 232, 0.5) 100%);">
+                        <div class="card-gradient-overlay"></div>
+                        <div style="position: absolute; right: 20px; top: 20px; width: 180px; height: 140px; background: linear-gradient(135deg, #c5d9f2 0%, #9bb8e0 100%); border-radius: 12px; opacity: 0.5;"></div>
+                        <div class="card-category" style="top: 98px;">ランニング</div>
+                        <div class="card-text card-text-large">春風を感じて、<br>走ってみませんか？</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- バリエーション4 -->
+        <div class="variation-section">
+            <div class="variation-header">
+                <div class="variation-title">バリエーション 4: カラフルなボーダー装飾</div>
+            </div>
+            <div class="reason-box">
+                <div class="reason-title">💡 採用理由</div>
+                <ul class="reason-list">
+                    <li><strong>遊び心:</strong> カラフルなボーダーが楽しさを演出</li>
+                    <li><strong>多様性の表現:</strong> 複数サイトからの提案を色で表現</li>
+                    <li><strong>目を引く効果:</strong> レインボーカラーが注目を集める</li>
+                    <li><strong>注意点:</strong> カジュアルな印象が強くなる可能性</li>
+                </ul>
+            </div>
+            <div class="mobile-frame">
+                <div class="mobile-content">
+                    <!-- 上部のYahoo Shopping AI -->
+                    <div style="margin-bottom: 16px;">
+                        <div class="category-card" style="background: linear-gradient(135deg, #78909c 0%, #546e7a 100%);">
+                            <div class="card-gradient-overlay"></div>
+                            <div class="card-category">アクセサリー</div>
+                            <div class="card-text">最近購入した<br>Apple Watchと...</div>
+                        </div>
+                        <div class="category-card" style="background: linear-gradient(135deg, #5c6bc0 0%, #3949ab 100%);">
+                            <div class="card-gradient-overlay"></div>
+                            <div class="card-category">ファッション</div>
+                            <div class="card-text">スーツ最新<br>流行特集</div>
+                        </div>
+                    </div>
+
+                    <!-- カラフルボーダーヘッダー -->
+                    <div class="var4-header">
+                        <div class="var4-header-inner">
+                            <div class="var4-title">あなたにおすすめのセット提案</div>
+                            <div class="var4-subtitle">複数のサイトから最適な組み合わせをご提案</div>
+                        </div>
+                    </div>
+
+                    <div class="category-card-wide" style="background: radial-gradient(96.79% 100% at 3.21% 100%, #758E73 0%, rgba(166, 180, 165, 0.5) 100%);">
+                        <div class="card-gradient-overlay"></div>
+                        <div style="position: absolute; right: 20px; top: 20px; width: 180px; height: 140px; background: linear-gradient(135deg, #a8d5ba 0%, #7bc393 100%); border-radius: 12px; opacity: 0.5;"></div>
+                        <div class="card-category" style="top: 98px;">キャンプ</div>
+                        <div class="card-text card-text-large">この春、キャンプを<br>始めてみませんか？</div>
+                    </div>
+
+                    <div class="category-card-wide" style="background: radial-gradient(100% 100% at 0% 100%, #B4C4E8 0%, rgba(211, 217, 232, 0.5) 100%);">
+                        <div class="card-gradient-overlay"></div>
+                        <div style="position: absolute; right: 20px; top: 20px; width: 180px; height: 140px; background: linear-gradient(135deg, #c5d9f2 0%, #9bb8e0 100%); border-radius: 12px; opacity: 0.5;"></div>
+                        <div class="card-category" style="top: 98px;">ランニング</div>
+                        <div class="card-text card-text-large">春風を感じて、<br>走ってみませんか？</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- バリエーション5 -->
+        <div class="variation-section">
+            <div class="variation-header">
+                <div class="variation-title">バリエーション 5: ミニマル + アクセントバッジ</div>
+            </div>
+            <div class="reason-box">
+                <div class="reason-title">💡 採用理由</div>
+                <ul class="reason-list">
+                    <li><strong>シンプル:</strong> 最小限の要素で差別化を実現</li>
+                    <li><strong>実装コスト:</strong> 最も低コストで実装可能</li>
+                    <li><strong>拡張性:</strong> 今後の追加機能に柔軟に対応</li>
+                    <li><strong>視認性:</strong> ゴールドバッジが「特別感」を演出</li>
+                </ul>
+            </div>
+            <div class="mobile-frame">
+                <div class="mobile-content">
+                    <!-- 上部のYahoo Shopping AI -->
+                    <div style="margin-bottom: 16px;">
+                        <div class="category-card" style="background: linear-gradient(135deg, #78909c 0%, #546e7a 100%);">
+                            <div class="card-gradient-overlay"></div>
+                            <div class="card-category">アクセサリー</div>
+                            <div class="card-text">最近購入した<br>Apple Watchと...</div>
+                        </div>
+                        <div class="category-card" style="background: linear-gradient(135deg, #5c6bc0 0%, #3949ab 100%);">
+                            <div class="card-gradient-overlay"></div>
+                            <div class="card-category">ファッション</div>
+                            <div class="card-text">スーツ最新<br>流行特集</div>
+                        </div>
+                    </div>
+
+                    <!-- シンプルヘッダー -->
+                    <div class="var5-header">
+                        <div class="var5-badge">NEW</div>
+                        <div class="var5-title">あなたにおすすめのセット提案</div>
+                    </div>
+
+                    <div class="category-card-wide" style="background: radial-gradient(96.79% 100% at 3.21% 100%, #758E73 0%, rgba(166, 180, 165, 0.5) 100%);">
+                        <div class="card-gradient-overlay"></div>
+                        <div style="position: absolute; right: 20px; top: 20px; width: 180px; height: 140px; background: linear-gradient(135deg, #a8d5ba 0%, #7bc393 100%); border-radius: 12px; opacity: 0.5;"></div>
+                        <div class="card-category" style="top: 98px;">キャンプ</div>
+                        <div class="card-text card-text-large">この春、キャンプを<br>始めてみませんか？</div>
+                    </div>
+
+                    <div class="category-card-wide" style="background: radial-gradient(100% 100% at 0% 100%, #B4C4E8 0%, rgba(211, 217, 232, 0.5) 100%);">
+                        <div class="card-gradient-overlay"></div>
+                        <div style="position: absolute; right: 20px; top: 20px; width: 180px; height: 140px; background: linear-gradient(135deg, #c5d9f2 0%, #9bb8e0 100%); border-radius: 12px; opacity: 0.5;"></div>
+                        <div class="card-category" style="top: 98px;">ランニング</div>
+                        <div class="card-text card-text-large">春風を感じて、<br>走ってみませんか？</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 比較表 -->
+        <div class="variation-section">
+            <h2 style="font-size: 20px; margin-bottom: 20px;">🎯 各バリエーション比較</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>バリエーション</th>
+                        <th>明るさ・ポジティブ感</th>
+                        <th>差別化の強さ</th>
+                        <th>実装コスト</th>
+                        <th>白背景との調和</th>
+                        <th>推奨度</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1. パステルグラデーション区切り</strong></td>
+                        <td><span class="score score-high">高</span></td>
+                        <td><span class="score score-high">高</span></td>
+                        <td><span class="score score-high">低</span></td>
+                        <td><span class="score score-high">優</span></td>
+                        <td><strong style="color: #2e7d32;">★★★★★</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>2. 鮮やかグラデーション背景</strong></td>
+                        <td><span class="score score-high">高</span></td>
+                        <td><span class="score score-high">最高</span></td>
+                        <td><span class="score score-medium">中</span></td>
+                        <td><span class="score score-medium">普通</span></td>
+                        <td><strong style="color: #f57c00;">★★★★☆</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>3. ソフトシャドウ + アイコン</strong></td>
+                        <td><span class="score score-medium">中</span></td>
+                        <td><span class="score score-medium">中</span></td>
+                        <td><span class="score score-high">低</span></td>
+                        <td><span class="score score-high">優</span></td>
+                        <td><strong style="color: #f57c00;">★★★★☆</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>4. カラフルボーダー</strong></td>
+                        <td><span class="score score-high">高</span></td>
+                        <td><span class="score score-medium">中</span></td>
+                        <td><span class="score score-high">低</span></td>
+                        <td><span class="score score-medium">普通</span></td>
+                        <td><strong style="color: #f57c00;">★★★☆☆</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>5. ミニマル + バッジ</strong></td>
+                        <td><span class="score score-medium">中</span></td>
+                        <td><span class="score score-low">低</span></td>
+                        <td><span class="score score-high">最低</span></td>
+                        <td><span class="score score-high">最優</span></td>
+                        <td><strong style="color: #666;">★★★☆☆</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="margin-top: 20px; padding: 20px; background: #e8f5e9; border-radius: 12px;">
+                <h3 style="font-size: 16px; font-weight: 700; color: #2e7d32; margin-bottom: 12px;">💡 最終推奨</h3>
+                <p style="font-size: 14px; line-height: 1.6; margin-bottom: 8px;">
+                    <strong>バリエーション1（パステルグラデーション区切り）</strong>を推奨します。
+                </p>
+                <ul style="font-size: 14px; line-height: 1.6; padding-left: 20px;">
+                    <li>白背景ベースのデザインと完璧に調和</li>
+                    <li>明るく楽しい印象で「暗さ」を完全に払拭</li>
+                    <li>視覚的な区切りが明確で、ユーザーが「別体験」を予感</li>
+                    <li>実装コストが低く、既存のFigmaデザインに容易に統合可能</li>
+                    <li>A/Bテストで効果測定しやすい</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
