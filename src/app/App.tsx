@@ -67,10 +67,16 @@ const t = {
   },
 };
 
+// パスワードをここで設定（本番運用では環境変数を推奨）
+const PASSWORD = "figma2026";
+
 function App() {
   const [idx, setIdx] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [theme, setTheme] = useState<Theme>("dark");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [passwordInput, setPasswordInput] = useState("");
+  const [error, setError] = useState("");
 
   const total = slides.length;
   const slide = slides[idx];
@@ -78,6 +84,14 @@ function App() {
   const c = t[theme];
 
   const go = useCallback((i: number) => setIdx(Math.max(0, Math.min(total - 1, i))), [total]);
+
+  // 認証状態をlocalStorageから復元
+  useEffect(() => {
+    const auth = localStorage.getItem("figma-auth");
+    if (auth === "true") {
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -87,6 +101,77 @@ function App() {
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [idx, go]);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passwordInput === PASSWORD) {
+      localStorage.setItem("figma-auth", "true");
+      setIsAuthenticated(true);
+      setError("");
+    } else {
+      setError("パスワードが間違っています");
+      setPasswordInput("");
+    }
+  };
+
+  // 未認証の場合、ログイン画面を表示
+  if (!isAuthenticated) {
+    return (
+      <ThemeContext.Provider value={theme}>
+        <div
+          className="flex items-center justify-center h-screen"
+          style={{
+            fontFamily: "'Noto Sans JP', 'Inter', system-ui, sans-serif",
+            background: t.dark.bg,
+          }}
+        >
+          <div
+            className="w-full max-w-md p-8 rounded-2xl"
+            style={{
+              background: "rgba(18,16,30,0.8)",
+              backdropFilter: "blur(24px)",
+              WebkitBackdropFilter: "blur(24px)",
+              border: "1px solid rgba(255,255,255,0.06)",
+            }}
+          >
+            <h1 className="text-[24px] text-white font-bold mb-2">Figma 研修資料</h1>
+            <p className="text-[14px] text-gray-400 mb-6">社内限定コンテンツです</p>
+
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <label htmlFor="password" className="block text-[13px] text-gray-300 mb-2">
+                  パスワード
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  value={passwordInput}
+                  onChange={(e) => setPasswordInput(e.target.value)}
+                  className="w-full px-4 py-3 rounded-lg text-white bg-white/5 border border-white/10 focus:border-purple-400 focus:outline-none transition"
+                  placeholder="パスワードを入力"
+                  autoFocus
+                />
+              </div>
+
+              {error && (
+                <p className="text-[13px] text-rose-400">{error}</p>
+              )}
+
+              <button
+                type="submit"
+                className="w-full px-4 py-3 rounded-lg text-white font-medium transition"
+                style={{
+                  background: "linear-gradient(135deg, #7c3aed, #a855f7)",
+                }}
+              >
+                ログイン
+              </button>
+            </form>
+          </div>
+        </div>
+      </ThemeContext.Provider>
+    );
+  }
 
   return (
     <ThemeContext.Provider value={theme}>
