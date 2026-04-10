@@ -387,7 +387,7 @@ function App() {
                       <div key={sl.id} className="relative group">
                         <button
                           onClick={() => go(slideIdx)}
-                          className={`w-full text-left pl-9 pr-10 py-1.5 text-[13px] flex items-center gap-1.5 transition-all rounded-r-xl ${
+                          className={`w-full text-left pl-9 pr-10 py-1.5 text-[13px] flex items-center gap-1.5 transition-all ${
                             isActive
                               ? `${c.navActive} font-medium`
                               : c.navInactive

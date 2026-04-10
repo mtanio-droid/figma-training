@@ -877,6 +877,37 @@ function AlDirectionSlide() {
     <div className="space-y-10">
       <Msg>方向・間隔・パディングの<strong>適切な設定</strong>で柔軟なレイアウトを実現</Msg>
 
+      <div className={`text-[14px] ${c.t3} leading-relaxed`}>
+        <p>
+          オートレイアウトを適切に設定することで、横幅を変えてもレイアウトが崩れない、カードなどのパーツを作ったり、と柔軟なデザイン・レイアウトを作ることが出来ます。
+        </p>
+      </div>
+
+      <div
+        className="w-full rounded-2xl overflow-hidden relative"
+        style={{
+          background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+          border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+          boxShadow: d
+            ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
+            : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+        }}
+      >
+        <ExpandableImage
+          src="/images/content_image-1711415488661.gif"
+          alt="オートレイアウトによる柔軟なレイアウトの例"
+        />
+        <div
+          className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+          style={{
+            background: 'rgba(0,0,0,0.6)',
+            color: 'rgba(255,255,255,0.8)'
+          }}
+        >
+          出典：SKILLHUB
+        </div>
+      </div>
+
       <div className={`text-[14px] ${c.t3} leading-relaxed space-y-4`}>
         <p>
           オートレイアウトフレームの要素は、方向、間隔、パディング、整列、その他のオートレイアウトプロパティに基づいて自動的に配置されます。コンテンツが変更されたり、要素が追加、削除、サイズ変更された場合でも、レイアウトは手動で再配置する必要なく調整されます。
@@ -914,37 +945,6 @@ function AlDirectionSlide() {
           }}
         >
           出典：Figma公式
-        </div>
-      </div>
-
-      <div className={`text-[14px] ${c.t3} leading-relaxed`}>
-        <p>
-          オートレイアウトを適切に設定することで、横幅を変えてもレイアウトが崩れない、カードなどのパーツを作ったり、と柔軟なデザイン・レイアウトを作ることが出来ます。
-        </p>
-      </div>
-
-      <div
-        className="w-full rounded-2xl overflow-hidden relative"
-        style={{
-          background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
-          border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
-          boxShadow: d
-            ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
-            : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
-        }}
-      >
-        <ExpandableImage
-          src="/images/content_image-1711415488661.gif"
-          alt="オートレイアウトによる柔軟なレイアウトの例"
-        />
-        <div
-          className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
-          style={{
-            background: 'rgba(0,0,0,0.6)',
-            color: 'rgba(255,255,255,0.8)'
-          }}
-        >
-          出典：SKILLHUB
         </div>
       </div>
 
