@@ -629,15 +629,13 @@ function App() {
             {!memoInputExpanded ? (
               <button
                 onClick={() => setMemoInputExpanded(true)}
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-medium text-[13px] transition-all hover:scale-[1.02] active:scale-[0.98]"
+                className={`w-full flex items-center justify-center gap-2 py-2.5 rounded-lg text-[13px] font-medium transition-colors ${
+                  theme === "dark"
+                    ? "text-purple-300 hover:text-purple-200 bg-white/5 hover:bg-white/10"
+                    : "text-purple-600 hover:text-purple-700 bg-purple-50 hover:bg-purple-100"
+                }`}
                 style={{
-                  background: theme === "dark"
-                    ? "linear-gradient(135deg, rgba(168,85,247,0.15), rgba(168,85,247,0.25))"
-                    : "linear-gradient(135deg, rgba(168,85,247,0.12), rgba(168,85,247,0.2))",
-                  color: theme === "dark" ? "#c4b5fd" : "#7c3aed",
-                  boxShadow: theme === "dark"
-                    ? "0 2px 12px rgba(168,85,247,0.2), inset 0 1px 0 rgba(255,255,255,0.1)"
-                    : "0 2px 12px rgba(168,85,247,0.15), inset 0 1px 0 rgba(255,255,255,0.5)"
+                  border: theme === "dark" ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(168,85,247,0.15)"
                 }}
               >
                 <Plus className="w-4 h-4" />

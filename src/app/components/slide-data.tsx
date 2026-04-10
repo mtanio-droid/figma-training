@@ -285,7 +285,7 @@ function TitleSlide() {
             <div className={`text-[12px] ${c.t5} text-center`}>余白・配置が不揃い</div>
           </div>
 
-          {/* After - Structured with Auto Layout hints */}
+          {/* After - Structured with オートレイアウト hints */}
           <div className="space-y-3">
             <Label>After</Label>
             <div
@@ -298,7 +298,7 @@ function TitleSlide() {
                   : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset, 0 0 48px rgba(168,85,247,0.06)'
               }}
             >
-              {/* Auto Layout container */}
+              {/* オートレイアウト container */}
               <div className="h-full p-5 flex flex-col gap-4 relative">
                 {/* Header section with card look */}
                 <div
@@ -355,7 +355,7 @@ function TitleSlide() {
                   />
                 </div>
 
-                {/* Auto Layout guides overlay */}
+                {/* オートレイアウト guides overlay */}
                 <div className="absolute inset-0 pointer-events-none">
                   {/* Vertical spacing indicators */}
                   <div className="absolute left-1 top-5 bottom-5 flex flex-col justify-between items-start">
@@ -517,7 +517,7 @@ function GoalSlide() {
                     boxShadow: '0 2px 8px rgba(16,185,129,0.1)'
                   }}
                 >
-                  <div className="text-[9px] text-emerald-400 mb-1.5 font-medium">Auto Layout</div>
+                  <div className="text-[9px] text-emerald-400 mb-1.5 font-medium">オートレイアウト</div>
                   <div className="flex gap-1">
                     <div className="text-[8px] text-emerald-400/70 font-mono">8</div>
                     <div className="text-[8px] text-emerald-400/70 font-mono">16</div>
@@ -578,7 +578,7 @@ function OverviewSlide() {
           {/* Five pillars */}
           <div className="grid grid-cols-3 gap-6 max-w-3xl w-full">
             {[
-              { icon: <Layers className="w-5 h-5" />, label: "Auto Layout", sub: "関係を設計する", color: d ? 'rgba(59,130,246,0.12)' : 'rgba(59,130,246,0.08)', border: d ? 'rgba(59,130,246,0.3)' : 'rgba(59,130,246,0.2)', iconColor: 'text-blue-400' },
+              { icon: <Layers className="w-5 h-5" />, label: "オートレイアウト", sub: "関係を設計する", color: d ? 'rgba(59,130,246,0.12)' : 'rgba(59,130,246,0.08)', border: d ? 'rgba(59,130,246,0.3)' : 'rgba(59,130,246,0.2)', iconColor: 'text-blue-400' },
               { icon: <Component className="w-5 h-5" />, label: "Component", sub: "判断を再利用する", color: d ? 'rgba(168,85,247,0.12)' : 'rgba(168,85,247,0.08)', border: d ? 'rgba(168,85,247,0.3)' : 'rgba(168,85,247,0.2)', iconColor: 'text-purple-400' },
               { icon: <Variable className="w-5 h-5" />, label: "Variable", sub: "値を再利用する", color: d ? 'rgba(16,185,129,0.12)' : 'rgba(16,185,129,0.08)', border: d ? 'rgba(16,185,129,0.3)' : 'rgba(16,185,129,0.2)', iconColor: 'text-emerald-400' },
               { icon: <Library className="w-5 h-5" />, label: "Library", sub: "チームで共有する", color: d ? 'rgba(249,115,22,0.12)' : 'rgba(249,115,22,0.08)', border: d ? 'rgba(249,115,22,0.3)' : 'rgba(249,115,22,0.2)', iconColor: 'text-orange-400' },
@@ -662,11 +662,11 @@ function AlBasicsSlide() {
             <div className={`text-[11px] text-rose-400 text-center`}>文言変更時に手動で再調整が必要</div>
           </div>
 
-          {/* Auto Layout */}
+          {/* オートレイアウト */}
           <div className="space-y-3">
             <div className="text-[13px] text-purple-400 mb-2 font-medium flex items-center gap-2">
               <CheckCircle className="w-4 h-4" />
-              <span>Auto Layout</span>
+              <span>オートレイアウト</span>
             </div>
             <div
               className="h-[320px] rounded-2xl p-5 flex flex-col gap-3 relative"
@@ -732,7 +732,7 @@ function AlApplySlide() {
   return (
     <div className="space-y-10">
       <Msg>オートレイアウトは<strong>構造を持った配置ルール</strong>で柔軟なデザインを実現</Msg>
-      <Points items={["ボタン、リスト1行、カード、モーダルなどは適用しやすい","装飾的な自由配置やビジュアル演出には無理に使わない",<>Group / Frame / Auto Layout の<strong>役割の違い</strong>を理解する</>,"意味のある単位で適用する"]} />
+      <Points items={["ボタン、リスト1行、カード、モーダルなどは適用しやすい","装飾的な自由配置やビジュアル演出には無理に使わない",<>Group / Frame / オートレイアウト の<strong>役割の違い</strong>を理解する</>,"意味のある単位で適用する"]} />
       <div className="w-full">
         <div className="grid grid-cols-2 gap-8">
           {/* Should apply */}
@@ -845,7 +845,7 @@ function AlApplySlide() {
       </div>
 
       <div className="rounded-xl p-4" style={{ background: c.glass, border: c.glassBd }}>
-        <Label>Group / Frame / Auto Layout の使い分け</Label>
+        <Label>Group / Frame / オートレイアウト の使い分け</Label>
         <div className={`grid grid-cols-3 gap-3 text-[12px] ${c.t3}`}>
           <div className="rounded-lg p-3 text-center" style={{ background: c.glass, border: c.glassBd }}>
             <div className={`font-medium ${c.t2} mb-1`}>Group</div>
@@ -858,7 +858,7 @@ function AlApplySlide() {
             <div className={`text-[11px] ${c.t5} mt-1`}>箱だけ</div>
           </div>
           <div className="rounded-lg p-3 text-center" style={{ background: "rgba(168,85,247,0.08)", border: "1px solid rgba(168,85,247,0.2)" }}>
-            <div className={`font-medium ${d ? "text-purple-300" : "text-purple-600"} mb-1`}>Auto Layout</div>
+            <div className={`font-medium ${d ? "text-purple-300" : "text-purple-600"} mb-1`}>オートレイアウト</div>
             <div>並び・余白・伸縮ルール</div>
             <div className="text-[11px] text-purple-400 mt-1">構造あり</div>
           </div>
@@ -1387,200 +1387,84 @@ function AlFigmaUISlide() {
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>Figmaの<strong>Auto Layout設定パネル</strong>を理解する</Msg>
+      <Msg>Figmaの<strong>オートレイアウト設定パネル</strong>を理解する</Msg>
       <Points items={["Direction（縦/横の向き）","Gap（要素間の余白）","Padding（外枠との余白）","Alignment（配置）とResizing（伸縮）"]} />
 
       <div className="w-full">
         <div className="grid grid-cols-2 gap-8">
           {/* Card Preview */}
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-start">
             <div
-              className="rounded-2xl p-6 w-72"
+              className="rounded-2xl p-8"
               style={{
                 background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
-                border: `2px solid ${d ? 'rgba(168,85,247,0.25)' : 'rgba(168,85,247,0.2)'}`,
+                border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
                 boxShadow: d
-                  ? '0 8px 32px rgba(168,85,247,0.2), 0 0 0 1px rgba(168,85,247,0.1) inset'
-                  : '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(255,255,255,0.6) inset'
+                  ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
+                  : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
               }}
             >
-              <div className="flex flex-col gap-3">
-                <div className={`text-[15px] font-semibold ${d ? 'text-purple-200' : 'text-purple-700'}`}>
-                  カードタイトル
-                </div>
-                <div className={`text-[13px] ${d ? c.t4 : 'text-purple-600'} leading-relaxed`}>
-                  説明文がここに入ります。Auto Layoutで構造を作っています。
-                </div>
-                <div className="flex gap-2 mt-1">
-                  <div
-                    className="flex-1 py-2 rounded-lg text-[13px] font-medium text-white text-center"
-                    style={{
-                      background: 'linear-gradient(135deg, rgba(168,85,247,0.6), rgba(168,85,247,0.5))',
-                      boxShadow: '0 4px 12px rgba(168,85,247,0.3)'
-                    }}
-                  >
-                    OK
-                  </div>
-                  <div
-                    className="flex-1 py-2 rounded-lg text-[13px] font-medium text-center"
-                    style={{
-                      background: d ? 'rgba(168,85,247,0.12)' : 'rgba(168,85,247,0.08)',
-                      border: `1px solid ${d ? 'rgba(168,85,247,0.3)' : 'rgba(168,85,247,0.2)'}`,
-                      color: d ? '#c4b5fd' : '#7c3aed'
-                    }}
-                  >
-                    Cancel
-                  </div>
-                </div>
-              </div>
+              <img
+                src="/images/Choice Result Card.svg"
+                alt="Choice Result Card"
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto',
+                  display: 'block'
+                }}
+              />
             </div>
           </div>
 
-          {/* Figma Auto Layout Panel Mock */}
-          <div
-            className="rounded-2xl overflow-hidden"
-            style={{
-              background: d ? '#2c2c2c' : '#f5f5f5',
-              border: `1px solid ${d ? '#3c3c3c' : '#e0e0e0'}`,
-              boxShadow: d ? '0 8px 32px rgba(0,0,0,0.4)' : '0 8px 32px rgba(0,0,0,0.1)',
-              height: 'fit-content'
-            }}
-          >
-            {/* Panel Header */}
+          {/* Figma オートレイアウト Panel Screenshot */}
+          <div className="flex items-center justify-start">
             <div
-              className="px-3 py-2"
+              className="rounded-2xl overflow-hidden"
               style={{
-                background: d ? '#1e1e1e' : '#ffffff',
-                borderBottom: `1px solid ${d ? '#3c3c3c' : '#e0e0e0'}`
+                boxShadow: d ? '0 8px 32px rgba(0,0,0,0.4)' : '0 8px 32px rgba(0,0,0,0.1)'
               }}
             >
-              <div className={`text-[11px] font-semibold ${d ? 'text-white' : 'text-gray-900'}`}>
-                Auto layout
-              </div>
-            </div>
-
-            {/* Settings */}
-            <div className="p-3 space-y-3">
-              {/* Direction */}
-              <div>
-                <div className={`text-[10px] ${d ? 'text-gray-400' : 'text-gray-600'} mb-1.5`}>
-                  Direction
-                </div>
-                <div className="flex gap-1">
-                  {[
-                    { icon: '⬇', active: true, label: 'Vertical' },
-                    { icon: '➡', active: false, label: 'Horizontal' },
-                    { icon: '🔄', active: false, label: 'Wrap' }
-                  ].map((dir) => (
-                    <div
-                      key={dir.label}
-                      className="flex-1 py-1.5 rounded text-center cursor-pointer"
-                      style={{
-                        background: dir.active ? '#7c3aed' : (d ? '#3c3c3c' : '#e0e0e0'),
-                        color: dir.active ? 'white' : (d ? '#a0a0a0' : '#666666')
-                      }}
-                      title={dir.label}
-                    >
-                      <span className="text-[14px]">{dir.icon}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Gap */}
-              <div>
-                <div className={`text-[10px] ${d ? 'text-gray-400' : 'text-gray-600'} mb-1.5`}>
-                  Gap between items
-                </div>
-                <div
-                  className="rounded px-2 py-1.5 text-[12px] font-mono"
-                  style={{
-                    background: d ? '#1e1e1e' : '#ffffff',
-                    border: `1px solid ${d ? '#3c3c3c' : '#d0d0d0'}`,
-                    color: d ? '#e0e0e0' : '#333333'
-                  }}
-                >
-                  12
-                </div>
-              </div>
-
-              {/* Padding */}
-              <div>
-                <div className={`text-[10px] ${d ? 'text-gray-400' : 'text-gray-600'} mb-1.5 flex items-center justify-between`}>
-                  <span>Padding</span>
-                  <span className="text-[9px]">🔗</span>
-                </div>
-                <div className="grid grid-cols-2 gap-1">
-                  {['24', '24', '24', '24'].map((val, i) => (
-                    <div
-                      key={i}
-                      className="rounded px-2 py-1.5 text-[12px] font-mono text-center"
-                      style={{
-                        background: d ? '#1e1e1e' : '#ffffff',
-                        border: `1px solid ${d ? '#3c3c3c' : '#d0d0d0'}`,
-                        color: d ? '#e0e0e0' : '#333333'
-                      }}
-                    >
-                      {val}
-                    </div>
-                  ))}
-                </div>
-                <div className={`text-[9px] ${d ? 'text-gray-500' : 'text-gray-500'} mt-1 grid grid-cols-2 gap-1 text-center`}>
-                  <span>↑ Top</span>
-                  <span>→ Right</span>
-                  <span>↓ Bottom</span>
-                  <span>← Left</span>
-                </div>
-              </div>
-
-              {/* Alignment */}
-              <div>
-                <div className={`text-[10px] ${d ? 'text-gray-400' : 'text-gray-600'} mb-1.5`}>
-                  Alignment
-                </div>
-                <div className="grid grid-cols-3 gap-1">
-                  {[
-                    '⬆', '⬆', '⬆',
-                    '↔', '↔', '↔',
-                    '⬇', '⬇', '⬇'
-                  ].map((icon, i) => (
-                    <div
-                      key={i}
-                      className="py-1.5 rounded text-center cursor-pointer text-[12px]"
-                      style={{
-                        background: i === 0 ? '#7c3aed' : (d ? '#3c3c3c' : '#e0e0e0'),
-                        color: i === 0 ? 'white' : (d ? '#a0a0a0' : '#666666')
-                      }}
-                    >
-                      {icon}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Resizing */}
-              <div>
-                <div className={`text-[10px] ${d ? 'text-gray-400' : 'text-gray-600'} mb-1.5`}>
-                  Resizing
-                </div>
-                <div
-                  className="rounded px-2 py-1.5 text-[11px] flex items-center justify-between"
-                  style={{
-                    background: d ? '#1e1e1e' : '#ffffff',
-                    border: `1px solid ${d ? '#3c3c3c' : '#d0d0d0'}`,
-                    color: d ? '#e0e0e0' : '#333333'
-                  }}
-                >
-                  <span>Hug contents</span>
-                  <ChevronRight className="w-3 h-3" />
-                </div>
-              </div>
+              <img
+                src="/images/al-figma-ui-panel.png"
+                alt="Figma オートレイアウト設定パネル"
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto',
+                  display: 'block'
+                }}
+              />
             </div>
           </div>
         </div>
       </div>
 
-      <Tip>Figmaの設定パネルは、Auto Layoutの「何を」「どう」設定するかを視覚的に表現している</Tip>
+      <div className="mt-8">
+        <a
+          href="https://www.figma.com/design/Lzxkw6F9BxPWo8DoTEU5Ul/%E6%96%B0%E5%8D%92%E3%83%87%E3%82%B6%E3%82%A4%E3%83%8A%E3%83%BC%E7%A0%94%E4%BF%AE_Day1-5-1-?node-id=4001-4915&t=8vYdwEp1iO1LK4Su-4"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-[13px] font-medium transition-all"
+          style={{
+            background: d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)',
+            border: `1px solid ${d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.15)'}`,
+            color: d ? '#93c5fd' : '#2563eb',
+            textDecoration: 'none'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = d ? 'rgba(59,130,246,0.15)' : 'rgba(59,130,246,0.1)';
+            e.currentTarget.style.borderColor = d ? 'rgba(59,130,246,0.35)' : 'rgba(59,130,246,0.25)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)';
+            e.currentTarget.style.borderColor = d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.15)';
+          }}
+        >
+          <Link2 className="w-3.5 h-3.5" />
+          実際のFigmaコンポーネント
+        </a>
+      </div>
+
+      <Tip>Figmaの設定パネルは、オートレイアウトの「何を」「どう」設定するかを視覚的に表現している</Tip>
     </div>
   );
 }
@@ -1797,7 +1681,7 @@ function CompPropsSlide() {
       <div className="w-full">
         <div className="grid grid-cols-2 gap-8">
           {/* Button Preview - CSS Implementation */}
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-start">
             <div
               className="rounded-2xl p-16"
               style={{
@@ -1886,7 +1770,7 @@ function CompPropsSlide() {
           </div>
 
           {/* Figma Properties Panel - Real Screenshot */}
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-start">
             <div
               className="rounded-2xl overflow-hidden"
               style={{
@@ -1908,31 +1792,57 @@ function CompPropsSlide() {
         </div>
       </div>
 
+      <div className="mt-8">
+        <a
+          href="https://www.figma.com/design/Lzxkw6F9BxPWo8DoTEU5Ul/%E6%96%B0%E5%8D%92%E3%83%87%E3%82%B6%E3%82%A4%E3%83%8A%E3%83%BC%E7%A0%94%E4%BF%AE_Day1-5-1-?node-id=4001-5149&t=8vYdwEp1iO1LK4Su-4"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-[13px] font-medium transition-all"
+          style={{
+            background: d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)',
+            border: `1px solid ${d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.15)'}`,
+            color: d ? '#93c5fd' : '#2563eb',
+            textDecoration: 'none'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = d ? 'rgba(59,130,246,0.15)' : 'rgba(59,130,246,0.1)';
+            e.currentTarget.style.borderColor = d ? 'rgba(59,130,246,0.35)' : 'rgba(59,130,246,0.25)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)';
+            e.currentTarget.style.borderColor = d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.15)';
+          }}
+        >
+          <Link2 className="w-3.5 h-3.5" />
+          実際のFigmaコンポーネント
+        </a>
+      </div>
+
       <div className="rounded-xl p-6 mt-8" style={{ background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)', border: `1px solid ${d ? 'rgba(168,85,247,0.1)' : 'rgba(168,85,247,0.08)'}` }}>
-        <div className="grid grid-cols-[1fr_auto_1fr] gap-6 items-center">
-          <div>
+        <div className="grid grid-cols-[440px_auto_1fr]">
+          <div className="self-start">
             <div className="text-[13px] text-rose-400 font-semibold mb-3 flex items-center gap-2">
               <AlertTriangle className="w-4 h-4" />
               やりがちな失敗
             </div>
-            <div className={`text-[14px] ${c.t4} space-y-2`}>
-              <div>• プロパティ名を「左アイコン」「大きいサイズ」のように見た目で付ける</div>
-              <div>• すべてをVariantにしてしまう（Label変更もVariantで作る）</div>
-              <div>• プロパティが多すぎて使いにくいコンポーネントになる</div>
+            <div className={`text-[13px] ${c.t4} space-y-2`}>
+              <div>• プロパティ名を「左アイコン」など見た目の表現で付けてしまう問題</div>
+              <div>• Label変更もVariant化してすべてをVariantで作ってしまう問題</div>
+              <div>• プロパティが多すぎて使いにくく複雑なコンポーネントになる問題</div>
             </div>
           </div>
 
-          <div className="text-[24px] text-purple-400 mr-4">→</div>
+          <div className="text-[24px] text-purple-400 mr-10 self-center">→</div>
 
-          <div>
+          <div className="self-start">
             <div className="text-[13px] text-emerald-400 font-semibold mb-3 flex items-center gap-2">
               <span>✓</span>
               おすすめのやり方
             </div>
-            <div className={`text-[14px] ${c.t4} space-y-2`}>
-              <div>• プロパティ名は役割で付ける（「Show left icon」「Size」など）</div>
-              <div>• テキスト変更はプロパティ、見た目の切り替えはVariantに</div>
-              <div>• 本当に必要なプロパティだけに絞ってシンプルに保つ</div>
+            <div className={`text-[13px] ${c.t4} space-y-2`}>
+              <div>• プロパティ名は「Show left icon」のように役割で付けること</div>
+              <div>• テキスト変更はプロパティで、見た目の切り替えはVariantで行うこと</div>
+              <div>• 本当に必要なプロパティだけに絞ってシンプルで使いやすく保つこと</div>
             </div>
           </div>
         </div>
@@ -3589,7 +3499,7 @@ function AlRealExampleSlide() {
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>実際のカードコンポーネントで<strong>Auto Layoutの威力</strong>を確認する</Msg>
+      <Msg>実際のカードコンポーネントで<strong>オートレイアウトの威力</strong>を確認する</Msg>
       <Points items={["画像・タイトル・説明文・ボタンを持つカード","文言変更や画像サイズ変更に自動対応","一度構造を作れば、あとは中身を変えるだけ"]} />
 
       <div className="w-full">
@@ -3645,7 +3555,7 @@ function AlRealExampleSlide() {
           <div className="space-y-3">
             <div className="text-[13px] text-purple-400 mb-2 font-medium flex items-center gap-2">
               <CheckCircle className="w-4 h-4" />
-              <span>成功例：Auto Layout</span>
+              <span>成功例：オートレイアウト</span>
             </div>
             <div
               className="h-[380px] rounded-2xl p-5 flex flex-col gap-3"
@@ -3704,7 +3614,7 @@ function AlRealExampleSlide() {
         </div>
       </div>
 
-      <Tip>カードのような複合コンポーネントこそ、Auto Layoutの真価が発揮される</Tip>
+      <Tip>カードのような複合コンポーネントこそ、オートレイアウトの真価が発揮される</Tip>
     </div>
   );
 }
@@ -4187,7 +4097,7 @@ function SummarySlide() {
       <Vis className="py-6">
         <div className="space-y-3 max-w-md mx-auto">
           {[
-            { icon: <Layers className="w-4 h-4" />, label: "Auto Layout", sub: "関係性を設計する" },
+            { icon: <Layers className="w-4 h-4" />, label: "オートレイアウト", sub: "関係性を設計する" },
             { icon: <Component className="w-4 h-4" />, label: "Component", sub: "判断を再利用する" },
             { icon: <Variable className="w-4 h-4" />, label: "Variable", sub: "値を再利用する" },
             { icon: <Library className="w-4 h-4" />, label: "Library", sub: "チームで共有する" },
@@ -4222,10 +4132,10 @@ export const slides: Slide[] = [
   { id: "al-basics", section: "auto-layout", title: "オートレイアウトの基本", message: "オートレイアウトは整列機能ではなく、要素同士の関係をルールにする機能", content: <AlBasicsSlide /> },
   { id: "al-apply", section: "auto-layout", title: "オートレイアウトとは", starred: true, message: "オートレイアウトは構造を持った配置ルールで柔軟なデザインを実現", content: <AlApplySlide /> },
   { id: "al-direction", section: "auto-layout", title: "オートレイアウトの適用", starred: true, message: "方向・間隔・パディングの適切な設定で柔軟なレイアウトを実現", content: <AlDirectionSlide /> },
-  { id: "al-figma-ui", section: "auto-layout", title: "Figma UI：Auto Layout設定", starred: true, message: "FigmaのAuto Layout設定パネルを理解する", content: <AlFigmaUISlide /> },
+  { id: "al-figma-ui", section: "auto-layout", title: "Figma UI：オートレイアウト設定", starred: true, message: "Figmaのオートレイアウト設定パネルを理解する", content: <AlFigmaUISlide /> },
   { id: "al-text", section: "auto-layout", title: "テキストの取り扱い", starred: true, message: "テキストはもっとも変化しやすい要素なので、見た目より先に振る舞いを決める", content: <AlTextSlide /> },
   { id: "al-advanced", section: "auto-layout", title: "最小最大幅 / 比率維持 / 絶対位置", message: "可変レイアウトの中で、どこまで許容し、何を例外にするかを決める", content: <AlAdvancedSlide /> },
-  { id: "al-real-example", section: "auto-layout", title: "実例：商品カード", starred: true, message: "実際のカードコンポーネントでAuto Layoutの威力を体感する", content: <AlRealExampleSlide /> },
+  { id: "al-real-example", section: "auto-layout", title: "実例：商品カード", starred: true, message: "実際のカードコンポーネントでオートレイアウトの威力を体感する", content: <AlRealExampleSlide /> },
   { id: "comp-basics", section: "components", title: "コンポーネントの基本", message: "コンポーネントは、見た目の再利用ではなく、判断の再利用", content: <CompBasicsSlide /> },
   { id: "comp-props", section: "components", title: "プロパティについて", starred: true, message: "プロパティは「何を変えてよいか」を明示する、安全な自由度の設計", content: <CompPropsSlide /> },
   { id: "comp-variants-properties", section: "components", title: "バリアントのプロパティと値", starred: true, message: "バリアントはプロパティと値の組み合わせで構成される", content: <CompVariantsPropertiesSlide /> },
