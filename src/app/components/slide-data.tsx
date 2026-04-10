@@ -1555,22 +1555,6 @@ function CompVariantsButtonExampleSlide() {
         </div>
       </div>
 
-      {/* Company Example */}
-      <div>
-        <div className={`text-[16px] ${c.t2} font-semibold mb-3 mt-10`}>
-          LYでのDesign Systemの一例
-        </div>
-        <div className={`text-[14px] ${c.t4} mb-3 leading-relaxed`}>
-          実際のプロジェクトでは、Priority（優先度）、Size（サイズ）、State（状態）、Icon only（アイコンのみ）といった複数のプロパティを組み合わせてボタンシステムを構築しています。各状態に対して一貫したビジュアルフィードバックを提供することで、ユーザー体験の質を向上させています。
-        </div>
-        <div className="w-full rounded-2xl overflow-hidden relative">
-          <ExpandableImage
-            src="/images/button実例.svg"
-            alt="LYでのDesign Systemの一例"
-          />
-        </div>
-      </div>
-
       <Tip>スラッシュ区切りの命名規則を使用すると、Figmaが自動的にバリアントプロパティと値を認識して設定してくれる</Tip>
     </div>
   );
@@ -2449,10 +2433,153 @@ function VarAliasSlide() {
         <div className={`text-[14px] ${c.t2} font-semibold`}>2. スタイルとバリアブルの違い</div>
         <div className={`text-[13px] ${c.t4} leading-relaxed space-y-3`}>
           <div>
-            ここが大事なんだけど、<strong>スタイルはこのエイリアスに対応していません</strong>。スタイルは、他のスタイルやバリアブルを"参照してつながる"しくみが弱いです。
+            <strong>スタイルはこのエイリアスに対応していません</strong>。スタイルは、他のスタイルやバリアブルを"参照してつながる"しくみが弱いです。
           </div>
           <div>
             一方で<strong>バリアブルは、他のバリアブルを参照できる</strong>ので、もっと大きくて整理された仕組みを作れます。
+          </div>
+        </div>
+
+        {/* 比較表 */}
+        <div className="overflow-x-auto mt-6">
+          <table className="w-full text-[13px]" style={{ borderCollapse: 'separate', borderSpacing: 0 }}>
+            <thead>
+              <tr>
+                <th
+                  className={`p-3 text-left font-semibold ${c.t2}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.08)' : 'rgba(168,85,247,0.06)',
+                    borderTop: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderLeft: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderTopLeftRadius: '8px',
+                  }}
+                ></th>
+                <th
+                  className={`p-3 text-left font-semibold ${c.t2}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.08)' : 'rgba(168,85,247,0.06)',
+                    borderTop: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  スタイル
+                </th>
+                <th
+                  className={`p-3 text-left font-semibold`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.08)' : 'rgba(168,85,247,0.06)',
+                    color: d ? '#c4b5fd' : '#7c3aed',
+                    borderTop: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderRight: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderTopRightRadius: '8px',
+                  }}
+                >
+                  バリアブル
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td
+                  className={`p-3 font-semibold ${c.t3}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderLeft: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  適用範囲
+                </td>
+                <td
+                  className={`p-3 ${c.t4}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  特定のデザイン属性（例：テキストスタイル、塗り、線など）に適用
+                </td>
+                <td
+                  className={`p-3 ${c.t4}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderRight: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  デザイン内の任意のプロパティに適用可能（例：幅、高さ、色、テキスト内容など）
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className={`p-3 font-semibold ${c.t3}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderLeft: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  データタイプ
+                </td>
+                <td
+                  className={`p-3 ${c.t4}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  主に視覚的な属性（例：色やフォント）
+                </td>
+                <td
+                  className={`p-3 ${c.t4}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderRight: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  色、数値、文字列、ブール値など多様なデータタイプを扱う
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className={`p-3 font-semibold ${c.t3}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderLeft: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottomLeftRadius: '8px',
+                  }}
+                >
+                  動的な変更
+                </td>
+                <td
+                  className={`p-3 ${c.t4}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  不可（静的なデザイン属性の適用と管理が主）
+                </td>
+                <td
+                  className={`p-3 ${c.t4}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderRight: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottomRightRadius: '8px',
+                  }}
+                >
+                  可能（プロトタイプでユーザーの操作に応じた変更が可能）
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div className={`text-right text-[11px] ${c.t4} mt-2`}>
+            出典：fumufumuUI
           </div>
         </div>
       </div>
@@ -3252,6 +3379,22 @@ function CompRealExampleSlide() {
               <div>• バリアントで統一的にサイズ管理する</div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* LY Design System Example */}
+      <div>
+        <div className={`text-[16px] ${c.t2} font-semibold mb-3 mt-10`}>
+          LYでのDesign Systemの一例
+        </div>
+        <div className={`text-[14px] ${c.t4} mb-3 leading-relaxed`}>
+          実際のプロジェクトでは、Priority（優先度）、Size（サイズ）、State（状態）、Icon only（アイコンのみ）といった複数のプロパティを組み合わせてボタンシステムを構築しています。各状態に対して一貫したビジュアルフィードバックを提供することで、ユーザー体験の質を向上させています。
+        </div>
+        <div className="w-full rounded-2xl overflow-hidden relative">
+          <ExpandableImage
+            src="/images/button実例.svg"
+            alt="LYでのDesign Systemの一例"
+          />
         </div>
       </div>
 
