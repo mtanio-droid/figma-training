@@ -876,35 +876,21 @@ function AlDirectionSlide() {
   return (
     <div className="space-y-10">
       <Msg>縦横の向きと余白は、<strong>情報の関係性</strong>を表している</Msg>
-      <Points items={["縦並び = 読み順、積み上がり","横並び = 並列、補助、比較","gap は子要素同士の関係、padding は外枠との関係","ネストしたオートレイアウトで情報階層を表現する"]} />
-      <Vis>
-        <Label>カード構造の分解</Label>
-        <div className="flex justify-center">
-          <div className="relative">
-            <div className="border-2 border-purple-500/30 rounded-2xl p-6 relative" style={{ background: "rgba(168,85,247,0.04)" }}>
-              <div className={`absolute -top-3 left-6 bg-purple-500/20 ${d ? "text-purple-300" : "text-purple-600"} text-[10px] px-2 py-0.5 rounded-full font-medium`}>padding: 24</div>
-              <div className="flex flex-col w-64">
-                <div className={`rounded-lg px-3 py-2 border ${c.bd1} text-[13px] font-medium ${c.t2}`} style={{ background: c.glass2 }}>カードタイトル</div>
-                <div className="flex items-center justify-center py-1">
-                  <div className={`text-[10px] ${d ? "text-purple-300" : "text-purple-600"} bg-purple-500/15 px-2 py-0.5 rounded-full`}>gap: 8</div>
-                </div>
-                <div className={`rounded-lg px-3 py-2 border ${c.bd1} text-[12px] ${c.t4}`} style={{ background: c.glass2 }}>説明文テキスト。ここに内容が入ります。</div>
-                <div className="flex items-center justify-center py-1">
-                  <div className={`text-[10px] ${d ? "text-purple-300" : "text-purple-600"} bg-purple-500/15 px-2 py-0.5 rounded-full`}>gap: 16</div>
-                </div>
-                <div className="border-2 border-purple-500/30 rounded-lg p-2 relative" style={{ background: "rgba(168,85,247,0.04)" }}>
-                  <div className={`absolute -top-2.5 right-3 bg-purple-500/20 ${d ? "text-purple-300" : "text-purple-600"} text-[10px] px-2 py-0.5 rounded-full font-medium`}>横 Auto Layout</div>
-                  <div className="flex gap-2 mt-1">
-                    <div className="text-white rounded-lg px-3 py-1.5 text-[11px]" style={{ background: "linear-gradient(135deg, #7c3aed, #a855f7, #c084fc)" }}>確認する</div>
-                    <div className={`${c.t3} rounded-lg px-3 py-1.5 text-[11px]`} style={{ background: c.secBtnBg, border: c.secBtnBd }}>キャンセル</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className={`absolute -left-3 top-1/2 -translate-y-1/2 bg-purple-500/20 ${d ? "text-purple-300" : "text-purple-600"} text-[10px] px-2 py-0.5 rounded-full font-medium rotate-[-90deg]`}>padding</div>
-          </div>
-        </div>
-      </Vis>
+
+      <div className={`text-[14px] ${c.t3} leading-relaxed space-y-4`}>
+        <p>
+          オートレイアウトフレームの要素は、方向、間隔、パディング、整列、その他のオートレイアウトプロパティに基づいて自動的に配置されます。コンテンツが変更されたり、要素が追加、削除、サイズ変更された場合でも、レイアウトは手動で再配置する必要なく調整されます。
+        </p>
+        <p>
+          オートレイアウトを使用すると、以下のような応答性のあるデザインを作成できます。
+        </p>
+        <ul className="list-disc ml-6 space-y-1">
+          <li>テキストラベルの編集に合わせて拡大/縮小するボタン</li>
+          <li>アイテムの追加、削除、または非表示に合わせて調整されるリスト</li>
+          <li>Bentoボックスとダッシュボード</li>
+          <li>さまざまな画面サイズに適応するウェブページ</li>
+        </ul>
+      </div>
 
       <div
         className="w-full rounded-2xl overflow-hidden relative"
@@ -931,7 +917,466 @@ function AlDirectionSlide() {
         </div>
       </div>
 
-      <Tip>gap の違い=情報のまとまりの違い。タイトルと説明は近く、ボタン群とは離す</Tip>
+      <div className={`text-[14px] ${c.t3} leading-relaxed`}>
+        <p>
+          オートレイアウトを適切に設定することで、横幅を変えてもレイアウトが崩れない、カードなどのパーツを作ったり、と柔軟なデザイン・レイアウトを作ることが出来ます。
+        </p>
+      </div>
+
+      <div
+        className="w-full rounded-2xl overflow-hidden relative"
+        style={{
+          background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+          border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+          boxShadow: d
+            ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
+            : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+        }}
+      >
+        <ExpandableImage
+          src="/images/content_image-1711415488661.gif"
+          alt="オートレイアウトによる柔軟なレイアウトの例"
+        />
+        <div
+          className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+          style={{
+            background: 'rgba(0,0,0,0.6)',
+            color: 'rgba(255,255,255,0.8)'
+          }}
+        >
+          出典：SKILLHUB
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <div className={`text-[15px] ${c.t2} font-semibold`}>アライメントについて</div>
+        <div className={`text-[14px] ${c.t3} leading-relaxed space-y-3`}>
+          <p>
+            オートレイアウトフレーム内で子オブジェクトの配置方法を選択します。使用可能な配置オプションは、オートレイアウトフレームの流れと、アイテム間の間隔（配置間隔）によって決まります。
+          </p>
+          <p>
+            通常のフレーム内のオブジェクトとは異なり、個々のオブジェクトの配置を制御することはできません。そのため、子オブジェクトの配置は親のオートレイアウトフレーム上で設定します。
+          </p>
+        </div>
+        <div
+          className="w-full rounded-2xl overflow-hidden relative"
+          style={{
+            background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+            border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+            boxShadow: d
+              ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
+              : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+          }}
+        >
+          <ExpandableImage
+            src="/images/al-alignment.gif"
+            alt="アライメントの設定例"
+          />
+          <div
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            style={{
+              background: 'rgba(0,0,0,0.6)',
+              color: 'rgba(255,255,255,0.8)'
+            }}
+          >
+            出典：Figma公式
+          </div>
+        </div>
+        <div className={`text-[14px] ${c.t3} leading-relaxed space-y-2`}>
+          <p>
+            アイテム間の間隔が「自動」に設定されている場合、各フローに対して次の3つのオプションがあります。
+          </p>
+          <ul className="list-disc ml-6 space-y-1">
+            <li>垂直方向の自動レイアウトの流れ: 左、中央、右</li>
+            <li>水平方向の自動レイアウトの流れ：上、中央、下</li>
+          </ul>
+        </div>
+        <div
+          className="w-full rounded-2xl overflow-hidden relative"
+          style={{
+            background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+            border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+            boxShadow: d
+              ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
+              : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+          }}
+        >
+          <ExpandableImage
+            src="/images/al-alighment-auto.gif"
+            alt="アライメントの自動設定"
+          />
+          <div
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            style={{
+              background: 'rgba(0,0,0,0.6)',
+              color: 'rgba(255,255,255,0.8)'
+            }}
+          >
+            出典：Figma公式
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <div className={`text-[15px] ${c.t2} font-semibold`}>アイテム間の間隔について</div>
+        <div className={`text-[14px] ${c.t3} leading-relaxed`}>
+          <p className="mb-3">アイテム間の間隔には2つの異なる設定があります。</p>
+          <ul className="list-disc ml-6 space-y-2">
+            <li><strong>自動：</strong>オブジェクト間の間隔を可能な限り最大に設定します。Autoフィールドに直接入力するか、ドロップダウンメニューから選択してください。</li>
+            <li><strong>間隔の指定：</strong>オブジェクト間の距離を指定します。フィールドに値を入力するか、矢印キーで値を微調整するか、カーソルでフィールドをスクラブしてください。</li>
+          </ul>
+        </div>
+        <div
+          className="w-full rounded-2xl overflow-hidden relative"
+          style={{
+            background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+            border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+            boxShadow: d
+              ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
+              : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+          }}
+        >
+          <ExpandableImage
+            src="/images/al-gap-between-toggle.gif"
+            alt="アイテム間の間隔の設定"
+          />
+          <div
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            style={{
+              background: 'rgba(0,0,0,0.6)',
+              color: 'rgba(255,255,255,0.8)'
+            }}
+          >
+            出典：Figma公式
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <div className={`text-[15px] ${c.t2} font-semibold`}>Paddingについて</div>
+        <div className={`text-[14px] ${c.t3} leading-relaxed`}>
+          <p>
+            パディングは、オートレイアウトフレームの境界とフレームの子オブジェクトとの間の空白（余白）を制御します。パディングは、均一に、垂直方向と水平方向に設定することも、上、右、下、左にそれぞれ異なる値を設定することもできます。
+          </p>
+        </div>
+        <div
+          className="w-full rounded-2xl overflow-hidden relative"
+          style={{
+            background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+            border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+            boxShadow: d
+              ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
+              : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+          }}
+        >
+          <ExpandableImage
+            src="/images/al-padding-resize-all-sides.gif"
+            alt="パディングの設定"
+          />
+          <div
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            style={{
+              background: 'rgba(0,0,0,0.6)',
+              color: 'rgba(255,255,255,0.8)'
+            }}
+          >
+            出典：Figma公式
+          </div>
+        </div>
+        <div className={`text-[14px] ${c.t3} leading-relaxed`}>
+          <p>
+            右側のパネルにあるパディング設定は、デフォルトでは垂直方向（上下）と水平方向（左右）のパディングに分かれています。
+          </p>
+        </div>
+        <div
+          className="w-full rounded-2xl overflow-hidden relative"
+          style={{
+            background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+            border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+            boxShadow: d
+              ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
+              : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+          }}
+        >
+          <ExpandableImage
+            src="/images/individual-padding.mov.gif"
+            alt="個別のパディング設定"
+          />
+          <div
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            style={{
+              background: 'rgba(0,0,0,0.6)',
+              color: 'rgba(255,255,255,0.8)'
+            }}
+          >
+            出典：Figma公式
+          </div>
+        </div>
+        <div className={`text-[15px] ${c.t2} font-semibold mt-6`}>オブジェクト操作のイメージ</div>
+        <div
+          className="w-full rounded-2xl overflow-hidden relative"
+          style={{
+            background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+            border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+            boxShadow: d
+              ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
+              : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+          }}
+        >
+          <ExpandableImage
+            src="/images/al-move-child-objects.gif"
+            alt="オブジェクト操作のイメージ"
+          />
+          <div
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            style={{
+              background: 'rgba(0,0,0,0.6)',
+              color: 'rgba(255,255,255,0.8)'
+            }}
+          >
+            出典：Figma公式
+          </div>
+        </div>
+        <div className={`text-[14px] ${c.t3} leading-relaxed`}>
+          <p>
+            一部オブジェクトに絶対位置を追加することも可能
+          </p>
+        </div>
+        <div
+          className="w-full rounded-2xl overflow-hidden relative"
+          style={{
+            background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+            border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+            boxShadow: d
+              ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
+              : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+          }}
+        >
+          <ExpandableImage
+            src="/images/hold-ctrl-to-ignore-auto-layout.gif"
+            alt="絶対位置の設定"
+          />
+          <div
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            style={{
+              background: 'rgba(0,0,0,0.6)',
+              color: 'rgba(255,255,255,0.8)'
+            }}
+          >
+            出典：Figma公式
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <div className={`text-[15px] ${c.t2} font-semibold`}>サイズ変更プロパティについて</div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-[13px]" style={{ borderCollapse: 'separate', borderSpacing: 0 }}>
+            <thead>
+              <tr>
+                <th
+                  className={`p-3 text-left font-semibold ${c.t2}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.08)' : 'rgba(168,85,247,0.06)',
+                    borderTop: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderLeft: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderTopLeftRadius: '8px',
+                  }}
+                >
+                  サイズ変更プロパティ
+                </th>
+                <th
+                  className={`p-3 text-left font-semibold ${c.t2}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.08)' : 'rgba(168,85,247,0.06)',
+                    borderTop: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  以下に適用可能
+                </th>
+                <th
+                  className={`p-3 text-left font-semibold ${c.t2}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.08)' : 'rgba(168,85,247,0.06)',
+                    borderTop: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderRight: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderTopRightRadius: '8px',
+                  }}
+                >
+                  サイズの動作
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td
+                  className={`p-3 font-semibold ${c.t3}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderLeft: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  コンテンツを内包
+                </td>
+                <td
+                  className={`p-3 ${c.t4}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  オートレイアウトフレーム
+                </td>
+                <td
+                  className={`p-3 ${c.t4}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderRight: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  オブジェクトはその子オブジェクトに基づいてサイズを変更
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className={`p-3 font-semibold ${c.t3}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderLeft: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  コンテナに合わせて拡大
+                </td>
+                <td
+                  className={`p-3 ${c.t4}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  オートレイアウトのフレームの子オブジェクト
+                </td>
+                <td
+                  className={`p-3 ${c.t4}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderRight: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  オブジェクトが利用可能なすべてのスペースを埋める
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className={`p-3 font-semibold ${c.t3}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderLeft: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  固定幅 / 高さ
+                </td>
+                <td
+                  className={`p-3 ${c.t4}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  両方
+                </td>
+                <td
+                  className={`p-3 ${c.t4}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderRight: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  オブジェクトは固定されたまま
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className={`p-3 font-semibold ${c.t3}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderLeft: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  最小幅 / 高さ
+                </td>
+                <td
+                  className={`p-3 ${c.t4}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  両方
+                </td>
+                <td
+                  className={`p-3 ${c.t4}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderRight: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  オブジェクトは最小値以上
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className={`p-3 font-semibold ${c.t3}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderLeft: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottomLeftRadius: '8px',
+                  }}
+                >
+                  最大幅 / 高さ
+                </td>
+                <td
+                  className={`p-3 ${c.t4}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                  }}
+                >
+                  両方
+                </td>
+                <td
+                  className={`p-3 ${c.t4}`}
+                  style={{
+                    background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                    borderRight: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                    borderBottomRightRadius: '8px',
+                  }}
+                >
+                  オブジェクトは最大値以下
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div className={`text-right text-[11px] ${c.t4} mt-2`}>
+            出典：Figma公式
+          </div>
+        </div>
+      </div>
+
+      <Tip>オートレイアウトの方向・間隔・パディングを適切に設定することで、コンテンツの変更に自動で対応する柔軟なレイアウトを実現できる</Tip>
     </div>
   );
 }
