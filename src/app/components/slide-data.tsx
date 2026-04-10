@@ -905,6 +905,32 @@ function AlDirectionSlide() {
           </div>
         </div>
       </Vis>
+
+      <div
+        className="w-full rounded-2xl overflow-hidden relative"
+        style={{
+          background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+          border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+          boxShadow: d
+            ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
+            : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+        }}
+      >
+        <ExpandableImage
+          src="/images/al-direction-ui3.png"
+          alt="縦横のレイアウトの例"
+        />
+        <div
+          className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+          style={{
+            background: 'rgba(0,0,0,0.6)',
+            color: 'rgba(255,255,255,0.8)'
+          }}
+        >
+          出典：Figma公式
+        </div>
+      </div>
+
       <Tip>gap の違い=情報のまとまりの違い。タイトルと説明は近く、ボタン群とは離す</Tip>
     </div>
   );

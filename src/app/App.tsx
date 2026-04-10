@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { slides, sectionList } from "./components/slide-data";
 import { ThemeContext, type Theme } from "./components/theme-context";
-import { Star, ChevronLeft, ChevronRight, Menu, X, Layers, Component, Variable, Library, Paintbrush, LayoutGrid, Sun, Moon, Bookmark, BookmarkCheck, StickyNote, Trash2, Edit3 } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight, Menu, X, Layers, Component, Variable, Library, Paintbrush, LayoutGrid, Sun, Moon, Bookmark, BookmarkCheck, StickyNote, Trash2, Edit3, Plus } from "lucide-react";
 
 interface Memo {
   id: string;
@@ -96,6 +96,7 @@ function App() {
   const [newMemoText, setNewMemoText] = useState("");
   const [editingMemoId, setEditingMemoId] = useState<string | null>(null);
   const [selectionPopup, setSelectionPopup] = useState<{ x: number; y: number; text: string } | null>(null);
+  const [memoInputExpanded, setMemoInputExpanded] = useState(false);
 
   const total = slides.length;
   const slide = slides[idx];
@@ -152,6 +153,7 @@ function App() {
     localStorage.setItem("figma-memos", JSON.stringify(newMemos));
     setNewMemoText("");
     setSelectionPopup(null);
+    setMemoInputExpanded(false);
   };
 
   // テキスト選択からメモを追加
@@ -447,28 +449,40 @@ function App() {
               </span>
             </div>
 
-            {/* Theme toggle */}
+            {/* Bookmark current slide */}
             <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className={`ml-auto ${c.toggleBtn} transition p-1.5 rounded-lg`}
-              style={{ background: theme === "dark" ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)" }}
-              title={theme === "dark" ? "ライトモードに切替" : "ダークモードに切替"}
+              onClick={() => toggleBookmark(idx)}
+              className={`${bookmarks.includes(idx) ? 'text-amber-400' : c.toggleBtn} transition`}
+              title={bookmarks.includes(idx) ? "ブックマーク解除" : "ブックマーク追加"}
             >
-              {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              {bookmarks.includes(idx) ? <BookmarkCheck className="w-4 h-4" /> : <Bookmark className="w-4 h-4" />}
             </button>
 
-            {/* Memo sidebar toggle */}
-            <button
-              onClick={() => setMemoSidebarOpen(!memoSidebarOpen)}
-              className={`${c.toggleBtn} transition p-1.5 rounded-lg`}
-              style={{ background: theme === "dark" ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)" }}
-              title={memoSidebarOpen ? "メモを閉じる" : "メモを開く"}
-            >
-              <StickyNote className="w-4 h-4" />
-            </button>
-
-            <div className={`text-[12px] ${c.counter} shrink-0 tabular-nums`}>
-              {idx + 1} / {total}
+            {/* Theme toggle switch */}
+            <div className="ml-auto flex items-center gap-3">
+              <Sun className={`w-4 h-4 transition-colors ${theme === "light" ? "text-amber-500" : c.toggleBtn}`} />
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="relative inline-flex items-center h-6 w-11 rounded-full transition-colors duration-200"
+                style={{
+                  background: theme === "dark" ? "rgba(168,85,247,0.3)" : "rgba(168,85,247,0.2)"
+                }}
+                title={theme === "dark" ? "ライトモードに切替" : "ダークモードに切替"}
+              >
+                <span
+                  className="inline-block h-5 w-5 transform rounded-full transition-all duration-200"
+                  style={{
+                    transform: theme === "dark" ? "translateX(22px)" : "translateX(1.5px)",
+                    background: theme === "dark"
+                      ? "#c4b5fd"
+                      : "#fff",
+                    boxShadow: theme === "dark"
+                      ? "0 2px 6px rgba(168,85,247,0.3)"
+                      : "0 2px 4px rgba(0,0,0,0.2)"
+                  }}
+                />
+              </button>
+              <Moon className={`w-4 h-4 transition-colors ${theme === "dark" ? "text-purple-300" : c.toggleBtn}`} />
             </div>
           </header>
 
@@ -573,7 +587,9 @@ function App() {
               <ChevronLeft className="w-4 h-4" /> 前へ
             </button>
 
-            <div></div>
+            <div className={`text-[13px] ${c.counter} font-medium tabular-nums`}>
+              {idx + 1} / {total}
+            </div>
 
             <button
               onClick={() => go(idx + 1)}
@@ -610,31 +626,80 @@ function App() {
 
           {/* Add memo form */}
           <div className="px-5 pb-4">
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={newMemoText}
-                onChange={(e) => setNewMemoText(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && addMemo()}
-                placeholder="メモを追加..."
-                className={`flex-1 px-3 py-2 rounded-lg text-[13px] bg-white/5 border transition focus:outline-none focus:border-purple-400`}
-                style={{
-                  borderColor: theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)",
-                  color: theme === "dark" ? "#fff" : "#000"
-                }}
-              />
+            {!memoInputExpanded ? (
               <button
-                onClick={() => addMemo()}
-                disabled={newMemoText.trim() === ""}
-                className="px-3 py-2 rounded-lg text-[13px] font-medium transition disabled:opacity-50"
+                onClick={() => setMemoInputExpanded(true)}
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-medium text-[13px] transition-all hover:scale-[1.02] active:scale-[0.98]"
                 style={{
-                  background: theme === "dark" ? "rgba(168,85,247,0.2)" : "rgba(168,85,247,0.15)",
-                  color: theme === "dark" ? "#c4b5fd" : "#7c3aed"
+                  background: theme === "dark"
+                    ? "linear-gradient(135deg, rgba(168,85,247,0.15), rgba(168,85,247,0.25))"
+                    : "linear-gradient(135deg, rgba(168,85,247,0.12), rgba(168,85,247,0.2))",
+                  color: theme === "dark" ? "#c4b5fd" : "#7c3aed",
+                  boxShadow: theme === "dark"
+                    ? "0 2px 12px rgba(168,85,247,0.2), inset 0 1px 0 rgba(255,255,255,0.1)"
+                    : "0 2px 12px rgba(168,85,247,0.15), inset 0 1px 0 rgba(255,255,255,0.5)"
                 }}
               >
-                追加
+                <Plus className="w-4 h-4" />
+                <span>新しいメモ</span>
               </button>
-            </div>
+            ) : (
+              <div className="space-y-2 animate-in fade-in slide-in-from-top-2 duration-200">
+                <textarea
+                  value={newMemoText}
+                  onChange={(e) => setNewMemoText(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      addMemo();
+                    }
+                    if (e.key === "Escape") {
+                      setMemoInputExpanded(false);
+                      setNewMemoText("");
+                    }
+                  }}
+                  placeholder="メモを入力... (Shift+Enter で改行)"
+                  autoFocus
+                  className={`w-full px-3 py-2 rounded-lg text-[13px] bg-white/5 border transition focus:outline-none focus:border-purple-400 resize-none`}
+                  style={{
+                    borderColor: theme === "dark" ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)",
+                    color: theme === "dark" ? "#fff" : "#000",
+                    minHeight: "80px"
+                  }}
+                />
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => addMemo()}
+                    disabled={newMemoText.trim() === ""}
+                    className="flex-1 py-2 rounded-lg text-[13px] font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.02] active:scale-[0.98]"
+                    style={{
+                      background: newMemoText.trim()
+                        ? (theme === "dark"
+                          ? "linear-gradient(135deg, #7c3aed, #a855f7)"
+                          : "linear-gradient(135deg, #7c3aed, #9333ea)")
+                        : (theme === "dark" ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"),
+                      color: newMemoText.trim() ? "#fff" : (theme === "dark" ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.3)"),
+                      boxShadow: newMemoText.trim() ? "0 2px 8px rgba(168,85,247,0.3)" : "none"
+                    }}
+                  >
+                    追加
+                  </button>
+                  <button
+                    onClick={() => {
+                      setMemoInputExpanded(false);
+                      setNewMemoText("");
+                    }}
+                    className={`px-4 py-2 rounded-lg text-[13px] transition-all hover:scale-[1.02] active:scale-[0.98]`}
+                    style={{
+                      background: theme === "dark" ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)",
+                      color: theme === "dark" ? "rgba(255,255,255,0.6)" : "rgba(0,0,0,0.6)"
+                    }}
+                  >
+                    キャンセル
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           <nav className="flex-1 overflow-y-auto pb-4 px-5">
