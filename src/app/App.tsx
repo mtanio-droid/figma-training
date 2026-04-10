@@ -553,7 +553,7 @@ function App() {
                 </button>
               </div>
             )}
-            <div className="max-w-6xl mx-auto px-8 py-10">
+            <div className="max-w-6xl mx-auto px-16 py-10">
               {slide.id !== "title" && (
                 <div className="mb-8">
                   <div className="flex items-center gap-2 mb-1">

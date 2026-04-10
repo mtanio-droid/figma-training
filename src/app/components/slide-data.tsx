@@ -731,7 +731,7 @@ function AlApplySlide() {
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>どこにかけるかは<strong>「今後もセットで動くか」</strong>で判断する</Msg>
+      <Msg>オートレイアウトは<strong>構造を持った配置ルール</strong>で柔軟なデザインを実現</Msg>
       <Points items={["ボタン、リスト1行、カード、モーダルなどは適用しやすい","装飾的な自由配置やビジュアル演出には無理に使わない",<>Group / Frame / Auto Layout の<strong>役割の違い</strong>を理解する</>,"意味のある単位で適用する"]} />
       <div className="w-full">
         <div className="grid grid-cols-2 gap-8">
@@ -875,7 +875,7 @@ function AlDirectionSlide() {
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>縦横の向きと余白は、<strong>情報の関係性</strong>を表している</Msg>
+      <Msg>方向・間隔・パディングの<strong>適切な設定</strong>で柔軟なレイアウトを実現</Msg>
 
       <div className={`text-[14px] ${c.t3} leading-relaxed space-y-4`}>
         <p>
@@ -4220,8 +4220,8 @@ export const slides: Slide[] = [
   { id: "goal", section: "intro", title: "今日のゴール", message: "デザインシステムの実践的な使い方をイメージできる・実践できる状態になる", content: <GoalSlide /> },
   { id: "overview", section: "intro", title: "全体像", message: "5つのテーマは別々の機能ではなく、実務ではつながっている", content: <OverviewSlide /> },
   { id: "al-basics", section: "auto-layout", title: "オートレイアウトの基本", message: "オートレイアウトは整列機能ではなく、要素同士の関係をルールにする機能", content: <AlBasicsSlide /> },
-  { id: "al-apply", section: "auto-layout", title: "オートレイアウトの適用", starred: true, message: "どこにかけるかは「今後もセットで動くか」で判断する", content: <AlApplySlide /> },
-  { id: "al-direction", section: "auto-layout", title: "縦横のレイアウト", starred: true, message: "縦横の向きと余白は、情報の関係性を表している", content: <AlDirectionSlide /> },
+  { id: "al-apply", section: "auto-layout", title: "オートレイアウトとは", starred: true, message: "オートレイアウトは構造を持った配置ルールで柔軟なデザインを実現", content: <AlApplySlide /> },
+  { id: "al-direction", section: "auto-layout", title: "オートレイアウトの適用", starred: true, message: "方向・間隔・パディングの適切な設定で柔軟なレイアウトを実現", content: <AlDirectionSlide /> },
   { id: "al-figma-ui", section: "auto-layout", title: "Figma UI：Auto Layout設定", starred: true, message: "FigmaのAuto Layout設定パネルを理解する", content: <AlFigmaUISlide /> },
   { id: "al-text", section: "auto-layout", title: "テキストの取り扱い", starred: true, message: "テキストはもっとも変化しやすい要素なので、見た目より先に振る舞いを決める", content: <AlTextSlide /> },
   { id: "al-advanced", section: "auto-layout", title: "最小最大幅 / 比率維持 / 絶対位置", message: "可変レイアウトの中で、どこまで許容し、何を例外にするかを決める", content: <AlAdvancedSlide /> },
