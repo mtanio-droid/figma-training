@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { slides, sectionList } from "./components/slide-data";
 import { ThemeContext, type Theme } from "./components/theme-context";
-import { Star, ChevronLeft, ChevronRight, Menu, X, Layers, Component, Variable, Library, Paintbrush, LayoutGrid, Sun, Moon, Bookmark, BookmarkCheck, StickyNote, Trash2, Edit3, Plus } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight, Menu, X, Layers, Component, Variable, Library, Paintbrush, LayoutGrid, Sun, Moon, Bookmark, BookmarkCheck, StickyNote, Trash2, Edit3, Plus, Eye, EyeOff } from "lucide-react";
 
 interface Memo {
   id: string;
@@ -76,7 +76,7 @@ const t = {
 };
 
 // パスワードをここで設定（本番運用では環境変数を推奨）
-const PASSWORD = "figma2026";
+const PASSWORD = "Figma2026!Design";
 
 function App() {
   const [idx, setIdx] = useState(0);
@@ -85,6 +85,7 @@ function App() {
   const [theme, setTheme] = useState<Theme>("dark");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [bookmarks, setBookmarks] = useState<number[]>([]);
   const [memos, setMemos] = useState<Memo[]>([]);
@@ -306,15 +307,26 @@ function App() {
                 <label htmlFor="password" className="block text-[13px] text-gray-300 mb-2">
                   パスワード
                 </label>
-                <input
-                  id="password"
-                  type="password"
-                  value={passwordInput}
-                  onChange={(e) => setPasswordInput(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg text-white bg-white/5 border border-white/10 focus:border-purple-400 focus:outline-none transition"
-                  placeholder="パスワードを入力"
-                  autoFocus
-                />
+                <div className="relative">
+                  <input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    value={passwordInput}
+                    onChange={(e) => setPasswordInput(e.target.value)}
+                    className="w-full px-4 py-3 pr-12 rounded-lg text-white bg-white/5 border border-white/10 focus:border-purple-400 focus:outline-none transition"
+                    placeholder="パスワードを入力"
+                    autoFocus
+                    autoComplete="off"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200 transition"
+                    tabIndex={-1}
+                  >
+                    {showPassword ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
+                  </button>
+                </div>
               </div>
 
               {error && (
