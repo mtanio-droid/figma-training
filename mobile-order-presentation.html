@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>モバイルオーダー UI サンプル - 16:9プレゼンテーション</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+      background: #f5f5f7;
+      margin: 0;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .presentation-frame {
+      width: 1920px;
+      height: 1080px;
+      background: white;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+      transform: scale(0.5);
+      transform-origin: center;
+    }
+    @media (min-width: 1920px) {
+      .presentation-frame {
+        transform: scale(0.8);
+      }
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+    }
+    .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .icon-placeholder {
+      border: 2px solid #d1d5db;
+      border-radius: 12px;
+    }
+    .mobile-frame {
+      width: 375px;
+      height: 812px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="presentation-frame">
+    <!-- Header -->
+    <div class="px-16 py-12 border-b border-gray-200">
+      <div class="flex items-end justify-between">
+        <div>
+          <h1 class="text-5xl font-bold text-gray-800 mb-3">モバイルオーダー UI サンプル</h1>
+          <p class="text-xl text-gray-600">新卒研修課題：オートレイアウト・コンポーネント実践</p>
+        </div>
+        <div class="flex gap-8 text-sm text-gray-600">
+          <div>
+            <div class="font-semibold text-gray-800 mb-1">課題内容</div>
+            <div>3画面のUIコンポーネント作成</div>
+          </div>
+          <div>
+            <div class="font-semibold text-gray-800 mb-1">ツール</div>
+            <div>Figma</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="px-16 py-12">
+      <div class="flex gap-8 justify-center">
+
+        <!-- Screen 1: Product List -->
+        <div>
+          <div class="mb-4">
+            <div class="text-lg font-bold text-gray-800 mb-1">① 商品一覧</div>
+            <div class="text-xs text-gray-500">商品カード・カテゴリ・バッジ・リスト構造</div>
+          </div>
+          <div class="mobile-frame">
+            <div class="h-full overflow-y-auto scrollbar-hide">
+              <!-- Header -->
+              <div class="px-6 pt-8 pb-4">
+                <h1 class="text-2xl font-bold text-gray-800 mb-1">メニュー</h1>
+                <p class="text-sm text-gray-500">お好きな商品をお選びください</p>
+              </div>
+
+              <!-- Search Bar -->
+              <div class="px-6 mb-6">
+                <div class="relative">
+                  <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+                  </svg>
+                  <input type="text" placeholder="商品を検索" class="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-2xl text-sm">
+                </div>
+              </div>
+
+              <!-- Category Tabs -->
+              <div class="px-6 mb-6">
+                <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+                  <button class="px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-gray-700 text-white">すべて</button>
+                  <button class="px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap border border-gray-200 text-gray-600">コーヒー</button>
+                  <button class="px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap border border-gray-200 text-gray-600">フード</button>
+                </div>
+              </div>
+
+              <!-- Product Cards -->
+              <div class="px-6 space-y-3 pb-6">
+                <!-- Product 1 -->
+                <div class="bg-white border border-gray-200 rounded-2xl p-4">
+                  <div class="flex gap-4">
+                    <div class="w-20 h-20 bg-gray-100 rounded-xl icon-placeholder shrink-0"></div>
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-start gap-2 mb-1">
+                        <div class="flex-1">
+                          <h3 class="text-base font-semibold text-gray-800 leading-tight">ブレンドコーヒー</h3>
+                          <p class="text-xs text-gray-400 mt-0.5">Blend Coffee</p>
+                        </div>
+                        <span class="px-2 py-0.5 rounded-md text-[10px] font-medium shrink-0 bg-gray-200 text-gray-700">人気</span>
+                      </div>
+                      <p class="text-xs text-gray-500 mb-2 line-clamp-2">毎日飲みたくなる、バランスの良いブレンド</p>
+                      <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-1">
+                          <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+                          <span class="text-xs font-medium text-gray-600">4.5</span>
+                        </div>
+                        <div class="text-base font-bold text-gray-800">¥380</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="bg-white border border-gray-200 rounded-2xl p-4">
+                  <div class="flex gap-4">
+                    <div class="w-20 h-20 bg-gray-100 rounded-xl icon-placeholder shrink-0"></div>
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-start gap-2 mb-1">
+                        <div class="flex-1">
+                          <h3 class="text-base font-semibold text-gray-800 leading-tight">カフェラテ</h3>
+                          <p class="text-xs text-gray-400 mt-0.5">Cafe Latte</p>
+                        </div>
+                      </div>
+                      <p class="text-xs text-gray-500 mb-2 line-clamp-2">ミルクのまろやかさとエスプレッソの香り</p>
+                      <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-1">
+                          <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+                          <span class="text-xs font-medium text-gray-600">4.8</span>
+                        </div>
+                        <div class="text-base font-bold text-gray-800">¥450</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="bg-white border border-gray-200 rounded-2xl p-4">
+                  <div class="flex gap-4">
+                    <div class="w-20 h-20 bg-gray-100 rounded-xl icon-placeholder shrink-0"></div>
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-start gap-2 mb-1">
+                        <div class="flex-1">
+                          <h3 class="text-base font-semibold text-gray-800 leading-tight">クロワッサン</h3>
+                          <p class="text-xs text-gray-400 mt-0.5">Croissant</p>
+                        </div>
+                        <span class="px-2 py-0.5 rounded-md text-[10px] font-medium shrink-0 bg-gray-200 text-gray-700">NEW</span>
+                      </div>
+                      <p class="text-xs text-gray-500 mb-2 line-clamp-2">バターの香りが広がる、サクサクのクロワッサン</p>
+                      <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-1">
+                          <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+                          <span class="text-xs font-medium text-gray-600">4.6</span>
+                        </div>
+                        <div class="text-base font-bold text-gray-800">¥280</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 2: Product Detail -->
+        <div>
+          <div class="mb-4">
+            <div class="text-lg font-bold text-gray-800 mb-1">② 商品詳細</div>
+            <div class="text-xs text-gray-500">商品情報・オプション選択・数量変更・CTA</div>
+          </div>
+          <div class="mobile-frame">
+            <div class="h-full overflow-y-auto scrollbar-hide pb-20">
+              <!-- Product Image -->
+              <div class="w-full h-56 bg-gray-100 flex items-center justify-center border-b border-gray-200">
+                <div class="w-32 h-32 bg-white rounded-2xl border-2 border-gray-200"></div>
+              </div>
+
+              <!-- Product Info -->
+              <div class="px-6 py-6">
+                <div class="flex items-start justify-between mb-3">
+                  <div class="flex-1">
+                    <h1 class="text-2xl font-bold text-gray-800 mb-1">ブレンドコーヒー</h1>
+                    <p class="text-sm text-gray-400">Blend Coffee</p>
+                  </div>
+                  <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-gray-200 text-gray-700">人気</span>
+                </div>
+
+                <div class="flex items-center gap-2 mb-4">
+                  <div class="flex items-center gap-1">
+                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+                    <span class="text-base font-semibold text-gray-800">4.5</span>
+                  </div>
+                  <span class="text-xs text-gray-400">(328件)</span>
+                </div>
+
+                <p class="text-sm text-gray-600 leading-relaxed mb-6">毎日飲みたくなる、バランスの良いブレンド</p>
+
+                <!-- Price -->
+                <div class="bg-gray-50 rounded-2xl p-4 mb-6 border border-gray-200">
+                  <div class="flex items-baseline justify-between">
+                    <span class="text-sm text-gray-500">基本価格</span>
+                    <span class="text-2xl font-bold text-gray-800">¥380</span>
+                  </div>
+                </div>
+
+                <!-- Options: Size -->
+                <div class="mb-6">
+                  <h3 class="text-sm font-semibold text-gray-800 mb-3">サイズ</h3>
+                  <div class="grid grid-cols-3 gap-2">
+                    <button class="py-3 px-4 rounded-xl text-sm font-medium bg-gray-700 text-white"><div>S</div></button>
+                    <button class="py-3 px-4 rounded-xl text-sm font-medium border border-gray-200 text-gray-600"><div>M</div><div class="text-xs mt-0.5 text-gray-400">+¥50</div></button>
+                    <button class="py-3 px-4 rounded-xl text-sm font-medium border border-gray-200 text-gray-600"><div>L</div><div class="text-xs mt-0.5 text-gray-400">+¥100</div></button>
+                  </div>
+                </div>
+
+                <!-- Options: Temperature -->
+                <div class="mb-6">
+                  <h3 class="text-sm font-semibold text-gray-800 mb-3">温度</h3>
+                  <div class="grid grid-cols-2 gap-2">
+                    <button class="py-3 px-4 rounded-xl text-sm font-medium bg-gray-700 text-white">HOT</button>
+                    <button class="py-3 px-4 rounded-xl text-sm font-medium border border-gray-200 text-gray-600">ICE</button>
+                  </div>
+                </div>
+
+                <!-- Quantity -->
+                <div class="mb-6">
+                  <h3 class="text-sm font-semibold text-gray-800 mb-3">数量</h3>
+                  <div class="flex items-center gap-4">
+                    <button class="w-12 h-12 border border-gray-200 rounded-xl flex items-center justify-center">
+                      <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
+                    </button>
+                    <span class="text-2xl font-bold text-gray-800 w-12 text-center">1</span>
+                    <button class="w-12 h-12 border border-gray-200 rounded-xl flex items-center justify-center">
+                      <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CTA -->
+              <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4" style="position: absolute; width: 375px;">
+                <button class="w-full bg-gray-800 text-white py-4 rounded-2xl font-semibold text-base flex items-center justify-between px-6">
+                  <span>カートに追加</span>
+                  <span>¥380</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Screen 3: Pickup -->
+        <div>
+          <div class="mb-4">
+            <div class="text-lg font-bold text-gray-800 mb-1">③ 受け取り</div>
+            <div class="text-xs text-gray-500">ステータス・受取番号・状態差分・優先順位</div>
+          </div>
+          <div class="mobile-frame">
+            <div class="h-full overflow-y-auto scrollbar-hide">
+              <!-- Header -->
+              <div class="px-6 pt-8 pb-4">
+                <h1 class="text-2xl font-bold text-gray-800 mb-1">注文履歴</h1>
+                <p class="text-sm text-gray-500">ご注文の状況を確認できます</p>
+              </div>
+
+              <!-- Store Info -->
+              <div class="mx-6 mb-6 bg-gray-50 border border-gray-200 rounded-2xl p-4">
+                <div class="flex items-start gap-3">
+                  <div class="w-10 h-10 bg-gray-700 rounded-xl flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                  </div>
+                  <div>
+                    <h3 class="text-xs font-semibold text-gray-500 uppercase mb-1">受取店舗</h3>
+                    <p class="text-sm text-gray-800 font-medium">渋谷スクランブルスクエア店</p>
+                    <p class="text-xs text-gray-500 mt-1">東京都渋谷区渋谷2-24-12 1F</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Order 1: Ready -->
+              <div class="mx-6 mb-3 bg-white border-2 border-gray-800 rounded-2xl p-5">
+                <div class="flex items-start justify-between mb-4">
+                  <div>
+                    <div class="flex items-center gap-2 mb-2">
+                      <div class="bg-gray-800 w-8 h-8 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                      </div>
+                      <span class="text-sm font-semibold text-gray-800">受け取り可能</span>
+                    </div>
+                    <div class="text-3xl font-black text-gray-800 tracking-tight">A-042</div>
+                    <p class="text-xs text-gray-400 mt-1">受取番号</p>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-2xl font-bold text-gray-800">14:30</div>
+                    <p class="text-xs text-gray-400">受取予定時刻</p>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <h4 class="text-xs font-semibold text-gray-500 uppercase mb-2">注文内容</h4>
+                  <div class="space-y-1">
+                    <div class="flex items-center justify-between text-sm">
+                      <span class="text-gray-700">ブレンドコーヒー (M)</span>
+                      <span class="text-gray-400">×1</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm">
+                      <span class="text-gray-700">クロワッサン</span>
+                      <span class="text-gray-400">×2</span>
+                    </div>
+                  </div>
+                </div>
+
+                <button class="w-full bg-gray-800 text-white py-3 rounded-xl font-semibold text-sm">受け取る</button>
+              </div>
+
+              <!-- Order 2: Preparing -->
+              <div class="mx-6 mb-3 bg-white border border-gray-300 rounded-2xl p-5">
+                <div class="flex items-start justify-between mb-4">
+                  <div>
+                    <div class="flex items-center gap-2 mb-2">
+                      <div class="bg-gray-500 w-8 h-8 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2"/></svg>
+                      </div>
+                      <span class="text-sm font-semibold text-gray-700">準備中</span>
+                    </div>
+                    <div class="text-3xl font-black text-gray-700 tracking-tight">B-128</div>
+                    <p class="text-xs text-gray-400 mt-1">受取番号</p>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-2xl font-bold text-gray-800">15:00</div>
+                    <p class="text-xs text-gray-400">受取予定時刻</p>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <h4 class="text-xs font-semibold text-gray-500 uppercase mb-2">注文内容</h4>
+                  <div class="space-y-1">
+                    <div class="flex items-center justify-between text-sm">
+                      <span class="text-gray-700">カフェラテ (L)</span>
+                      <span class="text-gray-400">×1</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-3 border border-gray-200 text-xs text-gray-600">準備中です</div>
+              </div>
+
+              <!-- Order 3: Completed -->
+              <div class="mx-6 mb-3 bg-gray-50 border border-gray-200 rounded-2xl p-5">
+                <div class="flex items-start justify-between mb-4">
+                  <div>
+                    <div class="flex items-center gap-2 mb-2">
+                      <div class="bg-gray-300 w-8 h-8 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                      </div>
+                      <span class="text-sm font-semibold text-gray-500">受け取り済み</span>
+                    </div>
+                    <div class="text-3xl font-black text-gray-400 tracking-tight">A-035</div>
+                    <p class="text-xs text-gray-400 mt-1">受取番号</p>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-2xl font-bold text-gray-600">13:45</div>
+                    <p class="text-xs text-gray-400">受取予定時刻</p>
+                  </div>
+                </div>
+
+                <div class="text-center py-2">
+                  <p class="text-xs text-gray-500">ご利用ありがとうございました</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

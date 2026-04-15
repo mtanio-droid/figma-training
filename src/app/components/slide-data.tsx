@@ -32,6 +32,10 @@ import {
   AlertTriangle,
   Minus,
   X,
+  MapPin,
+  Check,
+  Clock,
+  Plus,
 } from "lucide-react";
 import { useTheme, type Theme } from "./theme-context";
 
@@ -236,6 +240,7 @@ export const sectionList: SlideSection[] = [
   { id: "library", title: "ライブラリ" },
   { id: "tokens", title: "デザイントークン" },
   { id: "others", title: "その他 & まとめ" },
+  { id: "practice", title: "実践課題" },
 ];
 
 /* ═══ Slide Content Components ═══ */
@@ -2142,6 +2147,104 @@ function CompVariantsCreateSlide() {
       </div>
 
       <Tip>コンポーネントセットの下の<span className="font-mono bg-purple-500/10 px-1.5 py-0.5 rounded text-purple-400">+</span>をクリックして、さらにバリアントを追加できる</Tip>
+    </div>
+  );
+}
+
+function CompSlotSlide() {
+  const theme = useTheme();
+  const c = tc(theme);
+  const d = theme === "dark";
+  return (
+    <div className="space-y-10">
+      <Msg><strong>Slot（スロット）</strong>でコンポーネント内に他の要素を差し込める</Msg>
+      <Points items={["コンポーネント内に「穴」を作って、インスタンス側で自由に内容を入れられる","アイコンやロゴなど、コンポーネントごとに変えたい要素に最適","プロパティと組み合わせることで、より柔軟な設計が可能に"]} />
+
+      <div className="space-y-6">
+        <div className={`text-[16px] ${c.t2} font-semibold`}>
+          Slotの基本概念
+        </div>
+        <div className={`text-[14px] ${c.t3} leading-relaxed space-y-4`}>
+          <p>
+            Slotは、コンポーネント内に「他の要素を差し込めるエリア」を定義する機能です。テキストプロパティでは文字列のみ、Swap propertyではアイコンの差し替えのみですが、Slotを使えばどんな要素でも配置できます。
+          </p>
+          <p>
+            例えば、カードコンポーネントに「画像エリア」「コンテンツエリア」としてSlotを設定すると、インスタンスごとに異なる画像やコンテンツを自由に配置できます。
+          </p>
+        </div>
+
+        <div
+          className="rounded-xl p-6"
+          style={{
+            background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+            border: `1px solid ${d ? 'rgba(168,85,247,0.15)' : 'rgba(168,85,247,0.1)'}`
+          }}
+        >
+          <div className={`text-[15px] ${c.t2} font-semibold mb-4`}>Slotの作り方</div>
+          <div className={`text-[14px] ${c.t3} space-y-3`}>
+            <div className="flex items-start gap-3">
+              <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center shrink-0 text-[13px] text-purple-400 font-semibold mt-0.5">1</div>
+              <div>
+                <div className="font-medium mb-1">コンポーネント内にフレームを作成</div>
+                <div className={`text-[13px] ${c.t4}`}>Slotとして使いたいエリアをフレームで作成します</div>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center shrink-0 text-[13px] text-purple-400 font-semibold mt-0.5">2</div>
+              <div>
+                <div className="font-medium mb-1">右パネルで「Add slot」を選択</div>
+                <div className={`text-[13px] ${c.t4}`}>レイヤーを選択した状態で、右パネルのContent欄から「Add slot」をクリック</div>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center shrink-0 text-[13px] text-purple-400 font-semibold mt-0.5">3</div>
+              <div>
+                <div className="font-medium mb-1">インスタンス側で要素を配置</div>
+                <div className={`text-[13px] ${c.t4}`}>Slotエリアにドラッグ&ドロップで任意の要素を配置できます</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-6">
+          <div
+            className="rounded-xl p-5"
+            style={{
+              background: d ? 'rgba(59,130,246,0.04)' : 'rgba(59,130,246,0.02)',
+              border: `1px solid ${d ? 'rgba(59,130,246,0.2)' : 'rgba(59,130,246,0.15)'}`
+            }}
+          >
+            <div className="text-[13px] text-blue-400 font-semibold mb-3 flex items-center gap-2">
+              <span>✓</span>
+              Slotが向いている場面
+            </div>
+            <div className={`text-[13px] ${c.t4} space-y-2`}>
+              <div>• アイコンやロゴを自由に入れたい</div>
+              <div>• 画像やイラストを差し込みたい</div>
+              <div>• 複雑なコンテンツを配置したい</div>
+              <div>• インスタンスごとに構造が変わる</div>
+            </div>
+          </div>
+
+          <div
+            className="rounded-xl p-5"
+            style={{
+              background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+              border: `1px solid ${d ? 'rgba(168,85,247,0.15)' : 'rgba(168,85,247,0.1)'}`
+            }}
+          >
+            <div className={`text-[13px] text-purple-400 font-semibold mb-3`}>Slotの利点</div>
+            <div className={`text-[13px] ${c.t4} space-y-2`}>
+              <div>• どんな要素でも差し込める柔軟性</div>
+              <div>• プロパティよりも自由度が高い</div>
+              <div>• ネストしたコンポーネントも配置可</div>
+              <div>• オートレイアウトと組み合わせ可</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <Tip>Slotは「コンテンツを入れる箱」、プロパティは「設定を切り替えるスイッチ」という役割の違いを理解する</Tip>
     </div>
   );
 }
@@ -4124,6 +4227,313 @@ function SummarySlide() {
   );
 }
 
+
+function ProductListPracticeSlide() {
+  const theme = useTheme();
+  const c = tc(theme);
+  const d = theme === "dark";
+
+  return (
+    <div className="flex gap-16 items-center justify-center">
+      <div>
+        <div className={`text-[17px] ${c.t1} font-bold mb-6 text-center`}>① 商品一覧画面</div>
+        <div className={`w-[300px] h-[640px] ${d ? "bg-gray-900/60" : "bg-white"} rounded-3xl overflow-hidden p-8`} style={{ border: `2px solid ${d ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`, boxShadow: d ? "0 8px 24px rgba(0,0,0,0.5)" : "0 8px 24px rgba(0,0,0,0.08)" }}>
+          {/* Header */}
+          <div className="mb-6">
+            <div className={`h-6 w-32 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-2`}></div>
+            <div className={`h-3 w-48 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
+          </div>
+
+          {/* Search */}
+          <div className={`h-12 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded-xl mb-6`}></div>
+
+          {/* Category Tabs */}
+          <div className="flex gap-2 mb-6">
+            <div className={`h-9 w-20 ${d ? "bg-gray-700" : "bg-gray-300"} rounded-full`}></div>
+            <div className={`h-9 w-20 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-full`}></div>
+            <div className={`h-9 w-16 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-full`}></div>
+          </div>
+
+          {/* Product Cards */}
+          <div className="space-y-4">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className={`${d ? "bg-gray-800/40" : "bg-gray-50"} rounded-2xl p-4`} style={{ border: `1px solid ${d ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}` }}>
+                <div className="flex gap-3">
+                  <div className={`w-16 h-16 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded-xl shrink-0`}></div>
+                  <div className="flex-1">
+                    <div className={`h-4 w-28 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-2`}></div>
+                    <div className={`h-3 w-20 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded mb-3`}></div>
+                    <div className="flex items-center justify-between">
+                      <div className={`h-3 w-12 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded`}></div>
+                      <div className={`h-4 w-14 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="w-[420px]">
+        <div className={`text-[17px] ${c.t1} font-bold mb-6`}>作るべきエレメント</div>
+        <div className="space-y-5">
+          {[
+            { name: "検索バー", desc: "アイコン + プレースホルダーテキスト、オートレイアウトで横配置" },
+            { name: "カテゴリタブ", desc: "横スクロール可能なボタングループ、ボタンのバリアント作成" },
+            { name: "商品カード", desc: "画像・タイトル・価格・評価・バッジを含む、柔軟なレイアウト" },
+            { name: "リスト構造", desc: "カードの繰り返し配置、オートレイアウトで縦配置" },
+            { name: "バッジ", desc: "「人気」「NEW」などのラベル、テキストのバリアント" },
+          ].map((el, idx) => (
+            <div key={idx} className="flex items-start gap-3">
+              <div className={`w-6 h-6 rounded-lg ${d ? "bg-purple-500/20" : "bg-purple-100"} flex items-center justify-center shrink-0 mt-0.5`}>
+                <div className={`text-[12px] font-bold ${d ? "text-purple-300" : "text-purple-600"}`}>{idx + 1}</div>
+              </div>
+              <div className="flex-1">
+                <div className={`text-[15px] font-bold ${c.t1} mb-1`}>{el.name}</div>
+                <div className={`text-[13px] ${c.t3} leading-relaxed`}>{el.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProductDetailPracticeSlide() {
+  const theme = useTheme();
+  const c = tc(theme);
+  const d = theme === "dark";
+
+  return (
+    <div className="flex gap-16 items-center justify-center">
+      <div>
+        <div className={`text-[17px] ${c.t1} font-bold mb-6 text-center`}>② 商品詳細画面</div>
+        <div className={`w-[300px] h-[640px] ${d ? "bg-gray-900/60" : "bg-white"} rounded-3xl overflow-hidden p-8`} style={{ border: `2px solid ${d ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`, boxShadow: d ? "0 8px 24px rgba(0,0,0,0.5)" : "0 8px 24px rgba(0,0,0,0.08)" }}>
+          {/* Product Image */}
+          <div className={`w-full h-40 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded-2xl mb-6`}></div>
+
+          {/* Title & Badge */}
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex-1">
+              <div className={`h-5 w-32 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-2`}></div>
+              <div className={`h-3 w-24 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
+            </div>
+            <div className={`h-5 w-12 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded-full`}></div>
+          </div>
+
+          {/* Rating */}
+          <div className="flex items-center gap-2 mb-4">
+            <div className={`h-3 w-3 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
+            <div className={`h-3 w-8 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
+            <div className={`h-3 w-12 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
+          </div>
+
+          {/* Description */}
+          <div className={`h-3 w-full ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded mb-1`}></div>
+          <div className={`h-3 w-4/5 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded mb-5`}></div>
+
+          {/* Price Box */}
+          <div className={`${d ? "bg-gray-800/40" : "bg-gray-50"} rounded-2xl p-4 mb-5`}>
+            <div className="flex items-center justify-between">
+              <div className={`h-3 w-16 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
+              <div className={`h-6 w-20 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
+            </div>
+          </div>
+
+          {/* Size Options */}
+          <div className="mb-4">
+            <div className={`h-3 w-12 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-3`}></div>
+            <div className="grid grid-cols-3 gap-2">
+              <div className={`h-9 ${d ? "bg-gray-700" : "bg-gray-300"} rounded-xl`}></div>
+              <div className={`h-9 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-xl`}></div>
+              <div className={`h-9 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-xl`}></div>
+            </div>
+          </div>
+
+          {/* Temperature Options */}
+          <div className="mb-4">
+            <div className={`h-3 w-12 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-3`}></div>
+            <div className="grid grid-cols-2 gap-2">
+              <div className={`h-9 ${d ? "bg-gray-700" : "bg-gray-300"} rounded-xl`}></div>
+              <div className={`h-9 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-xl`}></div>
+            </div>
+          </div>
+
+          {/* Quantity Control */}
+          <div className="mb-5">
+            <div className={`h-3 w-12 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-3`}></div>
+            <div className="flex items-center justify-center gap-4">
+              <div className={`w-10 h-10 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-xl`}></div>
+              <div className={`h-5 w-8 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
+              <div className={`w-10 h-10 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-xl`}></div>
+            </div>
+          </div>
+
+          {/* Add to Cart Button */}
+          <div className={`h-12 ${d ? "bg-gray-700" : "bg-gray-300"} rounded-2xl`}></div>
+        </div>
+      </div>
+
+      <div className="w-[420px]">
+        <div className={`text-[17px] ${c.t1} font-bold mb-6`}>作るべきエレメント</div>
+        <div className="space-y-5">
+          {[
+            { name: "商品画像エリア", desc: "大きな画像プレースホルダー、固定比率で配置" },
+            { name: "商品情報", desc: "タイトル・評価・説明文の階層構造、情報の優先順位を意識" },
+            { name: "オプション選択", desc: "サイズ・温度などのボタングループ、グリッドレイアウト" },
+            { name: "数量コントロール", desc: "－ボタン・数字・＋ボタンの横並び配置" },
+            { name: "CTAボタン", desc: "固定配置の購入ボタン、目立つ配置とスタイル" },
+          ].map((el, idx) => (
+            <div key={idx} className="flex items-start gap-3">
+              <div className={`w-6 h-6 rounded-lg ${d ? "bg-purple-500/20" : "bg-purple-100"} flex items-center justify-center shrink-0 mt-0.5`}>
+                <div className={`text-[12px] font-bold ${d ? "text-purple-300" : "text-purple-600"}`}>{idx + 1}</div>
+              </div>
+              <div className="flex-1">
+                <div className={`text-[15px] font-bold ${c.t1} mb-1`}>{el.name}</div>
+                <div className={`text-[13px] ${c.t3} leading-relaxed`}>{el.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PickupPracticeSlide() {
+  const theme = useTheme();
+  const c = tc(theme);
+  const d = theme === "dark";
+
+  return (
+    <div className="flex gap-16 items-center justify-center">
+      <div>
+        <div className={`text-[17px] ${c.t1} font-bold mb-6 text-center`}>③ 受け取り画面</div>
+        <div className={`w-[300px] h-[640px] ${d ? "bg-gray-900/60" : "bg-white"} rounded-3xl overflow-hidden p-8`} style={{ border: `2px solid ${d ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`, boxShadow: d ? "0 8px 24px rgba(0,0,0,0.5)" : "0 8px 24px rgba(0,0,0,0.08)" }}>
+          {/* Header */}
+          <div className="mb-6">
+            <div className={`h-6 w-28 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-2`}></div>
+            <div className={`h-3 w-40 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
+          </div>
+
+          {/* Store Info */}
+          <div className={`${d ? "bg-gray-800/40" : "bg-gray-50"} rounded-2xl p-4 mb-4`}>
+            <div className="flex items-center gap-3">
+              <div className={`w-8 h-8 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded-xl shrink-0`}></div>
+              <div className="flex-1">
+                <div className={`h-2 w-16 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded mb-2`}></div>
+                <div className={`h-3 w-32 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Order Cards */}
+          <div className="space-y-3">
+            {/* Active Order - Emphasized */}
+            <div className={`${d ? "bg-gray-800/60" : "bg-gray-50"} rounded-2xl p-4`} style={{ border: `2px solid ${d ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"}` }}>
+              <div className="flex items-start justify-between mb-4">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className={`w-5 h-5 ${d ? "bg-gray-700" : "bg-gray-300"} rounded`}></div>
+                    <div className={`h-3 w-20 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
+                  </div>
+                  <div className={`h-8 w-20 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-1`}></div>
+                  <div className={`h-2 w-16 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
+                </div>
+                <div>
+                  <div className={`h-5 w-14 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-1`}></div>
+                  <div className={`h-2 w-12 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <div className={`h-2 w-16 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded mb-2`}></div>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className={`h-3 w-28 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
+                    <div className={`h-3 w-8 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className={`h-3 w-24 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
+                    <div className={`h-3 w-8 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
+                  </div>
+                </div>
+              </div>
+
+              <div className={`h-10 ${d ? "bg-gray-700" : "bg-gray-300"} rounded-xl`}></div>
+            </div>
+
+            {/* Preparing Order */}
+            <div className={`${d ? "bg-gray-800/30" : "bg-gray-50/60"} rounded-2xl p-4`} style={{ border: `1px solid ${d ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}` }}>
+              <div className="flex items-start justify-between mb-3">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className={`w-5 h-5 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
+                    <div className={`h-3 w-16 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
+                  </div>
+                  <div className={`h-7 w-20 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded mb-1`}></div>
+                  <div className={`h-2 w-16 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded`}></div>
+                </div>
+                <div>
+                  <div className={`h-5 w-14 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded mb-1`}></div>
+                  <div className={`h-2 w-12 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded`}></div>
+                </div>
+              </div>
+
+              <div className={`h-8 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-xl`}></div>
+            </div>
+
+            {/* Completed Order */}
+            <div className={`${d ? "bg-gray-800/20" : "bg-gray-50/40"} rounded-2xl p-4`} style={{ border: `1px solid ${d ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"}` }}>
+              <div className="flex items-start justify-between mb-2">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className={`w-5 h-5 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
+                    <div className={`h-3 w-20 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded`}></div>
+                  </div>
+                  <div className={`h-7 w-20 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded mb-1`}></div>
+                  <div className={`h-2 w-16 ${d ? "bg-gray-800/30" : "bg-gray-100"} rounded`}></div>
+                </div>
+                <div>
+                  <div className={`h-5 w-14 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded mb-1`}></div>
+                  <div className={`h-2 w-12 ${d ? "bg-gray-800/30" : "bg-gray-100"} rounded`}></div>
+                </div>
+              </div>
+
+              <div className={`h-3 w-36 ${d ? "bg-gray-800/30" : "bg-gray-100"} rounded mx-auto`}></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-[420px]">
+        <div className={`text-[17px] ${c.t1} font-bold mb-6`}>作るべきエレメント</div>
+        <div className="space-y-5">
+          {[
+            { name: "店舗情報カード", desc: "アイコン + 店舗名・住所、情報の整理" },
+            { name: "注文カード", desc: "ステータス・番号・時刻・商品リスト、状態に応じたスタイル" },
+            { name: "ステータス表示", desc: "アイコン + ラベル（受取可能・準備中・完了）、視覚的な差分" },
+            { name: "受取番号", desc: "大きな文字で目立たせる、タイポグラフィの強弱" },
+            { name: "アクションボタン", desc: "状態に応じて変わるボタン、優先順位の表現" },
+          ].map((el, idx) => (
+            <div key={idx} className="flex items-start gap-3">
+              <div className={`w-6 h-6 rounded-lg ${d ? "bg-purple-500/20" : "bg-purple-100"} flex items-center justify-center shrink-0 mt-0.5`}>
+                <div className={`text-[12px] font-bold ${d ? "text-purple-300" : "text-purple-600"}`}>{idx + 1}</div>
+              </div>
+              <div className="flex-1">
+                <div className={`text-[15px] font-bold ${c.t1} mb-1`}>{el.name}</div>
+                <div className={`text-[13px] ${c.t3} leading-relaxed`}>{el.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ═══ Slides ═══ */
 export const slides: Slide[] = [
   { id: "title", section: "intro", title: "Figmaを「描く道具」から「設計の道具」へ", message: "", content: <TitleSlide /> },
@@ -4141,6 +4551,7 @@ export const slides: Slide[] = [
   { id: "comp-variants-properties", section: "components", title: "バリアントのプロパティと値", starred: true, message: "バリアントはプロパティと値の組み合わせで構成される", content: <CompVariantsPropertiesSlide /> },
   { id: "comp-variants-button-example", section: "components", title: "実例：ボタンバリアント", starred: true, message: "ボタンコンポーネントでバリアントの実践的な使い方を理解する", content: <CompVariantsButtonExampleSlide /> },
   { id: "comp-variants-create", section: "components", title: "バリアントの作成手順", starred: true, message: "Figmaでバリアントを作成する実際の手順を理解する", content: <CompVariantsCreateSlide /> },
+  { id: "comp-slot", section: "components", title: "Slot（スロット）", starred: true, message: "Slotでコンポーネント内に他の要素を自由に差し込める", content: <CompSlotSlide /> },
   { id: "comp-real-example", section: "components", title: "実例：ボタンシステム", starred: true, message: "実際のボタンシステムでコンポーネント設計を理解する", content: <CompRealExampleSlide /> },
   { id: "var-basics", section: "variables", title: "バリアブルの基本", message: "スタイルは見た目のまとまり、バリアブルは再利用する値の源泉", content: <VarBasicsSlide /> },
   { id: "var-apply", section: "variables", title: "バリアブルの適用", starred: true, message: "バリアブルの価値は、値を持つことではなく、変更の経路を設計すること", content: <VarApplySlide /> },
@@ -4155,4 +4566,7 @@ export const slides: Slide[] = [
   { id: "workflow-example", section: "others", title: "実例：実務フロー", starred: true, message: "デザインシステムが実務でどう機能するかを理解する", content: <WorkflowExampleSlide /> },
   { id: "others-ds", section: "others", title: "その他のデザインシステム要素", message: "デザインシステムは色とコンポーネントだけではない", content: <OthersDsSlide /> },
   { id: "summary", section: "others", title: "まとめ", message: "Figmaの機能は、見た目を作るためではなく、運用できる構造を作るために使う", content: <SummarySlide /> },
+  { id: "practice-list", section: "practice", title: "① 商品一覧画面", starred: true, message: "左に画面サンプル、右に作るべきエレメント", content: <ProductListPracticeSlide /> },
+  { id: "practice-detail", section: "practice", title: "② 商品詳細画面", starred: true, message: "商品情報の階層とオプション選択の実装", content: <ProductDetailPracticeSlide /> },
+  { id: "practice-pickup", section: "practice", title: "③ 受け取り画面", starred: true, message: "ステータスによる状態差分と優先順位の表現", content: <PickupPracticeSlide /> },
 ];

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { slides, sectionList } from "./components/slide-data";
 import { ThemeContext, type Theme } from "./components/theme-context";
-import { Star, ChevronLeft, ChevronRight, Menu, X, Layers, Component, Variable, Library, Paintbrush, LayoutGrid, Sun, Moon, Bookmark, BookmarkCheck, StickyNote, Trash2, Edit3, Plus, Eye, EyeOff } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight, Menu, X, Layers, Component, Variable, Library, Paintbrush, LayoutGrid, Sun, Moon, Bookmark, BookmarkCheck, StickyNote, Trash2, Edit3, Plus, Eye, EyeOff, Target } from "lucide-react";
 
 interface Memo {
   id: string;
@@ -19,6 +19,7 @@ const sectionIcons: Record<string, React.ReactNode> = {
   library: <Library className="w-3.5 h-3.5" />,
   tokens: <Paintbrush className="w-3.5 h-3.5" />,
   others: <LayoutGrid className="w-3.5 h-3.5" />,
+  practice: <Target className="w-3.5 h-3.5" />,
 };
 
 /* ── Theme tokens ── */
