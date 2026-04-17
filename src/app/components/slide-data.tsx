@@ -754,7 +754,7 @@ function OverviewSlide() {
 
         {/* Result */}
         <div
-          className="rounded-2xl px-10 py-6 relative"
+          className="w-full rounded-2xl px-10 py-6 relative"
           style={{
             background: d
               ? 'linear-gradient(135deg, rgba(168,85,247,0.15), rgba(139,92,246,0.1))'
