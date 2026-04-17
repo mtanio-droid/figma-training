@@ -674,14 +674,16 @@ function OverviewSlide() {
           </div>
         </div>
 
-        {/* Connection lines background */}
+        {/* Simplified connection lines */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <svg className="w-full h-full" style={{ opacity: 0.1 }}>
-            <line x1="50%" y1="25%" x2="25%" y2="50%" stroke={d ? "#a855f7" : "#7c3aed"} strokeWidth="2" strokeDasharray="4 4" />
-            <line x1="50%" y1="25%" x2="50%" y2="50%" stroke={d ? "#a855f7" : "#7c3aed"} strokeWidth="2" strokeDasharray="4 4" />
-            <line x1="50%" y1="25%" x2="75%" y2="50%" stroke={d ? "#a855f7" : "#7c3aed"} strokeWidth="2" strokeDasharray="4 4" />
-            <line x1="33%" y1="60%" x2="50%" y2="75%" stroke={d ? "#a855f7" : "#7c3aed"} strokeWidth="2" strokeDasharray="4 4" />
-            <line x1="67%" y1="60%" x2="50%" y2="75%" stroke={d ? "#a855f7" : "#7c3aed"} strokeWidth="2" strokeDasharray="4 4" />
+          <svg className="w-full h-full" style={{ opacity: 0.2 }}>
+            {/* From core to top row */}
+            <line x1="50%" y1="18%" x2="25%" y2="38%" stroke={d ? "#a855f7" : "#7c3aed"} strokeWidth="2" />
+            <line x1="50%" y1="18%" x2="50%" y2="38%" stroke={d ? "#a855f7" : "#7c3aed"} strokeWidth="2" />
+            <line x1="50%" y1="18%" x2="75%" y2="38%" stroke={d ? "#a855f7" : "#7c3aed"} strokeWidth="2" />
+            {/* From core to bottom row */}
+            <line x1="50%" y1="18%" x2="35%" y2="62%" stroke={d ? "#a855f7" : "#7c3aed"} strokeWidth="2" />
+            <line x1="50%" y1="18%" x2="50%" y2="62%" stroke={d ? "#a855f7" : "#7c3aed"} strokeWidth="2" />
           </svg>
         </div>
       </div>
