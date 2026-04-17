@@ -77,9 +77,9 @@ export default function PresenterView() {
 
       {/* メインコンテンツ */}
       <div className="flex-1 overflow-auto p-6">
-        <div className="grid grid-cols-2 gap-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-3 gap-6 max-w-7xl mx-auto">
           {/* 現在のスライド */}
-          <div className="space-y-4">
+          <div className="col-span-2 space-y-4">
             <div className="bg-gray-800 rounded-xl border border-gray-700 p-6">
               <div className="flex items-center gap-2 text-sm text-purple-400 mb-3">
                 <span className="font-semibold">現在のスライド</span>
