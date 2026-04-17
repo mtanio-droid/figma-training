@@ -4800,35 +4800,246 @@ export const slides: Slide[] = [
 そのときに、毎回見た目を手で整え直すような作り方だと、すぐしんどくなります。
 なので、壊れにくい設計というのは、"今きれいに見えること"よりも、"あとで変わっても保てること"が大事です。`
   },
-  { id: "al-basics", section: "auto-layout", title: "Auto Layoutの基本", message: "Auto Layoutは整列機能ではなく、要素同士の関係をルールにする機能", content: <AlBasicsSlide /> },
-  { id: "al-apply", section: "auto-layout", title: "Auto Layoutとは", starred: true, message: "Auto Layoutは構造を持った配置ルールで柔軟なデザインを実現", content: <AlApplySlide /> },
-  { id: "al-figma-ui", section: "auto-layout", title: "Auto Layout設定", starred: true, message: "方向・間隔・パディングの適切な設定で柔軟なレイアウトを実現", content: <AlFigmaUISlide /> },
+  {
+    id: "al-basics",
+    section: "auto-layout",
+    title: "Auto Layoutの基本",
+    message: "Auto Layoutは整列機能ではなく、要素同士の関係をルールにする機能",
+    content: <AlBasicsSlide />,
+    speakerNotes: `ここからレイアウトの話に入ります。
+レイアウトって、見た目を整えるためのものだと思われやすいんですけど、実務での本質はそこだけじゃありません。
+レイアウトは、要素と要素の関係を定義するためのものです。
+この要素は縦に並ぶのか、横に並ぶのか。間隔はいくつか。親に対してどう広がるのか。テキストが増えたらどこが伸びるのか。
+こういう関係性を、感覚で置くのではなく、ルールとして持つのがレイアウト設計です。
+なので、レイアウトをちゃんと組むというのは、きれいに整列することではなくて、"変化に耐える関係性を作ること"だと思ってください。`
+  },
+  {
+    id: "al-apply",
+    section: "auto-layout",
+    title: "Auto Layoutとは",
+    starred: true,
+    message: "Auto Layoutは構造を持った配置ルールで柔軟なデザインを実現",
+    content: <AlApplySlide />,
+    speakerNotes: `そのレイアウト設計で、すごく重要なのがオートレイアウトです。
+オートレイアウトは、よく"便利な整列機能"みたいに覚えられがちなんですけど、実際にはもっと重要な役割があります。
+それは、要素同士の関係を定義することです。
+手で並べると、その瞬間は整って見えます。でも文言が変わったり要素が増えたりすると、すぐ崩れます。
+一方でオートレイアウトを使うと、縦並び・横並び・間隔・内側余白などが構造として持てるので、変更が入っても整いやすいです。
+つまり、手で整えるのは"今だけ整える"で、オートレイアウトで組むのは"変わっても整うようにする"です。
+この違いがすごく大きいです。`
+  },
+  {
+    id: "al-figma-ui",
+    section: "auto-layout",
+    title: "Auto Layout設定",
+    starred: true,
+    message: "方向・間隔・パディングの適切な設定で柔軟なレイアウトを実現",
+    content: <AlFigmaUISlide />,
+    speakerNotes: `次に、余白の話をします。
+新卒のうちは、余白を"なんとなくいい感じ"で置いてしまうことが多いです。もちろん最初はそれでも作れます。
+でも実務で困るのは、画面ごとに余白の判断がズレていくことです。ある画面では16、別の画面では20、そのまた別では24、みたいなことが起こります。
+余白は、見た目の印象に関わるだけでなく、情報のまとまりや優先度にも関わります。
+なので、余白は感覚ではなくルールで持つことが大事です。
+内側の余白なのか、要素同士の間隔なのか、セクション間の余白なのか。この役割を分けて考えられるようになると、画面の設計がかなり安定します。`
+  },
   { id: "al-direction", section: "auto-layout", title: "Auto Layoutの適用", message: "コンテンツの変更や追加に応じて、レイアウトが自動で調整される", content: <AlDirectionSlide /> },
-  { id: "al-text", section: "auto-layout", title: "テキストの取り扱い", starred: true, message: "テキストはもっとも変化しやすい要素なので、見た目より先に振る舞いを決める", content: <AlTextSlide /> },
-  { id: "al-advanced", section: "auto-layout", title: "最小最大幅 / 比率維持 / 絶対位置", message: "可変レイアウトの中で、どこまで許容し、何を例外にするかを決める", content: <AlAdvancedSlide /> },
-  { id: "al-real-example", section: "auto-layout", title: "実例：商品カード", starred: true, message: "実際のカードコンポーネントでAuto Layoutの威力を体感する", content: <AlRealExampleSlide /> },
-  { id: "comp-basics", section: "components", title: "コンポーネントの基本", message: "コンポーネントは、見た目の再利用ではなく、判断の再利用", content: <CompBasicsSlide /> },
-  { id: "comp-props", section: "components", title: "プロパティについて", starred: true, message: "プロパティは「何を変えてよいか」を明示する、安全な自由度の設計", content: <CompPropsSlide /> },
-  { id: "comp-variants-properties", section: "components", title: "バリアントのプロパティと値", starred: true, message: "プロパティ = 何を切り替えるか、値 = どういう状態があるか", content: <CompVariantsPropertiesSlide /> },
+  {
+    id: "al-text",
+    section: "auto-layout",
+    title: "テキストの取り扱い",
+    starred: true,
+    message: "テキストはもっとも変化しやすい要素なので、見た目より先に振る舞いを決める",
+    content: <AlTextSlide />,
+    speakerNotes: `実務で本当に壊れやすいのが、テキストまわりです。
+デザイン中は短い仮文が入っていることが多いので、その状態ではきれいに見えます。
+でも実際には、文言が長くなったり、補足が入ったり、エラーが表示されたり、翻訳で文字量が増えたりします。
+そのときに壊れるUIは、短い文言でしか成立しないUIです。
+なので、テキストは固定のものとして扱うのではなく、変化するものとして扱う必要があります。
+"この文章が2倍になっても大丈夫かな""1行じゃなくて2行になっても崩れないかな"という視点を持てると、かなり実務向きの設計になります。
+短文でしか成立しないUIは、実務ではかなり危ないです。`
+  },
+  {
+    id: "al-advanced",
+    section: "auto-layout",
+    title: "最小最大幅 / 比率維持 / 絶対位置",
+    message: "可変レイアウトの中で、どこまで許容し、何を例外にするかを決める",
+    content: <AlAdvancedSlide />,
+    speakerNotes: `ここで、サイズの考え方も整理しておきます。
+Figmaでは Hug、Fill、Fixed という振る舞いがあります。
+大事なのは、どれが正解かではなくて、その要素にどう振る舞ってほしいかです。
+中身に合わせて伸びてほしいなら Hug。親の幅に合わせて広がってほしいなら Fill。サイズを固定して保ちたいなら Fixed。
+たとえば、ボタンのラベルが変わる可能性が高いなら、ボタン自体は Hug のほうが自然なことが多いです。
+逆に、一覧の中で横幅いっぱい使ってほしいカードなら Fill のほうが合うかもしれません。
+この"機能名"ではなく、"どんな振る舞いを期待するか"で考える癖がつくと、レイアウト設計がかなり強くなります。`
+  },
+  {
+    id: "al-real-example",
+    section: "auto-layout",
+    title: "実例：商品カード",
+    starred: true,
+    message: "実際のカードコンポーネントでAuto Layoutの威力を体感する",
+    content: <AlRealExampleSlide />,
+    speakerNotes: `ここまでのレイアウトの話が、実務で何に効くかもはっきりさせます。
+レイアウトシステムがちゃんとしていると、差し替えに強くなります。量産しやすくなります。レビューでも"見た目の感想"ではなく、"構造として妥当か"の話がしやすくなります。
+さらに、実装との会話もしやすくなります。
+なぜなら、要素の関係が整理されているので、エンジニアにも意図が伝わりやすいからです。
+つまりレイアウト設計は、きれいに見せるためだけではなくて、修正コストとコミュニケーションコストを下げるためにも重要です。
+ここまでが、壊れにくい設計の土台になる部分です。`
+  },
+  {
+    id: "comp-basics",
+    section: "components",
+    title: "コンポーネントの基本",
+    message: "コンポーネントは、見た目の再利用ではなく、判断の再利用",
+    content: <CompBasicsSlide />,
+    speakerNotes: `次に、コンポーネントの話に入ります。
+コンポーネントは、よく"使い回しのため"と説明されます。もちろんそれも正しいです。
+でも実務での本質は、UIの正解を一か所に集めることです。
+同じ見た目のボタンを画面ごとに別々に作っていたら、修正のたびに全部直す必要が出ますし、微妙なズレも起きます。
+でもコンポーネントにしておけば、共通部分を守りながら運用できます。
+なのでコンポーネントは、単なる時短テクニックではなくて、一貫性を保つための仕組みです。
+"似てるから一緒にする"というより、"同じ役割だから共通化する"という意識が大事です。`
+  },
+  {
+    id: "comp-props",
+    section: "components",
+    title: "プロパティについて",
+    starred: true,
+    message: "プロパティは「何を変えてよいか」を明示する、安全な自由度の設計",
+    content: <CompPropsSlide />,
+    speakerNotes: `コンポーネントを実務で使いやすくするのが、プロパティです。
+実務では、ラベルだけ変えたい、アイコンだけ切り替えたい、一部だけ表示を変えたい、ということがすごく多いです。
+そのたびにコンポーネントを複製したり、インスタンスを壊して編集したりしていると、管理が一気に難しくなります。
+そこで、変えていい部分をあらかじめ定義しておくのがプロパティです。
+コンポーネントが土台で、プロパティは調整できる範囲です。
+これによって、守るべき共通部分は守ったまま、使う側が必要な差分だけ安全に変えられるようになります。
+プロパティは、自由度を増やすためというより、安全に編集できるようにするための仕組みだと考えるとわかりやすいです。`
+  },
+  {
+    id: "comp-variants-properties",
+    section: "components",
+    title: "バリアントのプロパティと値",
+    starred: true,
+    message: "プロパティ = 何を切り替えるか、値 = どういう状態があるか",
+    content: <CompVariantsPropertiesSlide />,
+    speakerNotes: `次にバリアントです。
+バリアントは、似た部品を整理するための仕組みです。
+たとえばボタンには、通常状態、ホバー状態、無効状態、ローディング状態みたいな違いがありますよね。
+これを全部バラバラのコンポーネントとして持っていると、探しづらいし、増えたときに整理しにくいです。
+なので、"同じ部品の状態違い"としてまとめて管理します。これがバリアントです。
+大事なのは、バリアントを見た目違いの収納箱だと思わないことです。
+本当は、"この部品にはこういう状態がある"という設計を整理するためのものです。
+状態を設計するという視点で使えるようになると、かなり実務っぽい使い方になります。`
+  },
   { id: "comp-variants-create", section: "components", title: "バリアントの作成手順", message: "Figmaでバリアントを作成する実際の手順を理解する", content: <CompVariantsCreateSlide /> },
   { id: "comp-slot", section: "components", title: "Slot（スロット）", starred: true, message: "Slotでコンポーネント内に他の要素を自由に差し込める", content: <CompSlotSlide /> },
-  { id: "comp-real-example", section: "components", title: "実例：ボタンシステム", message: "実際のボタンシステムでコンポーネント設計を理解する", content: <CompRealExampleSlide /> },
-  { id: "var-basics", section: "variables", title: "バリアブルの基本", message: "スタイルは見た目のまとまり、バリアブルは再利用する値の源泉", content: <VarBasicsSlide /> },
+  {
+    id: "comp-real-example",
+    section: "components",
+    title: "実例：ボタンシステム",
+    message: "実際のボタンシステムでコンポーネント設計を理解する",
+    content: <CompRealExampleSlide />,
+    speakerNotes: `コンポーネントって、自分のためだけのものだと思うと、価値を半分しか見れていません。
+もちろん、自分の作業は楽になります。
+でも本当は、他のデザイナーが使うため、エンジニアと認識を合わせるため、数か月後の自分が迷わないため、という意味でもすごく大事です。
+つまり、コンポーネントはチームの品質を揃えるための仕組みです。
+誰が触っても同じ品質で組める、という状態を作るのが役割です。
+ここまで来ると、コンポーネントは便利機能ではなくて、チーム開発のインフラみたいなものだとわかってくると思います。`
+  },
+  {
+    id: "var-basics",
+    section: "variables",
+    title: "バリアブルの基本",
+    message: "スタイルは見た目のまとまり、バリアブルは再利用する値の源泉",
+    content: <VarBasicsSlide />,
+    speakerNotes: `Figmaでは、こうしたトークン的な考え方を運用しやすくするために、バリアブルがあります。
+バリアブルを使うと、色や数値を固定値ではなく、切り替え可能なルールとして持つことができます。
+たとえば、ライトモードとダークモードで値を切り替えるとか、ブランドごとの差分を管理するとか、余白やサイズのルールをまとめて持つとか、そういうことがしやすくなります。
+つまり、バリアブルは"あとで変わるかもしれない値"を管理しやすくする仕組みです。
+実務では、色や値って思った以上に変わります。
+だからこそ、最初から変化に強い持ち方をしておくことが大事です。`
+  },
   { id: "var-apply", section: "variables", title: "バリアブルの適用", starred: true, message: "バリアブルの価値は、値を持つことではなく、変更の経路を設計すること", content: <VarApplySlide /> },
   { id: "var-alias", section: "variables", title: "トークンのエイリアス", starred: true, message: "トークンのエイリアスを使うと、デザインシステムを効率よく育てられる", content: <VarAliasSlide /> },
   { id: "var-real-example", section: "variables", title: "実例：カラーシステム", starred: true, message: "実際のカラーシステムでバリアブルの価値を体感する", content: <VarRealExampleSlide /> },
-  { id: "lib-basics", section: "library", title: "ライブラリの基本", message: "ライブラリはアセット置き場ではなく、チームの共通言語", content: <LibBasicsSlide /> },
+  {
+    id: "lib-basics",
+    section: "library",
+    title: "ライブラリの基本",
+    message: "ライブラリはアセット置き場ではなく、チームの共通言語",
+    content: <LibBasicsSlide />,
+    speakerNotes: `ここで、デザインシステムという言葉も整理します。
+デザインシステムは、コンポーネント集ではありません。
+本当は、どんな構造で作るか、どんな部品をどう使うか、値をどう管理するか、誰が見ても同じ判断ができるか、まで含めた仕組みです。
+コンポーネントだけある状態だと、部品棚はあるけど使い方がそろっていない状態になりやすいです。
+そこにトークンやバリアブル、命名ルールや使い方のルールが加わって、初めてシステムになります。
+なので、デザインシステムは"何が置いてあるか"だけでなく、"どう運用するか"まで含めて考える必要があります。`
+  },
   { id: "lib-publish", section: "library", title: "ライブラリの公開・更新", message: "ライブラリ更新は、単なる修正ではなくチームへのリリース", content: <LibPublishSlide /> },
-  { id: "token-basics", section: "tokens", title: "デザイントークンの基本", message: "トークンは、値に名前をつけることではなく、判断を再利用できる形にすること", content: <TokenBasicsSlide /> },
-  { id: "token-semantic", section: "tokens", title: "セマンティックカラー", starred: true, message: "色は「何色か」ではなく「何のための色か」で扱う", content: <TokenSemanticSlide /> },
+  {
+    id: "token-basics",
+    section: "tokens",
+    title: "デザイントークンの基本",
+    message: "トークンは、値に名前をつけることではなく、判断を再利用できる形にすること",
+    content: <TokenBasicsSlide />,
+    speakerNotes: `ここから、値の管理の話に入ります。
+トークンは、色や余白や角丸などの値を、直接数字やカラーコードで管理するのではなく、意味のある名前で管理する考え方です。
+たとえば、毎回 #0057FF を直接入れるのではなく、color.primary みたいに意味を持たせる。
+余白も、16を直接打つのではなく、spacing.md のように扱う。
+こうすると、見た目が揃うだけでなく、"これは主役の色なんだな""これは中くらいの余白なんだな"という意図が共有できます。
+つまり、トークンは値を共通化するだけではなく、判断を共通化するためのものです。`
+  },
+  {
+    id: "token-semantic",
+    section: "tokens",
+    title: "セマンティックカラー",
+    starred: true,
+    message: "色は「何色か」ではなく「何のための色か」で扱う",
+    content: <TokenSemanticSlide />,
+    speakerNotes: `では、なぜ直入力がつらいのか。
+一見すると、手で値を入れたほうが早く見えます。
+でも運用が始まると、微妙に違う値が増えていきます。16と18と20が混ざったり、似た青が何種類もできたりします。
+そうなると、見た目の統一もしにくいし、あとから一括変更もしづらいです。
+さらに、"なぜこの値なのか"が残りません。
+トークンを使うと、見た目を揃えるだけじゃなくて、判断基準をチームで共有できます。
+なので、トークンは装飾ルールではなく、設計ルールです。
+ここを理解すると、デザインシステムが単なる部品集ではないことが見えてきます。`
+  },
   { id: "token-hex", section: "tokens", title: "HEXカラーにトークンを適用する", message: "HEXをトークン化する時は、値を置き換えるのではなく、意味を読み替える", content: <TokenHexSlide /> },
   { id: "token-appearance", section: "tokens", title: "Light/Dark mode の切り替え", message: "AppearanceパネルからLight/Dark modeを切り替えられる", content: <TokenAppearanceSlide /> },
   { id: "token-typo", section: "tokens", title: "タイポグラフィについて", message: "タイポグラフィは文字サイズ表ではなく、情報の優先順位と読みやすさの設計", content: <TokenTypoSlide /> },
   { id: "others-ds", section: "others", title: "その他のデザインシステム要素", message: "デザインシステムは色とコンポーネントだけではない", content: <OthersDsSlide /> },
   { id: "summary", section: "others", title: "まとめ", message: "Figmaの機能は、見た目を作るためではなく、運用できる構造を作るために使う", content: <SummarySlide /> },
-  { id: "practice-intro", section: "practice", title: "Figma研修 基本課題", starred: true, message: "完成度より構造を意識して、手を動かしながら学ぶ", content: <PracticeIntroSlide /> },
+  {
+    id: "practice-intro",
+    section: "practice",
+    title: "Figma研修 基本課題",
+    starred: true,
+    message: "完成度より構造を意識して、手を動かしながら学ぶ",
+    content: <PracticeIntroSlide />,
+    speakerNotes: `最後に、明日からすぐ意識できることを5つだけ置いておきます。
+1つ目、このUIは文言が変わっても崩れないか。
+2つ目、同じものを3画面に増やしても管理できるか。
+3つ目、他の人が見て構造が理解できるか。
+4つ目、値を直接打ちすぎていないか。
+5つ目、その場しのぎの上書きをしていないか。
+この5つを考えるだけでも、設計の質はかなり変わります。
+機能を全部覚えていなくても、この視点があれば、Figmaの使い方がかなり実務寄りになります。`
+  },
   { id: "practice-overview", section: "practice", title: "課題概要", message: "モバイルオーダーUIコンポーネントを題材に、実践的な設計を学ぶ", content: <PracticeOverviewSlide /> },
   { id: "practice-required-screens", section: "practice", title: "必須画面", starred: true, message: "商品一覧と商品詳細の作成ポイント", content: <PracticeRequiredScreensSlide /> },
   { id: "practice-additional", section: "practice", title: "追加課題", message: "余力があれば店舗選択・カート・受け取り画面に挑戦", content: <PracticeAdditionalSlide /> },
-  { id: "practice-summary", section: "practice", title: "完成イメージ", starred: true, message: "今日大事なのは「完成度」より「構造」", content: <PracticeSummarySlide /> },
+  {
+    id: "practice-summary",
+    section: "practice",
+    title: "完成イメージ",
+    starred: true,
+    message: "今日大事なのは「完成度」より「構造」",
+    content: <PracticeSummarySlide />,
+    speakerNotes: `今日の内容を通して、一番持って帰ってほしいのは、上手いデザイナーほど"今の見た目"だけではなく、"変更されたあと"を見越して作っている、ということです。
+きれいに作れることはもちろん大事です。
+でも実務では、それに加えて、直しやすい、展開しやすい、共有しやすい、壊れにくい、という価値がすごく大きいです。
+ぜひこれからFigmaを使うときは、"うまく描くためのツール"としてだけではなく、"壊れにくく設計するためのツール"として見てみてください。
+今日の講義が、その最初の視点を持つきっかけになったらうれしいです。ありがとうございました。`
+  },
 ];
