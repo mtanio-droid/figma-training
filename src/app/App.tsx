@@ -131,6 +131,17 @@ function App() {
     }
   }, []);
 
+  // カンペappからのページ移動を受信
+  useEffect(() => {
+    const channel = new BroadcastChannel('figma-presenter');
+    channel.onmessage = (event) => {
+      if (event.data.type === 'navigate' && typeof event.data.index === 'number') {
+        go(event.data.index);
+      }
+    };
+    return () => channel.close();
+  }, [go]);
+
   // ブックマークを追加・削除
   const toggleBookmark = (index: number) => {
     const newBookmarks = bookmarks.includes(index)

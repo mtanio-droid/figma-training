@@ -42,7 +42,7 @@ import { useTheme, type Theme } from "./theme-context";
 
 /* ═══ Types ═══ */
 export interface SlideSection { id: string; title: string; }
-export interface Slide { id: string; section: string; title: string; starred?: boolean; message: string; content: React.ReactNode; }
+export interface Slide { id: string; section: string; title: string; starred?: boolean; message: string; content: React.ReactNode; speakerNotes?: string; }
 
 /* ═══ Theme color helper ═══ */
 function tc(theme: Theme) {
@@ -4762,9 +4762,30 @@ function PracticeSummarySlide() {
 
 /* ═══ Slides ═══ */
 export const slides: Slide[] = [
-  { id: "title", section: "intro", title: "Figmaを「描く道具」から「設計の道具」へ", message: "", content: <TitleSlide /> },
-  { id: "goal", section: "intro", title: "今日のゴール", message: "デザインシステムの実践的な使い方をイメージできる・実践できる状態になる", content: <GoalSlide /> },
-  { id: "overview", section: "intro", title: "全体像", message: "5つのテーマは別々の機能ではなく、実務ではつながっている", content: <OverviewSlide /> },
+  {
+    id: "title",
+    section: "intro",
+    title: "Figmaを「描く道具」から「設計の道具」へ",
+    message: "",
+    content: <TitleSlide />,
+    speakerNotes: "今日は、Figmaの機能をたくさん覚える時間というより、実務で困らない設計の考え方を身につける時間です。\n新卒のうちは、どうしても"きれいに作ること"とか、"指示通りに作ること"に意識が向きやすいと思います。もちろんそれも大事です。\nでも実務では、それだけだと足りません。なぜかというと、デザインは作って終わりではなくて、あとから必ず変更が入るからです。文言が変わったり、要素が増えたり、状態が追加されたり、別画面にも展開されたりします。\nそのときに必要なのが、壊れにくい設計です。\n今日はそのために、レイアウトシステム、コンポーネント、トークンやバリアブルという3つの観点から、Figmaをどう使うと実務に強い設計になるのかを見ていきます。"
+  },
+  {
+    id: "goal",
+    section: "intro",
+    title: "今日のゴール",
+    message: "デザインシステムの実践的な使い方をイメージできる・実践できる状態になる",
+    content: <GoalSlide />,
+    speakerNotes: "Figmaを学ぶ理由って、作業を早くするためだけではないです。\nもちろん、作業効率が上がるのはすごく大事なんですけど、それ以上に、Figmaはチームでデザインを作るためのツールです。\nつまり、ひとりでなんとかするためではなくて、複数人で同じルールを使いながら、同じ品質で作り続けるための仕組みがたくさん入っています。\nなので、今日覚えてほしいのは、単なる機能の名前ではなくて、"なぜその機能が必要なのか"です。\nこの視点があると、機能を丸暗記しなくても、実務の中でちゃんと使えるようになります。\n今日はぜひ、"どう作るか"だけじゃなくて、"なぜその設計にするのか"という視点で聞いてみてください。"
+  },
+  {
+    id: "overview",
+    section: "intro",
+    title: "全体像",
+    message: "5つのテーマを組み合わせて、壊れにくいデザインを作る",
+    content: <OverviewSlide />,
+    speakerNotes: "まず最初に、壊れにくい設計って何かをそろえます。\n壊れにくい設計というのは、見た目がきれいな設計という意味ではありません。\n変更が入っても崩れにくい、他の人が触っても事故りにくい、量産や展開をしてもズレにくい。そういう設計のことです。\nたとえば、ボタンの文言が『保存』から『下書きを保存』に変わるとか、一覧カードにタグが1つ増えるとか、同じUIを別画面にも使うとか。こういう変更は実務ではすごく普通に起きます。\nそのときに、毎回見た目を手で整え直すような作り方だと、すぐしんどくなります。\nなので、壊れにくい設計というのは、"今きれいに見えること"よりも、"あとで変わっても保てること"が大事です。"
+  },
   { id: "al-basics", section: "auto-layout", title: "Auto Layoutの基本", message: "Auto Layoutは整列機能ではなく、要素同士の関係をルールにする機能", content: <AlBasicsSlide /> },
   { id: "al-apply", section: "auto-layout", title: "Auto Layoutとは", starred: true, message: "Auto Layoutは構造を持った配置ルールで柔軟なデザインを実現", content: <AlApplySlide /> },
   { id: "al-figma-ui", section: "auto-layout", title: "Auto Layout設定", starred: true, message: "方向・間隔・パディングの適切な設定で柔軟なレイアウトを実現", content: <AlFigmaUISlide /> },
