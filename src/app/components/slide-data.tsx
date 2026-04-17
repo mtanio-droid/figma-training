@@ -754,13 +754,23 @@ function OverviewSlide() {
 
         {/* Result */}
         <div
-          className="text-white rounded-2xl px-8 py-4 text-[16px] font-bold shadow-xl"
+          className="rounded-2xl px-10 py-6 relative"
           style={{
-            background: "linear-gradient(135deg, #7c3aed, #a855f7, #c084fc)",
-            boxShadow: '0 8px 24px rgba(168,85,247,0.4), 0 0 48px rgba(168,85,247,0.2)'
+            background: d
+              ? 'linear-gradient(135deg, rgba(168,85,247,0.15), rgba(139,92,246,0.1))'
+              : 'linear-gradient(135deg, rgba(168,85,247,0.08), rgba(139,92,246,0.05))',
+            border: `3px solid ${d ? 'rgba(168,85,247,0.4)' : 'rgba(168,85,247,0.3)'}`,
+            boxShadow: d
+              ? '0 0 40px rgba(168,85,247,0.2), inset 0 0 20px rgba(168,85,247,0.05)'
+              : '0 0 40px rgba(168,85,247,0.15), inset 0 0 20px rgba(255,255,255,0.5)'
           }}
         >
-          ✨ 壊れにくいUI構造
+          <div className={`text-[18px] font-bold text-center ${d ? 'text-purple-200' : 'text-purple-700'}`}>
+            ✨ 壊れにくいUI構造
+          </div>
+          <div className={`text-[12px] text-center mt-1 ${d ? 'text-purple-300' : 'text-purple-600'}`}>
+            変更に強く、チームで使いやすい
+          </div>
         </div>
       </div>
 
