@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { slides, sectionList } from "./app/components/slide-data";
-import { ChevronLeft, ChevronRight, Clock, Monitor } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Monitor, Edit3, Star } from "lucide-react";
 import { ThemeContext } from "./app/components/theme-context";
 
 export default function PresenterView() {
@@ -11,6 +11,8 @@ export default function PresenterView() {
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [localLaser, setLocalLaser] = useState<{ x: number; y: number } | null>(null);
   const previewRef = useRef<HTMLDivElement>(null);
+  const [editedNotes, setEditedNotes] = useState<Record<string, string>>({});
+  const [isEditingNotes, setIsEditingNotes] = useState(false);
 
   // プレビューエリアでのレーザーポインター操作
   const handlePreviewMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -59,6 +61,26 @@ export default function PresenterView() {
     }, 1000);
     return () => clearInterval(timer);
   }, [startTime]);
+
+  // 編集した原稿をlocalStorageから復元
+  useEffect(() => {
+    const saved = localStorage.getItem('presenter-notes');
+    if (saved) {
+      setEditedNotes(JSON.parse(saved));
+    }
+  }, []);
+
+  // 原稿の編集を保存
+  const saveNotes = (slideId: string, notes: string) => {
+    const updated = { ...editedNotes, [slideId]: notes };
+    setEditedNotes(updated);
+    localStorage.setItem('presenter-notes', JSON.stringify(updated));
+  };
+
+  // 現在のスライドの原稿を取得（編集版 or オリジナル）
+  const getCurrentNotes = () => {
+    return editedNotes[currentSlide.id] || currentSlide.speakerNotes || '';
+  };
 
   // ページ移動
   const navigate = (newIdx: number) => {
@@ -114,8 +136,40 @@ export default function PresenterView() {
       </div>
 
       {/* メインコンテンツ */}
-      <div className="flex-1 overflow-auto p-6">
-        <div className="grid grid-cols-2 gap-6 max-w-7xl mx-auto">
+      <div className="flex-1 overflow-hidden flex">
+        {/* 左サイドバー：ページ一覧 */}
+        <div className="w-64 bg-gray-800 border-r border-gray-700 overflow-y-auto">
+          <div className="p-4">
+            <h3 className="text-sm font-semibold text-gray-400 mb-3">ページ一覧</h3>
+            <div className="space-y-1">
+              {slides.map((slide, i) => {
+                const section = sectionList.find(s => s.id === slide.section);
+                return (
+                  <button
+                    key={slide.id}
+                    onClick={() => navigate(i)}
+                    className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
+                      i === idx
+                        ? 'bg-purple-600 text-white'
+                        : 'text-gray-300 hover:bg-gray-700'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-500 font-mono">{i + 1}</span>
+                      {slide.starred && <Star className="w-3 h-3 text-yellow-400" />}
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1">{section?.title}</div>
+                    <div className="font-medium truncate">{slide.title}</div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* 中央・右 */}
+        <div className="flex-1 overflow-auto p-6">
+          <div className="grid grid-cols-2 gap-6 h-full">
           {/* 左：スライドプレビュー */}
           <div className="space-y-4">
             <div className="bg-gray-800 rounded-xl border border-gray-700 p-6">
@@ -136,9 +190,9 @@ export default function PresenterView() {
                 onMouseMove={handlePreviewMouseMove}
                 onMouseLeave={handlePreviewMouseLeave}
               >
-                <div className="absolute inset-0 flex items-center justify-center scale-[0.45] origin-center">
+                <div className="w-full h-full overflow-hidden">
                   <ThemeContext.Provider value="dark">
-                    <div className="w-[1920px] h-[1080px] bg-[#262335]">
+                    <div className="w-full h-full bg-[#262335] p-12 overflow-auto">
                       {currentSlide.content}
                     </div>
                   </ThemeContext.Provider>
@@ -170,10 +224,10 @@ export default function PresenterView() {
           </div>
 
           {/* 右：原稿 */}
-          <div className="space-y-4">
-            <div className="bg-gray-800 rounded-xl border border-gray-700 p-6">
+          <div className="space-y-4 h-full flex flex-col">
+            <div className="bg-gray-800 rounded-xl border border-gray-700 p-6 flex-1 flex flex-col">
               <div className="text-xs text-gray-500 mb-1">{currentSection?.title}</div>
-              <h2 className="text-2xl font-bold mb-2">{currentSlide.title}</h2>
+              <h2 className="text-xl font-bold mb-2">{currentSlide.title}</h2>
 
               {currentSlide.message && (
                 <div className="text-sm text-gray-400 mb-4 p-3 bg-gray-900/50 rounded-lg border border-gray-700">
@@ -181,16 +235,38 @@ export default function PresenterView() {
                 </div>
               )}
 
-              {currentSlide.speakerNotes && (
-                <div className="mt-6">
-                  <div className="text-sm font-semibold text-emerald-400 mb-3">📝 読み上げ原稿</div>
-                  <div className="text-sm leading-relaxed text-gray-300 whitespace-pre-line p-4 bg-gray-900/70 rounded-lg border border-gray-700 max-h-[600px] overflow-y-auto">
-                    {currentSlide.speakerNotes}
-                  </div>
+              <div className="mt-4 flex-1 flex flex-col">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="text-sm font-semibold text-emerald-400">📝 読み上げ原稿</div>
+                  <button
+                    onClick={() => setIsEditingNotes(!isEditingNotes)}
+                    className={`flex items-center gap-1 px-2 py-1 rounded text-xs transition ${
+                      isEditingNotes
+                        ? 'bg-emerald-600 text-white'
+                        : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                    }`}
+                  >
+                    <Edit3 className="w-3 h-3" />
+                    {isEditingNotes ? '保存' : '編集'}
+                  </button>
                 </div>
-              )}
+
+                {isEditingNotes ? (
+                  <textarea
+                    value={getCurrentNotes()}
+                    onChange={(e) => saveNotes(currentSlide.id, e.target.value)}
+                    className="flex-1 text-sm leading-relaxed text-gray-300 whitespace-pre-line p-4 bg-gray-900/70 rounded-lg border border-gray-700 resize-none focus:outline-none focus:border-emerald-500"
+                    placeholder="読み上げ原稿を入力..."
+                  />
+                ) : (
+                  <div className="flex-1 text-sm leading-relaxed text-gray-300 whitespace-pre-line p-4 bg-gray-900/70 rounded-lg border border-gray-700 overflow-y-auto">
+                    {getCurrentNotes() || '原稿がありません'}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
 
