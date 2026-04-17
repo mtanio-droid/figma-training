@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { slides, sectionList } from "./app/components/slide-data";
-import { ChevronLeft, ChevronRight, Clock, Monitor, MousePointer2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Monitor } from "lucide-react";
 import { ThemeContext } from "./app/components/theme-context";
 
 export default function PresenterView() {
@@ -8,13 +8,24 @@ export default function PresenterView() {
   const [startTime] = useState(Date.now());
   const [elapsed, setElapsed] = useState(0);
   const [channel] = useState(() => new BroadcastChannel('figma-presenter'));
-  const [laserMode, setLaserMode] = useState(false);
+  const [isMouseDown, setIsMouseDown] = useState(false);
   const [localLaser, setLocalLaser] = useState<{ x: number; y: number } | null>(null);
   const previewRef = useRef<HTMLDivElement>(null);
 
   // プレビューエリアでのレーザーポインター操作
+  const handlePreviewMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsMouseDown(true);
+    handlePreviewMouseMove(e);
+  };
+
+  const handlePreviewMouseUp = () => {
+    setIsMouseDown(false);
+    setLocalLaser(null);
+    channel.postMessage({ type: 'laser', active: false });
+  };
+
   const handlePreviewMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!laserMode || !previewRef.current) return;
+    if (!isMouseDown || !previewRef.current) return;
 
     const rect = previewRef.current.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -28,15 +39,8 @@ export default function PresenterView() {
   };
 
   const handlePreviewMouseLeave = () => {
-    setLocalLaser(null);
-  };
-
-  const toggleLaser = () => {
-    const newMode = !laserMode;
-    setLaserMode(newMode);
-
-    if (!newMode) {
-      // OFFにしたらレーザーを消す
+    if (isMouseDown) {
+      setIsMouseDown(false);
       setLocalLaser(null);
       channel.postMessage({ type: 'laser', active: false });
     }
@@ -90,17 +94,6 @@ export default function PresenterView() {
             <h1 className="text-lg font-semibold">発表者ビュー</h1>
           </div>
           <div className="flex items-center gap-6">
-            <button
-              onClick={toggleLaser}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
-                laserMode
-                  ? 'bg-pink-600 text-white'
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-              }`}
-            >
-              <MousePointer2 className="w-4 h-4" />
-              <span className="text-sm font-semibold">レーザー</span>
-            </button>
             <div className="flex items-center gap-2 text-sm text-gray-400">
               <Clock className="w-4 h-4" />
               <span className="font-mono">{formatTime(elapsed)}</span>
@@ -134,10 +127,12 @@ export default function PresenterView() {
               {/* スライドプレビュー */}
               <div
                 ref={previewRef}
-                className={`relative bg-gray-900 rounded-lg border-2 overflow-hidden ${
-                  laserMode ? 'border-pink-500 cursor-crosshair' : 'border-gray-700'
+                className={`relative bg-gray-900 rounded-lg border-2 overflow-hidden cursor-crosshair select-none ${
+                  isMouseDown ? 'border-pink-500' : 'border-gray-700'
                 }`}
                 style={{ aspectRatio: '16/9' }}
+                onMouseDown={handlePreviewMouseDown}
+                onMouseUp={handlePreviewMouseUp}
                 onMouseMove={handlePreviewMouseMove}
                 onMouseLeave={handlePreviewMouseLeave}
               >
@@ -150,7 +145,7 @@ export default function PresenterView() {
                 </div>
 
                 {/* ローカルレーザーポインター */}
-                {laserMode && localLaser && (
+                {isMouseDown && localLaser && (
                   <div
                     className="absolute pointer-events-none animate-pulse"
                     style={{
@@ -164,9 +159,10 @@ export default function PresenterView() {
                   </div>
                 )}
 
-                {laserMode && (
-                  <div className="absolute top-2 left-2 bg-pink-600 text-white text-xs px-2 py-1 rounded">
-                    レーザーモード ON
+                {/* 使い方の説明 */}
+                {!isMouseDown && (
+                  <div className="absolute top-2 left-2 bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">
+                    クリック押しながらでレーザーポインター
                   </div>
                 )}
               </div>
