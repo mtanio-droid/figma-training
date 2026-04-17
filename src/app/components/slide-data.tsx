@@ -1898,8 +1898,8 @@ function CompPropsSlide() {
       </div>
 
       <div className="space-y-4 mt-8">
-        <div className="rounded-xl p-6" style={{ background: d ? 'rgba(249,115,22,0.08)' : 'rgba(249,115,22,0.04)', border: `1px solid ${d ? 'rgba(249,115,22,0.25)' : 'rgba(249,115,22,0.18)'}` }}>
-          <div className="text-[13px] text-orange-500 font-semibold mb-3 flex items-center gap-2">
+        <div className="rounded-xl p-6" style={{ background: d ? 'rgba(239,67,68,0.08)' : 'rgba(239,67,68,0.04)', border: `1px solid ${d ? 'rgba(239,67,68,0.25)' : 'rgba(239,67,68,0.18)'}` }}>
+          <div className="text-[13px] text-red-500 font-semibold mb-3 flex items-center gap-2">
             <AlertTriangle className="w-4 h-4" />
             やりがちな失敗
           </div>
@@ -3346,8 +3346,8 @@ function LibPublishSlide() {
       </div>
 
       <div className="space-y-4 mt-8">
-        <div className="rounded-xl p-6" style={{ background: d ? 'rgba(249,115,22,0.08)' : 'rgba(249,115,22,0.04)', border: `1px solid ${d ? 'rgba(249,115,22,0.25)' : 'rgba(249,115,22,0.18)'}` }}>
-          <div className="text-[13px] text-orange-500 font-semibold mb-3 flex items-center gap-2">
+        <div className="rounded-xl p-6" style={{ background: d ? 'rgba(239,67,68,0.08)' : 'rgba(239,67,68,0.04)', border: `1px solid ${d ? 'rgba(239,67,68,0.25)' : 'rgba(239,67,68,0.18)'}` }}>
+          <div className="text-[13px] text-red-500 font-semibold mb-3 flex items-center gap-2">
             <AlertTriangle className="w-4 h-4" />
             やりがちな失敗
           </div>
@@ -3440,7 +3440,7 @@ function TokenSemanticSlide() {
   return (
     <div className="space-y-10">
       <Msg>色は<strong>「何色か」ではなく「何のための色か」</strong>で扱う</Msg>
-      <Points items={["text / bg / border の3分類がベース","デザイナーは色番号ではなく役割を選ぶ"]} />
+      <Points items={["よく使われるのは text / bg / border の3分類","デザイナーは色番号ではなく役割を選ぶ"]} />
       <Vis>
         <Label>テキスト / 背景 / ボーダーの3分類</Label>
         <div className="space-y-5">
@@ -3831,8 +3831,8 @@ function CompRealExampleSlide() {
       </div>
 
       <div className="space-y-4 mt-8">
-        <div className="rounded-xl p-6" style={{ background: d ? 'rgba(249,115,22,0.08)' : 'rgba(249,115,22,0.04)', border: `1px solid ${d ? 'rgba(249,115,22,0.25)' : 'rgba(249,115,22,0.18)'}` }}>
-          <div className="text-[13px] text-orange-500 font-semibold mb-3 flex items-center gap-2">
+        <div className="rounded-xl p-6" style={{ background: d ? 'rgba(239,67,68,0.08)' : 'rgba(239,67,68,0.04)', border: `1px solid ${d ? 'rgba(239,67,68,0.25)' : 'rgba(239,67,68,0.18)'}` }}>
+          <div className="text-[13px] text-red-500 font-semibold mb-3 flex items-center gap-2">
             <AlertTriangle className="w-4 h-4" />
             やりがちな失敗
           </div>
@@ -3963,8 +3963,8 @@ function VarRealExampleSlide() {
       </div>
 
       <div className="space-y-4 mt-8">
-        <div className="rounded-xl p-6" style={{ background: d ? 'rgba(249,115,22,0.08)' : 'rgba(249,115,22,0.04)', border: `1px solid ${d ? 'rgba(249,115,22,0.25)' : 'rgba(249,115,22,0.18)'}` }}>
-          <div className="text-[13px] text-orange-500 font-semibold mb-3 flex items-center gap-2">
+        <div className="rounded-xl p-6" style={{ background: d ? 'rgba(239,67,68,0.08)' : 'rgba(239,67,68,0.04)', border: `1px solid ${d ? 'rgba(239,67,68,0.25)' : 'rgba(239,67,68,0.18)'}` }}>
+          <div className="text-[13px] text-red-500 font-semibold mb-3 flex items-center gap-2">
             <AlertTriangle className="w-4 h-4" />
             やりがちな失敗
           </div>
@@ -4675,8 +4675,8 @@ export const slides: Slide[] = [
   { id: "overview", section: "intro", title: "全体像", message: "5つのテーマは別々の機能ではなく、実務ではつながっている", content: <OverviewSlide /> },
   { id: "al-basics", section: "auto-layout", title: "Auto Layoutの基本", message: "Auto Layoutは整列機能ではなく、要素同士の関係をルールにする機能", content: <AlBasicsSlide /> },
   { id: "al-apply", section: "auto-layout", title: "Auto Layoutとは", starred: true, message: "Auto Layoutは構造を持った配置ルールで柔軟なデザインを実現", content: <AlApplySlide /> },
+  { id: "al-figma-ui", section: "auto-layout", title: "Auto Layout設定", message: "FigmaのAuto Layout設定パネルを理解する", content: <AlFigmaUISlide /> },
   { id: "al-direction", section: "auto-layout", title: "Auto Layoutの適用", starred: true, message: "方向・間隔・パディングの適切な設定で柔軟なレイアウトを実現", content: <AlDirectionSlide /> },
-  { id: "al-figma-ui", section: "auto-layout", title: "Auto Layout設定", starred: true, message: "FigmaのAuto Layout設定パネルを理解する", content: <AlFigmaUISlide /> },
   { id: "al-text", section: "auto-layout", title: "テキストの取り扱い", starred: true, message: "テキストはもっとも変化しやすい要素なので、見た目より先に振る舞いを決める", content: <AlTextSlide /> },
   { id: "al-advanced", section: "auto-layout", title: "最小最大幅 / 比率維持 / 絶対位置", message: "可変レイアウトの中で、どこまで許容し、何を例外にするかを決める", content: <AlAdvancedSlide /> },
   { id: "al-real-example", section: "auto-layout", title: "実例：商品カード", starred: true, message: "実際のカードコンポーネントでAuto Layoutの威力を体感する", content: <AlRealExampleSlide /> },
