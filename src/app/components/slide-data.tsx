@@ -460,7 +460,7 @@ function GoalSlide() {
   return (
     <div className="space-y-10">
       <Msg><strong>デザインシステムの実践的な使い方</strong>をイメージできる・実践できる状態になる</Msg>
-      <Points items={["コンポーネント、トークン、レイアウトシステムを理解する","実務で変更に強く、チームで共有しやすい設計を作れる","デザイナーとエンジニアの協業をスムーズにする基盤を作る"]} />
+      <Points items={["コンポーネント、トークン、レイアウトシステムを理解する","実務で変更に強く、チームで共有しやすい設計を作れる"]} />
 
       <div className="w-full">
         <div className="grid grid-cols-2 gap-8 items-start">
