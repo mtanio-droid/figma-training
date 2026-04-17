@@ -523,18 +523,18 @@ function GoalSlide() {
 
           {/* After - Design System */}
           <div className="space-y-3">
-            <div className="text-[13px] text-purple-400 mb-2 font-medium flex items-center gap-2">
+            <div className="text-[13px] text-emerald-400 mb-2 font-medium flex items-center gap-2">
               <CheckCircle className="w-4 h-4" />
               <span>デザインシステム</span>
             </div>
             <div
               className="h-[320px] rounded-2xl p-4 relative overflow-hidden"
               style={{
-                background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
-                border: `2px solid ${d ? 'rgba(168,85,247,0.25)' : 'rgba(168,85,247,0.2)'}`,
+                background: d ? 'rgba(16,185,129,0.04)' : 'rgba(16,185,129,0.02)',
+                border: `2px solid ${d ? 'rgba(16,185,129,0.25)' : 'rgba(16,185,129,0.2)'}`,
                 boxShadow: d
-                  ? '0 8px 32px rgba(168,85,247,0.2), 0 0 0 1px rgba(168,85,247,0.1) inset'
-                  : '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(255,255,255,0.6) inset'
+                  ? '0 8px 32px rgba(16,185,129,0.2), 0 0 0 1px rgba(16,185,129,0.1) inset'
+                  : '0 8px 32px rgba(16,185,129,0.15), 0 0 0 1px rgba(255,255,255,0.6) inset'
               }}
             >
               <div className="space-y-3 relative z-10">
@@ -598,12 +598,16 @@ function GoalSlide() {
               {/* Connection lines indicating system */}
               <div className="absolute inset-0 pointer-events-none overflow-hidden">
                 <svg className="w-full h-full" style={{ opacity: 0.15 }}>
-                  <line x1="50%" y1="30%" x2="50%" y2="50%" stroke={d ? "#a855f7" : "#7c3aed"} strokeWidth="1.5" strokeDasharray="3 3" />
-                  <line x1="50%" y1="50%" x2="50%" y2="70%" stroke={d ? "#a855f7" : "#7c3aed"} strokeWidth="1.5" strokeDasharray="3 3" />
-                  <circle cx="50%" cy="30%" r="3" fill={d ? "#a855f7" : "#7c3aed"} />
-                  <circle cx="50%" cy="50%" r="3" fill={d ? "#a855f7" : "#7c3aed"} />
-                  <circle cx="50%" cy="70%" r="3" fill={d ? "#a855f7" : "#7c3aed"} />
+                  <line x1="50%" y1="30%" x2="50%" y2="50%" stroke={d ? "#10b981" : "#059669"} strokeWidth="1.5" strokeDasharray="3 3" />
+                  <line x1="50%" y1="50%" x2="50%" y2="70%" stroke={d ? "#10b981" : "#059669"} strokeWidth="1.5" strokeDasharray="3 3" />
+                  <circle cx="50%" cy="30%" r="3" fill={d ? "#10b981" : "#059669"} />
+                  <circle cx="50%" cy="50%" r="3" fill={d ? "#10b981" : "#059669"} />
+                  <circle cx="50%" cy="70%" r="3" fill={d ? "#10b981" : "#059669"} />
                 </svg>
+              </div>
+
+              <div className={`absolute bottom-4 left-0 right-0 text-[12px] ${c.t3} text-center italic`}>
+                一度作れば再利用、統一性あり
               </div>
             </div>
           </div>
