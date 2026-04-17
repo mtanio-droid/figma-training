@@ -296,7 +296,7 @@ function ProductListScreen({
                   </div>
                   {/* Badge - 学習ポイント: バッジ */}
                   {product.badge && (
-                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold shrink-0 ${
+                    <span className={`px-2 py-0.5 rounded-full text-[12px] font-bold shrink-0 ${
                       product.badge === "人気"
                         ? "bg-orange-100 text-orange-700"
                         : product.badge === "NEW"

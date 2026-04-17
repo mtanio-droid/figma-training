@@ -36,6 +36,7 @@ import {
   Check,
   Clock,
   Plus,
+  Package,
 } from "lucide-react";
 import { useTheme, type Theme } from "./theme-context";
 
@@ -139,6 +140,69 @@ function ExpandableImage({ src, alt }: { src: string; alt: string }) {
   );
 }
 
+function ExpandableVideo({ src }: { src: string }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const theme = useTheme();
+  const d = theme === "dark";
+
+  useEffect(() => {
+    if (isOpen) {
+      const handleEsc = (e: KeyboardEvent) => {
+        if (e.key === "Escape") setIsOpen(false);
+      };
+      window.addEventListener("keydown", handleEsc);
+      return () => window.removeEventListener("keydown", handleEsc);
+    }
+  }, [isOpen]);
+
+  return (
+    <>
+      <video
+        src={src}
+        controls
+        onClick={() => setIsOpen(true)}
+        className="cursor-pointer transition-transform hover:scale-[1.02]"
+        style={{
+          width: '100%',
+          height: 'auto',
+          display: 'block'
+        }}
+      />
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-8 animate-in fade-in duration-200"
+          style={{
+            background: d ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.4)',
+            backdropFilter: 'blur(8px)',
+          }}
+          onClick={() => setIsOpen(false)}
+        >
+          <button
+            onClick={() => setIsOpen(false)}
+            className="absolute top-4 right-4 p-2 rounded-full transition-colors hover:bg-white/20"
+            style={{
+              background: 'rgba(255,255,255,0.1)',
+              color: 'white',
+            }}
+          >
+            <X className="w-6 h-6" />
+          </button>
+          <video
+            src={src}
+            controls
+            autoPlay
+            className="max-w-full max-h-full object-contain animate-in zoom-in-95 duration-300 rounded-2xl"
+            style={{
+              boxShadow: d ? '0 25px 50px -12px rgba(0,0,0,0.5)' : '0 25px 50px -12px rgba(0,0,0,0.3)',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
+    </>
+  );
+}
+
 function Msg({ children }: { children: React.ReactNode }) {
   return (
     <div
@@ -160,7 +224,7 @@ function Point({ children }: { children: React.ReactNode }) {
   const c = tc(theme);
   return (
     <li className={`flex gap-3 items-start text-[14px] leading-relaxed ${c.t3}`}>
-      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-400 shrink-0" />
+      <span className="w-1.5 h-1.5 rounded-full bg-purple-400 shrink-0 mt-[0.45rem]" />
       <span>{children}</span>
     </li>
   );
@@ -203,7 +267,7 @@ function Vis({ children, className = "" }: { children: React.ReactNode; classNam
 }
 
 function Label({ children }: { children: React.ReactNode }) {
-  return <div className="text-[11px] tracking-wide text-purple-400 uppercase mb-3 font-medium">{children}</div>;
+  return <div className="text-[12px] tracking-wide text-purple-400 uppercase mb-3 font-medium">{children}</div>;
 }
 
 function Pill({ children, color = "bg-purple-500/20 text-purple-300" }: { children: React.ReactNode; color?: string }) {
@@ -225,7 +289,7 @@ function Comp({ label, children }: { label?: string; children: React.ReactNode; 
   const c = tc(theme);
   return (
     <GlassCard>
-      {label && <div className={`text-[11px] ${c.t5} mb-2`}>{label}</div>}
+      {label && <div className={`text-[12px] ${c.t5} mb-2`}>{label}</div>}
       {children}
     </GlassCard>
   );
@@ -234,7 +298,7 @@ function Comp({ label, children }: { label?: string; children: React.ReactNode; 
 /* ═══ Sections ═══ */
 export const sectionList: SlideSection[] = [
   { id: "intro", title: "イントロ" },
-  { id: "auto-layout", title: "オートレイアウト" },
+  { id: "auto-layout", title: "Auto Layout" },
   { id: "components", title: "コンポーネント" },
   { id: "variables", title: "バリアブル" },
   { id: "library", title: "ライブラリ" },
@@ -271,26 +335,26 @@ function TitleSlide() {
               }}
             >
               {/* Chaotic, misaligned elements */}
-              <div className={`absolute top-4 left-5 w-28 h-6 ${c.b2} rounded shadow-sm`} style={{ transform: 'rotate(-1deg)' }} />
-              <div className={`absolute top-[52px] left-8 w-32 h-4 ${c.b2} rounded opacity-70`} style={{ transform: 'rotate(0.5deg)' }} />
-              <div className={`absolute top-[76px] left-7 w-36 h-3 ${c.b2} rounded opacity-60`} />
-              <div className={`absolute top-[95px] left-11 w-28 h-3 ${c.b2} rounded opacity-50`} style={{ transform: 'rotate(-0.3deg)' }} />
+              <div className={`absolute top-4 left-5 w-28 h-6 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`} style={{ transform: 'rotate(-1deg)' }} />
+              <div className={`absolute top-[52px] left-8 w-32 h-4 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded opacity-70`} style={{ transform: 'rotate(0.5deg)' }} />
+              <div className={`absolute top-[76px] left-7 w-36 h-3 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded opacity-60`} />
+              <div className={`absolute top-[95px] left-11 w-28 h-3 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded opacity-50`} style={{ transform: 'rotate(-0.3deg)' }} />
 
-              <div className={`absolute top-[130px] left-6 w-20 h-8 ${c.b1} rounded shadow-sm`} style={{ transform: 'rotate(-0.8deg)' }} />
-              <div className={`absolute top-[132px] right-8 w-24 h-8 ${c.b2} rounded`} style={{ transform: 'rotate(1deg)' }} />
+              <div className={`absolute top-[130px] left-6 w-20 h-8 ${d ? "bg-gray-700" : "bg-gray-300"} rounded`} style={{ transform: 'rotate(-0.8deg)' }} />
+              <div className={`absolute top-[132px] right-8 w-24 h-8 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`} style={{ transform: 'rotate(1deg)' }} />
 
-              <div className={`absolute bottom-[60px] left-9 w-2 h-2 rounded-full ${c.b1}`} />
-              <div className={`absolute bottom-[58px] left-14 w-16 h-3 ${c.b2} rounded opacity-70`} />
+              <div className={`absolute bottom-[60px] left-9 w-2 h-2 rounded-full ${d ? "bg-gray-700" : "bg-gray-300"}`} />
+              <div className={`absolute bottom-[58px] left-14 w-16 h-3 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded opacity-70`} />
 
-              <div className={`absolute bottom-[32px] left-9 w-2 h-2 rounded-full ${c.b1}`} />
-              <div className={`absolute bottom-[30px] left-14 w-20 h-3 ${c.b2} rounded opacity-70`} />
+              <div className={`absolute bottom-[32px] left-9 w-2 h-2 rounded-full ${d ? "bg-gray-700" : "bg-gray-300"}`} />
+              <div className={`absolute bottom-[30px] left-14 w-20 h-3 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded opacity-70`} />
 
-              <div className={`absolute bottom-3 right-5 w-14 h-6 ${c.b1} rounded`} style={{ transform: 'rotate(-1.5deg)' }} />
+              <div className={`absolute bottom-3 right-5 w-14 h-6 ${d ? "bg-gray-700" : "bg-gray-300"} rounded`} style={{ transform: 'rotate(-1.5deg)' }} />
             </div>
             <div className={`text-[12px] ${c.t5} text-center`}>余白・配置が不揃い</div>
           </div>
 
-          {/* After - Structured with オートレイアウト hints */}
+          {/* After - Structured with Auto Layout hints */}
           <div className="space-y-3">
             <Label>After</Label>
             <div
@@ -303,7 +367,7 @@ function TitleSlide() {
                   : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset, 0 0 48px rgba(168,85,247,0.06)'
               }}
             >
-              {/* オートレイアウト container */}
+              {/* Auto Layout container */}
               <div className="h-full p-5 flex flex-col gap-4 relative">
                 {/* Header section with card look */}
                 <div
@@ -313,8 +377,8 @@ function TitleSlide() {
                     boxShadow: d ? '0 2px 8px rgba(0,0,0,0.15)' : '0 2px 8px rgba(168,85,247,0.08)'
                   }}
                 >
-                  <div className="w-3/4 h-5 bg-purple-500/30 rounded mb-2" />
-                  <div className="w-1/2 h-3 bg-purple-500/15 rounded" />
+                  <div className={`w-3/4 h-5 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-2`} />
+                  <div className={`w-1/2 h-3 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`} />
                 </div>
 
                 {/* Content section */}
@@ -326,18 +390,18 @@ function TitleSlide() {
                     boxShadow: d ? '0 2px 8px rgba(0,0,0,0.1)' : '0 2px 8px rgba(0,0,0,0.03)'
                   }}
                 >
-                  <div className="w-full h-3 bg-purple-500/20 rounded" />
-                  <div className="w-5/6 h-3 bg-purple-500/15 rounded" />
+                  <div className={`w-full h-3 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`} />
+                  <div className={`w-5/6 h-3 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`} />
 
                   {/* List items */}
                   <div className="flex flex-col gap-2 mt-1">
                     <div className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-purple-500/40" />
-                      <div className="w-4/5 h-2.5 bg-purple-500/15 rounded" />
+                      <div className={`w-1.5 h-1.5 rounded-full ${d ? "bg-gray-700" : "bg-gray-300"}`} />
+                      <div className={`w-4/5 h-2.5 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`} />
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-purple-500/40" />
-                      <div className="w-3/4 h-2.5 bg-purple-500/15 rounded" />
+                      <div className={`w-1.5 h-1.5 rounded-full ${d ? "bg-gray-700" : "bg-gray-300"}`} />
+                      <div className={`w-3/4 h-2.5 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`} />
                     </div>
                   </div>
                 </div>
@@ -360,7 +424,7 @@ function TitleSlide() {
                   />
                 </div>
 
-                {/* オートレイアウト guides overlay */}
+                {/* Auto Layout guides overlay */}
                 <div className="absolute inset-0 pointer-events-none">
                   {/* Vertical spacing indicators */}
                   <div className="absolute left-1 top-5 bottom-5 flex flex-col justify-between items-start">
@@ -451,7 +515,7 @@ function GoalSlide() {
                 <div className={`w-14 h-6 ${c.b1} rounded`} style={{ transform: 'rotate(1.2deg)' }} />
               </div>
 
-              <div className={`text-[10px] ${c.t5} text-center italic mt-3`}>
+              <div className={`text-[12px] ${c.t5} text-center italic mt-3`}>
                 都度作成、統一性なし
               </div>
             </div>
@@ -478,12 +542,12 @@ function GoalSlide() {
                 <div
                   className="rounded-lg p-2 border"
                   style={{
-                    background: d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)',
-                    borderColor: d ? 'rgba(59,130,246,0.3)' : 'rgba(59,130,246,0.2)',
-                    boxShadow: '0 2px 8px rgba(59,130,246,0.1)'
+                    background: d ? 'rgba(16,185,129,0.08)' : 'rgba(16,185,129,0.06)',
+                    borderColor: d ? 'rgba(16,185,129,0.3)' : 'rgba(16,185,129,0.2)',
+                    boxShadow: '0 2px 8px rgba(16,185,129,0.1)'
                   }}
                 >
-                  <div className="text-[9px] text-blue-400 mb-1.5 font-medium">Tokens</div>
+                  <div className="text-[9px] text-emerald-400 mb-1.5 font-medium">Tokens</div>
                   <div className="flex gap-1.5">
                     <div className="w-4 h-4 rounded bg-purple-500/40" />
                     <div className="w-4 h-4 rounded bg-purple-500/30" />
@@ -522,7 +586,7 @@ function GoalSlide() {
                     boxShadow: '0 2px 8px rgba(16,185,129,0.1)'
                   }}
                 >
-                  <div className="text-[9px] text-emerald-400 mb-1.5 font-medium">オートレイアウト</div>
+                  <div className="text-[9px] text-emerald-400 mb-1.5 font-medium">Auto Layout</div>
                   <div className="flex gap-1">
                     <div className="text-[8px] text-emerald-400/70 font-mono">8</div>
                     <div className="text-[8px] text-emerald-400/70 font-mono">16</div>
@@ -583,7 +647,7 @@ function OverviewSlide() {
           {/* Five pillars */}
           <div className="grid grid-cols-3 gap-6 max-w-3xl w-full">
             {[
-              { icon: <Layers className="w-5 h-5" />, label: "オートレイアウト", sub: "関係を設計する", color: d ? 'rgba(59,130,246,0.12)' : 'rgba(59,130,246,0.08)', border: d ? 'rgba(59,130,246,0.3)' : 'rgba(59,130,246,0.2)', iconColor: 'text-blue-400' },
+              { icon: <Layers className="w-5 h-5" />, label: "Auto Layout", sub: "関係を設計する", color: d ? 'rgba(59,130,246,0.12)' : 'rgba(59,130,246,0.08)', border: d ? 'rgba(59,130,246,0.3)' : 'rgba(59,130,246,0.2)', iconColor: 'text-blue-400' },
               { icon: <Component className="w-5 h-5" />, label: "Component", sub: "判断を再利用する", color: d ? 'rgba(168,85,247,0.12)' : 'rgba(168,85,247,0.08)', border: d ? 'rgba(168,85,247,0.3)' : 'rgba(168,85,247,0.2)', iconColor: 'text-purple-400' },
               { icon: <Variable className="w-5 h-5" />, label: "Variable", sub: "値を再利用する", color: d ? 'rgba(16,185,129,0.12)' : 'rgba(16,185,129,0.08)', border: d ? 'rgba(16,185,129,0.3)' : 'rgba(16,185,129,0.2)', iconColor: 'text-emerald-400' },
               { icon: <Library className="w-5 h-5" />, label: "Library", sub: "チームで共有する", color: d ? 'rgba(249,115,22,0.12)' : 'rgba(249,115,22,0.08)', border: d ? 'rgba(249,115,22,0.3)' : 'rgba(249,115,22,0.2)', iconColor: 'text-orange-400' },
@@ -628,7 +692,7 @@ function AlBasicsSlide() {
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>オートレイアウトは整列機能ではなく、要素同士の<strong>関係をルール</strong>にする機能</Msg>
+      <Msg>Auto Layoutは整列機能ではなく、要素同士の<strong>関係をルール</strong>にする機能</Msg>
       <Points items={["並び順、余白、配置、サイズの振る舞いを持たせる","変更が起きた時の再調整コストを減らす","「見た目」ではなく「構造」を作る"]} />
 
       <div className="w-full">
@@ -651,7 +715,7 @@ function AlBasicsSlide() {
               <div className={`absolute top-5 left-5 text-[13px] ${c.t3} font-medium`}>カードタイトル</div>
               <div className={`absolute top-12 left-5 right-5 h-4 ${c.b2} rounded`} />
               <div className={`absolute top-[72px] left-5 w-3/4 h-4 ${c.b2} rounded`} />
-              <div className={`absolute bottom-5 left-5 w-20 h-8 ${c.b1} rounded text-[11px] flex items-center justify-center ${c.t4} font-medium`}>
+              <div className={`absolute bottom-5 left-5 w-20 h-8 ${c.b1} rounded text-[12px] flex items-center justify-center ${c.t4} font-medium`}>
                 ボタン
               </div>
 
@@ -664,14 +728,14 @@ function AlBasicsSlide() {
               </div>
             </div>
             <div className={`text-[12px] ${c.t5} text-center`}>要素の間に「関係」がない</div>
-            <div className={`text-[11px] text-rose-400 text-center`}>文言変更時に手動で再調整が必要</div>
+            <div className={`text-[12px] text-rose-400 text-center`}>文言変更時に手動で再調整が必要</div>
           </div>
 
-          {/* オートレイアウト */}
+          {/* Auto Layout */}
           <div className="space-y-3">
             <div className="text-[13px] text-purple-400 mb-2 font-medium flex items-center gap-2">
               <CheckCircle className="w-4 h-4" />
-              <span>オートレイアウト</span>
+              <span>Auto Layout</span>
             </div>
             <div
               className="h-[320px] rounded-2xl p-5 flex flex-col gap-3 relative"
@@ -694,7 +758,7 @@ function AlBasicsSlide() {
 
               {/* Button */}
               <div
-                className="w-20 h-8 rounded text-[11px] flex items-center justify-center text-white font-medium"
+                className="w-20 h-8 rounded text-[12px] flex items-center justify-center text-white font-medium"
                 style={{
                   background: 'linear-gradient(135deg, rgba(168,85,247,0.6), rgba(168,85,247,0.5))',
                   boxShadow: '0 4px 12px rgba(168,85,247,0.3)'
@@ -720,7 +784,7 @@ function AlBasicsSlide() {
               />
             </div>
             <div className="text-[12px] text-purple-400 text-center font-medium">余白と順序がルールになっている</div>
-            <div className={`text-[11px] text-purple-400 text-center`}>文言が変わっても自動で調整される</div>
+            <div className={`text-[12px] text-purple-400 text-center`}>文言が変わっても自動で調整される</div>
           </div>
         </div>
       </div>
@@ -736,8 +800,8 @@ function AlApplySlide() {
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>オートレイアウトは<strong>構造を持った配置ルール</strong>で柔軟なデザインを実現</Msg>
-      <Points items={["ボタン、リスト1行、カード、モーダルなどは適用しやすい","装飾的な自由配置やビジュアル演出には無理に使わない",<>Group / Frame / オートレイアウト の<strong>役割の違い</strong>を理解する</>,"意味のある単位で適用する"]} />
+      <Msg>Auto Layoutは<strong>構造を持った配置ルール</strong>で柔軟なデザインを実現</Msg>
+      <Points items={["ボタン、リスト1行、カード、モーダルなどは適用しやすい","装飾的な自由配置やビジュアル演出には無理に使わない",<>Group / Frame / Auto Layout の<strong>役割の違い</strong>を理解する</>,"意味のある単位で適用する"]} />
       <div className="w-full">
         <div className="grid grid-cols-2 gap-8">
           {/* Should apply */}
@@ -802,7 +866,7 @@ function AlApplySlide() {
                 )},
               ].map((ex) => (
                 <div key={ex.name}>
-                  <div className={`text-[11px] ${d ? 'text-purple-300' : 'text-purple-600'} mb-2 font-medium`}>{ex.name}</div>
+                  <div className={`text-[12px] ${d ? 'text-purple-300' : 'text-purple-600'} mb-2 font-medium`}>{ex.name}</div>
                   {ex.el}
                 </div>
               ))}
@@ -840,7 +904,7 @@ function AlApplySlide() {
                 )},
               ].map((ex) => (
                 <div key={ex.name}>
-                  <div className={`text-[11px] ${c.t5} mb-2`}>{ex.name}</div>
+                  <div className={`text-[12px] ${c.t5} mb-2`}>{ex.name}</div>
                   {ex.el}
                 </div>
               ))}
@@ -850,26 +914,26 @@ function AlApplySlide() {
       </div>
 
       <div className="rounded-xl p-4" style={{ background: c.glass, border: c.glassBd }}>
-        <Label>Group / Frame / オートレイアウト の使い分け</Label>
+        <Label>Group / Frame / Auto Layout の使い分け</Label>
         <div className={`grid grid-cols-3 gap-3 text-[12px] ${c.t3}`}>
           <div className="rounded-lg p-3 text-center" style={{ background: c.glass, border: c.glassBd }}>
             <div className={`font-medium ${c.t2} mb-1`}>Group</div>
             <div>まとめて移動するだけ</div>
-            <div className={`text-[11px] ${c.t5} mt-1`}>構造なし</div>
+            <div className={`text-[12px] ${c.t5} mt-1`}>構造なし</div>
           </div>
           <div className="rounded-lg p-3 text-center" style={{ background: c.glass, border: c.glassBd }}>
             <div className={`font-medium ${c.t2} mb-1`}>Frame</div>
             <div>領域とクリッピング</div>
-            <div className={`text-[11px] ${c.t5} mt-1`}>箱だけ</div>
+            <div className={`text-[12px] ${c.t5} mt-1`}>箱だけ</div>
           </div>
           <div className="rounded-lg p-3 text-center" style={{ background: "rgba(168,85,247,0.08)", border: "1px solid rgba(168,85,247,0.2)" }}>
-            <div className={`font-medium ${d ? "text-purple-300" : "text-purple-600"} mb-1`}>オートレイアウト</div>
+            <div className={`font-medium ${d ? "text-purple-300" : "text-purple-600"} mb-1`}>Auto Layout</div>
             <div>並び・余白・伸縮ルール</div>
-            <div className="text-[11px] text-purple-400 mt-1">構造あり</div>
+            <div className="text-[12px] text-purple-400 mt-1">構造あり</div>
           </div>
         </div>
       </div>
-      <Ng>「全部にオートレイアウトをかければ良い」は思考停止。意味の単位で判断する</Ng>
+      <Ng>「全部にAuto Layoutをかければ良い」は思考停止。意味の単位で判断する</Ng>
     </div>
   );
 }
@@ -884,7 +948,7 @@ function AlDirectionSlide() {
 
       <div className={`text-[14px] ${c.t3} leading-relaxed`}>
         <p>
-          オートレイアウトを適切に設定することで、横幅を変えてもレイアウトが崩れない、カードなどのパーツを作ったり、と柔軟なデザイン・レイアウトを作ることが出来ます。
+          Auto Layoutを適切に設定することで、横幅を変えてもレイアウトが崩れない、カードなどのパーツを作ったり、と柔軟なデザイン・レイアウトを作ることが出来ます。
         </p>
       </div>
 
@@ -900,10 +964,10 @@ function AlDirectionSlide() {
       >
         <ExpandableImage
           src="/images/content_image-1711415488661.gif"
-          alt="オートレイアウトによる柔軟なレイアウトの例"
+          alt="Auto Layoutによる柔軟なレイアウトの例"
         />
         <div
-          className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+          className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
           style={{
             background: 'rgba(0,0,0,0.6)',
             color: 'rgba(255,255,255,0.8)'
@@ -915,10 +979,10 @@ function AlDirectionSlide() {
 
       <div className={`text-[14px] ${c.t3} leading-relaxed space-y-4`}>
         <p>
-          オートレイアウトフレームの要素は、方向、間隔、パディング、整列、その他のオートレイアウトプロパティに基づいて自動的に配置されます。コンテンツが変更されたり、要素が追加、削除、サイズ変更された場合でも、レイアウトは手動で再配置する必要なく調整されます。
+          Auto Layoutフレームの要素は、方向、間隔、パディング、整列、その他のAuto Layoutプロパティに基づいて自動的に配置されます。コンテンツが変更されたり、要素が追加、削除、サイズ変更された場合でも、レイアウトは手動で再配置する必要なく調整されます。
         </p>
         <p>
-          オートレイアウトを使用すると、以下のような応答性のあるデザインを作成できます。
+          Auto Layoutを使用すると、以下のような応答性のあるデザインを作成できます。
         </p>
         <ul className="list-disc ml-6 space-y-1">
           <li>テキストラベルの編集に合わせて拡大/縮小するボタン</li>
@@ -943,7 +1007,7 @@ function AlDirectionSlide() {
           alt="縦横のレイアウトの例"
         />
         <div
-          className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+          className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
           style={{
             background: 'rgba(0,0,0,0.6)',
             color: 'rgba(255,255,255,0.8)'
@@ -957,10 +1021,10 @@ function AlDirectionSlide() {
         <div className={`text-[15px] ${c.t2} font-semibold`}>アライメントについて</div>
         <div className={`text-[14px] ${c.t3} leading-relaxed space-y-3`}>
           <p>
-            オートレイアウトフレーム内で子オブジェクトの配置方法を選択します。使用可能な配置オプションは、オートレイアウトフレームの流れと、アイテム間の間隔（配置間隔）によって決まります。
+            Auto Layoutフレーム内で子オブジェクトの配置方法を選択します。使用可能な配置オプションは、Auto Layoutフレームの流れと、アイテム間の間隔（配置間隔）によって決まります。
           </p>
           <p>
-            通常のフレーム内のオブジェクトとは異なり、個々のオブジェクトの配置を制御することはできません。そのため、子オブジェクトの配置は親のオートレイアウトフレーム上で設定します。
+            通常のフレーム内のオブジェクトとは異なり、個々のオブジェクトの配置を制御することはできません。そのため、子オブジェクトの配置は親のAuto Layoutフレーム上で設定します。
           </p>
         </div>
         <div
@@ -978,7 +1042,7 @@ function AlDirectionSlide() {
             alt="アライメントの設定例"
           />
           <div
-            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
             style={{
               background: 'rgba(0,0,0,0.6)',
               color: 'rgba(255,255,255,0.8)'
@@ -1011,7 +1075,7 @@ function AlDirectionSlide() {
             alt="アライメントの自動設定"
           />
           <div
-            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
             style={{
               background: 'rgba(0,0,0,0.6)',
               color: 'rgba(255,255,255,0.8)'
@@ -1046,7 +1110,7 @@ function AlDirectionSlide() {
             alt="アイテム間の間隔の設定"
           />
           <div
-            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
             style={{
               background: 'rgba(0,0,0,0.6)',
               color: 'rgba(255,255,255,0.8)'
@@ -1061,7 +1125,7 @@ function AlDirectionSlide() {
         <div className={`text-[15px] ${c.t2} font-semibold`}>Paddingについて</div>
         <div className={`text-[14px] ${c.t3} leading-relaxed`}>
           <p>
-            パディングは、オートレイアウトフレームの境界とフレームの子オブジェクトとの間の空白（余白）を制御します。パディングは、均一に、垂直方向と水平方向に設定することも、上、右、下、左にそれぞれ異なる値を設定することもできます。
+            パディングは、Auto Layoutフレームの境界とフレームの子オブジェクトとの間の空白（余白）を制御します。パディングは、均一に、垂直方向と水平方向に設定することも、上、右、下、左にそれぞれ異なる値を設定することもできます。
           </p>
         </div>
         <div
@@ -1079,7 +1143,7 @@ function AlDirectionSlide() {
             alt="パディングの設定"
           />
           <div
-            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
             style={{
               background: 'rgba(0,0,0,0.6)',
               color: 'rgba(255,255,255,0.8)'
@@ -1108,7 +1172,7 @@ function AlDirectionSlide() {
             alt="個別のパディング設定"
           />
           <div
-            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
             style={{
               background: 'rgba(0,0,0,0.6)',
               color: 'rgba(255,255,255,0.8)'
@@ -1133,7 +1197,7 @@ function AlDirectionSlide() {
             alt="オブジェクト操作のイメージ"
           />
           <div
-            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
             style={{
               background: 'rgba(0,0,0,0.6)',
               color: 'rgba(255,255,255,0.8)'
@@ -1162,7 +1226,7 @@ function AlDirectionSlide() {
             alt="絶対位置の設定"
           />
           <div
-            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
             style={{
               background: 'rgba(0,0,0,0.6)',
               color: 'rgba(255,255,255,0.8)'
@@ -1234,7 +1298,7 @@ function AlDirectionSlide() {
                     borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
                   }}
                 >
-                  オートレイアウトフレーム
+                  Auto Layoutフレーム
                 </td>
                 <td
                   className={`p-3 ${c.t4}`}
@@ -1265,7 +1329,7 @@ function AlDirectionSlide() {
                     borderBottom: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
                   }}
                 >
-                  オートレイアウトのフレームの子オブジェクト
+                  Auto Layoutのフレームの子オブジェクト
                 </td>
                 <td
                   className={`p-3 ${c.t4}`}
@@ -1375,13 +1439,13 @@ function AlDirectionSlide() {
               </tr>
             </tbody>
           </table>
-          <div className={`text-right text-[11px] ${c.t4} mt-2`}>
+          <div className={`text-right text-[12px] ${c.t4} mt-2`}>
             出典：Figma公式
           </div>
         </div>
       </div>
 
-      <Tip>オートレイアウトの方向・間隔・パディングを適切に設定することで、コンテンツの変更に自動で対応する柔軟なレイアウトを実現できる</Tip>
+      <Tip>Auto Layoutの方向・間隔・パディングを適切に設定することで、コンテンツの変更に自動で対応する柔軟なレイアウトを実現できる</Tip>
     </div>
   );
 }
@@ -1392,7 +1456,7 @@ function AlFigmaUISlide() {
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>Figmaの<strong>オートレイアウト設定パネル</strong>を理解する</Msg>
+      <Msg>Figmaの<strong>Auto Layout設定パネル</strong>を理解する</Msg>
       <Points items={["Direction（縦/横の向き）","Gap（要素間の余白）","Padding（外枠との余白）","Alignment（配置）とResizing（伸縮）"]} />
 
       <div className="w-full">
@@ -1421,7 +1485,7 @@ function AlFigmaUISlide() {
             </div>
           </div>
 
-          {/* Figma オートレイアウト Panel Screenshot */}
+          {/* Figma Auto Layout Panel Screenshot */}
           <div className="flex items-center justify-start">
             <div
               className="rounded-2xl overflow-hidden"
@@ -1431,7 +1495,7 @@ function AlFigmaUISlide() {
             >
               <img
                 src="/images/al-figma-ui-panel.png"
-                alt="Figma オートレイアウト設定パネル"
+                alt="Figma Auto Layout設定パネル"
                 style={{
                   maxWidth: '100%',
                   height: 'auto',
@@ -1469,7 +1533,7 @@ function AlFigmaUISlide() {
         </a>
       </div>
 
-      <Tip>Figmaの設定パネルは、オートレイアウトの「何を」「どう」設定するかを視覚的に表現している</Tip>
+      <Tip>Figmaの設定パネルは、Auto Layoutの「何を」「どう」設定するかを視覚的に表現している</Tip>
     </div>
   );
 }
@@ -1495,7 +1559,7 @@ function AlTextSlide() {
               <div className={`text-[13px] font-medium ${c.t2}`}>{ex.title}</div>
               <div className={`text-[14px] ${c.t4} leading-relaxed ${ex.truncate ? "line-clamp-2" : ""}`}>{ex.body}</div>
               <div className="mt-auto">
-                <div className="text-[11px] text-purple-400 font-medium">詳しく見る →</div>
+                <div className="text-[12px] text-purple-400 font-medium">詳しく見る →</div>
               </div>
             </div>
           ))}
@@ -1532,12 +1596,12 @@ function AlAdvancedSlide() {
             <Label>最小・最大幅</Label>
             <div className="space-y-3">
               <div className="rounded-xl p-3" style={{ background: c.glass, border: c.glassBd }}>
-                <div className="bg-purple-500/40 text-white text-[11px] rounded-lg px-3 py-1.5 text-center" style={{ minWidth: 100 }}>短い</div>
-                <div className={`text-[10px] ${c.t5} mt-1.5 text-center`}>min-width で潰れない</div>
+                <div className="bg-purple-500/40 text-white text-[12px] rounded-lg px-3 py-1.5 text-center" style={{ minWidth: 100 }}>短い</div>
+                <div className={`text-[12px] ${c.t5} mt-1.5 text-center`}>min-width で潰れない</div>
               </div>
               <div className="rounded-xl p-3" style={{ background: c.glass, border: c.glassBd }}>
-                <div className="bg-purple-500/40 text-white text-[11px] rounded-lg px-3 py-1.5 text-center truncate" style={{ maxWidth: 120 }}>とても長いボタンラベル</div>
-                <div className={`text-[10px] ${c.t5} mt-1.5 text-center`}>max-width で広がりすぎない</div>
+                <div className="bg-purple-500/40 text-white text-[12px] rounded-lg px-3 py-1.5 text-center truncate" style={{ maxWidth: 120 }}>とても長いボタンラベル</div>
+                <div className={`text-[12px] ${c.t5} mt-1.5 text-center`}>max-width で広がりすぎない</div>
               </div>
             </div>
           </div>
@@ -1546,10 +1610,10 @@ function AlAdvancedSlide() {
             <div className="rounded-xl p-3" style={{ background: c.glass, border: c.glassBd }}>
               <div className="flex gap-2 items-end justify-center">
                 {[40, 56, 72].map((s) => (
-                  <div key={s} className="bg-gradient-to-br from-purple-500/20 to-purple-500/10 rounded-lg flex items-center justify-center text-[10px] text-purple-400" style={{ width: s, height: s * 0.75 }}>4:3</div>
+                  <div key={s} className="bg-gradient-to-br from-purple-500/20 to-purple-500/10 rounded-lg flex items-center justify-center text-[12px] text-purple-400" style={{ width: s, height: s * 0.75 }}>4:3</div>
                 ))}
               </div>
-              <div className={`text-[10px] ${c.t5} mt-2 text-center`}>サイズが変わっても比率は維持</div>
+              <div className={`text-[12px] ${c.t5} mt-2 text-center`}>サイズが変わっても比率は維持</div>
             </div>
           </div>
           <div>
@@ -1557,9 +1621,9 @@ function AlAdvancedSlide() {
             <div className="rounded-xl p-3" style={{ background: c.glass, border: c.glassBd }}>
               <div className="relative inline-block">
                 <div className="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center text-[16px]">🔔</div>
-                <div className={`absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-white text-[10px] flex items-center justify-center font-medium ring-2 ${c.rn}`}>3</div>
+                <div className={`absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-white text-[12px] flex items-center justify-center font-medium ring-2 ${c.rn}`}>3</div>
               </div>
-              <div className={`text-[10px] ${c.t5} mt-2`}>フローの例外として使う</div>
+              <div className={`text-[12px] ${c.t5} mt-2`}>フローの例外として使う</div>
             </div>
           </div>
         </div>
@@ -1575,8 +1639,18 @@ function CompBasicsSlide() {
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>コンポーネントは、見た目の再利用ではなく、<strong>判断の再利用</strong></Msg>
-      <Points items={["メインコンポーネントは基準、インスタンスは文脈に応じた利用","オーバーライドは文脈への適応","Reset は基準に戻す、Detach は基準とのつながりを切る"]} />
+      <Msg>コンポーネント = 同じ部品を何度も作らないための<strong>仕組み</strong></Msg>
+
+      <div className={`text-[14px] ${c.t3} leading-relaxed space-y-4`}>
+        <p>
+          ボタンやカードなど、繰り返し使う部品を1つのコンポーネントにまとめておけば、デザイン変更も一箇所で済みます。
+        </p>
+        <p>
+          例えば「送信ボタン」「キャンセルボタン」「削除ボタン」を毎回手作りするのではなく、1つのボタンコンポーネントから作れば、後から色や角丸を変えたいときも一気に反映できます。
+        </p>
+      </div>
+
+      <Points items={["メインコンポーネント = 基準となる1つの部品","インスタンス = メインから作ったコピー（文言や色を部分的に変更できる）","変更した部分は元に戻したり、完全に切り離すこともできる"]} />
 
       <div
         className="rounded-2xl p-8 relative overflow-hidden"
@@ -1591,7 +1665,7 @@ function CompBasicsSlide() {
         <div className="flex flex-col items-center gap-6 relative z-10">
           {/* Main Component */}
           <div className="flex flex-col items-center gap-3">
-            <div className="text-[11px] text-purple-400 uppercase tracking-wider font-medium">Main Component</div>
+            <div className="text-[12px] text-purple-400 uppercase tracking-wider font-medium">Main Component</div>
             <div
               className="rounded-xl p-5 flex items-center gap-3 w-64 relative"
               style={{
@@ -1630,8 +1704,8 @@ function CompBasicsSlide() {
           {/* Instances */}
           <div className="flex gap-6">
             {[
-              { label: "送信する", override: "", color: 'rgba(168,85,247,0.08)' },
-              { label: "キャンセル", override: "文言変更", color: 'rgba(59,130,246,0.08)' },
+              { label: "送信する", override: "文言変更", color: 'rgba(168,85,247,0.08)' },
+              { label: "キャンセル", override: "文言変更", color: 'rgba(168,85,247,0.08)' },
               { label: "削除", override: "文言+色変更", color: 'rgba(244,63,94,0.08)' },
             ].map((inst) => (
               <div key={inst.label} className="flex flex-col items-center gap-2">
@@ -1647,7 +1721,7 @@ function CompBasicsSlide() {
                   <span className={`text-[13px] ${d ? c.t2 : c.t3} font-medium`}>{inst.label}</span>
                 </div>
                 {inst.override && (
-                  <div className="text-[10px] text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded">
+                  <div className="text-[12px] text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded">
                     {inst.override}
                   </div>
                 )}
@@ -1823,125 +1897,33 @@ function CompPropsSlide() {
         </a>
       </div>
 
-      <div className="rounded-xl p-6 mt-8" style={{ background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)', border: `1px solid ${d ? 'rgba(168,85,247,0.1)' : 'rgba(168,85,247,0.08)'}` }}>
-        <div className="grid grid-cols-[440px_auto_1fr]">
-          <div className="self-start">
-            <div className="text-[13px] text-rose-400 font-semibold mb-3 flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4" />
-              やりがちな失敗
-            </div>
-            <div className={`text-[13px] ${c.t4} space-y-2`}>
-              <div>• プロパティ名を「左アイコン」など見た目の表現で付けてしまう問題</div>
-              <div>• Label変更もVariant化してすべてをVariantで作ってしまう問題</div>
-              <div>• プロパティが多すぎて使いにくく複雑なコンポーネントになる問題</div>
-            </div>
+      <div className="space-y-4 mt-8">
+        <div className="rounded-xl p-6" style={{ background: d ? 'rgba(249,115,22,0.08)' : 'rgba(249,115,22,0.04)', border: `1px solid ${d ? 'rgba(249,115,22,0.25)' : 'rgba(249,115,22,0.18)'}` }}>
+          <div className="text-[13px] text-orange-500 font-semibold mb-3 flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4" />
+            やりがちな失敗
           </div>
+          <div className={`text-[13px] ${c.t4} space-y-2`}>
+            <div>• プロパティ名を「左アイコン」など見た目の表現で付けてしまう問題</div>
+            <div>• Label変更もVariant化してすべてをVariantで作ってしまう問題</div>
+            <div>• プロパティが多すぎて使いにくく複雑なコンポーネントになる問題</div>
+          </div>
+        </div>
 
-          <div className="text-[24px] text-purple-400 mr-10 self-center">→</div>
-
-          <div className="self-start">
-            <div className="text-[13px] text-emerald-400 font-semibold mb-3 flex items-center gap-2">
-              <span>✓</span>
-              おすすめのやり方
-            </div>
-            <div className={`text-[13px] ${c.t4} space-y-2`}>
-              <div>• プロパティ名は「Show left icon」のように役割で付けること</div>
-              <div>• テキスト変更はプロパティで、見た目の切り替えはVariantで行うこと</div>
-              <div>• 本当に必要なプロパティだけに絞ってシンプルで使いやすく保つこと</div>
-            </div>
+        <div className="rounded-xl p-6" style={{ background: d ? 'rgba(16,185,129,0.12)' : 'rgba(16,185,129,0.06)', border: `2px solid ${d ? 'rgba(16,185,129,0.3)' : 'rgba(16,185,129,0.2)'}` }}>
+          <div className="text-[13px] text-emerald-400 font-semibold mb-3 flex items-center gap-2">
+            <span>✓</span>
+            おすすめのやり方
+          </div>
+          <div className={`text-[13px] ${c.t4} space-y-2`}>
+            <div>• プロパティ名は「Show left icon」のように役割で付けること</div>
+            <div>• テキスト変更はプロパティで、見た目の切り替えはVariantで行うこと</div>
+            <div>• 本当に必要なプロパティだけに絞ってシンプルで使いやすく保つこと</div>
           </div>
         </div>
       </div>
 
       <Tip>プロパティで変更可能な部分を決めることで、デザインの一貫性を保ちながら柔軟に使える</Tip>
-    </div>
-  );
-}
-
-function CompVariantsButtonExampleSlide() {
-  const theme = useTheme();
-  const c = tc(theme);
-  const d = theme === "dark";
-  return (
-    <div className="space-y-10">
-      <Msg>ボタンコンポーネントを例に<strong>バリアントの実践的な使い方</strong>を理解する</Msg>
-
-      {/* Naming Convention */}
-      <div>
-        <div className={`text-[16px] ${c.t2} font-semibold mb-3`}>
-          1. バリアント命名規則
-        </div>
-        <div className={`text-[14px] ${c.t4} mb-3 leading-relaxed`}>
-          <strong>Button/Primary/Large/Default/False</strong> という名前のコンポーネントは、次のようなプロパティと値を持つことになります：
-          <div className="mt-2 pl-4 space-y-1">
-            <div>• <strong>コンポーネントセット名:</strong> Button</div>
-            <div>• <strong>Variant:</strong> Primary</div>
-            <div>• <strong>Size:</strong> Large</div>
-            <div>• <strong>State:</strong> Default</div>
-            <div>• <strong>Icon:</strong> False</div>
-          </div>
-        </div>
-        <div
-          className="w-full rounded-2xl overflow-hidden relative"
-          style={{
-            background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
-            border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
-            boxShadow: d
-              ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
-              : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
-          }}
-        >
-          <ExpandableImage
-            src="/images/variant-naming.png"
-            alt="バリアント命名規則"
-          />
-          <div
-            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
-            style={{
-              background: 'rgba(0,0,0,0.6)',
-              color: 'rgba(255,255,255,0.8)'
-            }}
-          >
-            出典：Figma公式
-          </div>
-        </div>
-      </div>
-
-      {/* Grid Layout */}
-      <div>
-        <div className={`text-[16px] ${c.t2} font-semibold mb-3 mt-10`}>
-          2. グリッドで整理する
-        </div>
-        <div className={`text-[14px] ${c.t4} mb-3 leading-relaxed`}>
-          特定のコンポーネント用のバリアントが多数ある場合は、コンポーネントを<strong>行、列、またはグリッドで整理</strong>すると良いでしょう。これにより、コンポーネントの多元的な性質をデザインシステムの使用者全員に伝えやすくなります。また、コンポーネントセットにテキストレイヤーを付加することで、関連するプロパティと値でアノテーションを行うことができます。
-        </div>
-        <div
-          className="w-full rounded-2xl overflow-hidden relative"
-          style={{
-            background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
-            border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
-            boxShadow: d
-              ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
-              : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
-          }}
-        >
-          <ExpandableImage
-            src="/images/variant-grid.png"
-            alt="バリアントのグリッド配置"
-          />
-          <div
-            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
-            style={{
-              background: 'rgba(0,0,0,0.6)',
-              color: 'rgba(255,255,255,0.8)'
-            }}
-          >
-            出典：Figma公式
-          </div>
-        </div>
-      </div>
-
-      <Tip>スラッシュ区切りの命名規則を使用すると、Figmaが自動的にバリアントプロパティと値を認識して設定してくれる</Tip>
     </div>
   );
 }
@@ -1952,127 +1934,123 @@ function CompVariantsPropertiesSlide() {
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>バリアントは<strong>プロパティと値の組み合わせ</strong>で構成される</Msg>
-      <Points items={["プロパティ = コンポーネントの変数（例：サイズ、状態、色）","値 = 各プロパティの選択肢（例：Small, Medium, Large）","各バリアントの「プロパティと値の組み合わせ」は一意でなくてはならない"]} />
+      <Msg>プロパティ = 何を切り替えるか、値 = どういう<strong>状態があるか</strong></Msg>
 
+      <div className={`text-[14px] ${c.t3} leading-relaxed space-y-4`}>
+        <p>
+          バリアントを作るときは、まず「何が変わるのか」を整理します。
+        </p>
+        <p>
+          例えばタブなら「選択されているか・いないか」が変わります。これが<strong>プロパティ（切り替える軸）</strong>です。
+        </p>
+        <p>
+          そして、その軸の中身が<strong>値</strong>です。state というプロパティなら、default / selected という値を持ちます。
+        </p>
+      </div>
+
+      {/* 小さい例 */}
       <div
-        className="w-full rounded-2xl p-8"
+        className="rounded-xl p-6"
         style={{
-          background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
-          border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
-          boxShadow: d
-            ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
-            : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+          background: d ? 'rgba(168,85,247,0.06)' : 'rgba(168,85,247,0.04)',
+          border: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
         }}
       >
-        <div className="space-y-8">
-          {/* Property 1 */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div
-                className="px-3 py-1.5 rounded-lg text-[12px] font-semibold"
-                style={{
-                  background: d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)',
-                  color: d ? '#c4b5fd' : '#7c3aed'
-                }}
-              >
-                プロパティ 1
-              </div>
-              <ArrowRight className="w-5 h-5 text-purple-400" />
-              <div className={`text-[13px] ${d ? 'text-purple-200' : 'text-purple-700'} font-semibold`}>
-                Hierarchy（階層）
-              </div>
-            </div>
-            <div className="flex gap-3">
-              {['Primary', 'Secondary', 'Tertiary'].map((val, i) => (
-                <div
-                  key={val}
-                  className="flex-1 rounded-xl p-4 text-center"
-                  style={{
-                    background: d ? 'rgba(168,85,247,0.08)' : 'rgba(168,85,247,0.06)',
-                    border: `1px solid ${d ? 'rgba(168,85,247,0.25)' : 'rgba(168,85,247,0.2)'}`,
-                    boxShadow: '0 2px 8px rgba(168,85,247,0.1)'
-                  }}
-                >
-                  <div className={`text-[11px] ${c.t5} mb-2`}>値 {i + 1}</div>
-                  <div className={`text-[13px] font-semibold ${d ? 'text-purple-200' : 'text-purple-700'}`}>
-                    {val}
-                  </div>
-                </div>
-              ))}
+        <div className={`text-[15px] ${c.t2} font-semibold mb-4`}>例：Category Tab</div>
+        <div className={`text-[14px] ${c.t3} space-y-3`}>
+          <div className="flex items-center gap-3">
+            <div className={`text-[13px] ${c.t4} font-medium w-24`}>Property:</div>
+            <div className="px-3 py-1.5 rounded-lg text-[13px] font-semibold" style={{ background: d ? 'rgba(168,85,247,0.15)' : 'rgba(168,85,247,0.12)', color: d ? '#c4b5fd' : '#7c3aed' }}>
+              state
             </div>
           </div>
-
-          {/* Property 2 */}
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div
-                className="px-3 py-1.5 rounded-lg text-[12px] font-semibold"
-                style={{
-                  background: d ? 'rgba(59,130,246,0.2)' : 'rgba(59,130,246,0.15)',
-                  color: d ? '#60a5fa' : '#3b82f6'
-                }}
-              >
-                プロパティ 2
+          <div className="flex items-start gap-3">
+            <div className={`text-[13px] ${c.t4} font-medium w-24`}>Values:</div>
+            <div className="flex gap-2">
+              <div className="px-3 py-1.5 rounded-lg text-[13px]" style={{ background: d ? 'rgba(168,85,247,0.08)' : 'rgba(168,85,247,0.06)', border: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`, color: c.t2 }}>
+                default
               </div>
-              <ArrowRight className="w-5 h-5 text-blue-400" />
-              <div className={`text-[13px] ${d ? 'text-blue-200' : 'text-blue-700'} font-semibold`}>
-                Size（サイズ）
+              <div className="px-3 py-1.5 rounded-lg text-[13px]" style={{ background: d ? 'rgba(168,85,247,0.08)' : 'rgba(168,85,247,0.06)', border: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`, color: c.t2 }}>
+                selected
               </div>
-            </div>
-            <div className="flex gap-3">
-              {['Small', 'Medium', 'Large'].map((val, i) => (
-                <div
-                  key={val}
-                  className="flex-1 rounded-xl p-4 text-center"
-                  style={{
-                    background: d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)',
-                    border: `1px solid ${d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.2)'}`,
-                    boxShadow: '0 2px 8px rgba(59,130,246,0.1)'
-                  }}
-                >
-                  <div className={`text-[11px] ${c.t5} mb-2`}>値 {i + 1}</div>
-                  <div className={`text-[13px] font-semibold ${d ? 'text-blue-200' : 'text-blue-700'}`}>
-                    {val}
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
+        </div>
+        <div className={`text-[13px] ${c.t4} mt-4 italic`}>
+          最初は1つのプロパティから考えればOK
+        </div>
+      </div>
 
-          {/* Combination */}
-          <div className="pt-4 border-t" style={{ borderColor: d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)' }}>
-            <div className={`text-[13px] ${c.t3} mb-4 text-center`}>
-              プロパティの組み合わせ = バリアント
+      {/* 実例：ボタンバリアント */}
+      <div>
+        <div className={`text-[16px] ${c.t2} font-semibold mb-4`}>
+          実例：ボタンバリアント
+        </div>
+
+        {/* 命名規則 */}
+        <div className="mb-6">
+          <div className={`text-[14px] ${c.t3} mb-3 leading-relaxed`}>
+            複数のプロパティを持つ場合、バリアント名は <strong>Button/Primary/Large/Default/False</strong> のように表現されます。
+          </div>
+          <div
+            className="w-full rounded-2xl overflow-hidden relative"
+            style={{
+              background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+              border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+              boxShadow: d
+                ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
+                : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+            }}
+          >
+            <ExpandableImage
+              src="/images/variant-naming.png"
+              alt="バリアント命名規則"
+            />
+            <div
+              className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
+              style={{
+                background: 'rgba(0,0,0,0.6)',
+                color: 'rgba(255,255,255,0.8)'
+              }}
+            >
+              出典：Figma公式
             </div>
-            <div className="grid grid-cols-3 gap-3">
-              {[
-                ['Primary', 'Small'],
-                ['Primary', 'Medium'],
-                ['Secondary', 'Large']
-              ].map((combo, i) => (
-                <div
-                  key={i}
-                  className="rounded-lg p-3 text-center"
-                  style={{
-                    background: d ? 'rgba(16,185,129,0.08)' : 'rgba(16,185,129,0.06)',
-                    border: `1px solid ${d ? 'rgba(16,185,129,0.25)' : 'rgba(16,185,129,0.2)'}`
-                  }}
-                >
-                  <div className={`text-[11px] ${d ? 'text-emerald-300' : 'text-emerald-700'}`}>
-                    {combo[0]} / {combo[1]}
-                  </div>
-                </div>
-              ))}
-              <div className={`text-[11px] ${c.t5} flex items-center justify-center`}>
-                ...etc
-              </div>
+          </div>
+        </div>
+
+        {/* グリッド配置 */}
+        <div>
+          <div className={`text-[14px] ${c.t3} mb-3 leading-relaxed`}>
+            バリアントが多い場合は、<strong>グリッドで整理</strong>すると使いやすくなります。
+          </div>
+          <div
+            className="w-full rounded-2xl overflow-hidden relative"
+            style={{
+              background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+              border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+              boxShadow: d
+                ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
+                : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+            }}
+          >
+            <ExpandableImage
+              src="/images/variant-grid.png"
+              alt="バリアントのグリッド配置"
+            />
+            <div
+              className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
+              style={{
+                background: 'rgba(0,0,0,0.6)',
+                color: 'rgba(255,255,255,0.8)'
+              }}
+            >
+              出典：Figma公式
             </div>
           </div>
         </div>
       </div>
 
-      <Tip>プロパティ名は「内容を分かりやすく表した名前」を付ける（見た目ではなく意味）</Tip>
+      <Points items={["最初は state のような1つの軸から考えればよい","プロパティ名は見た目ではなく意味でつける（「青いボタン」ではなく「primary」）","バリアントが多い場合はグリッドで整理する"]} />
     </div>
   );
 }
@@ -2106,7 +2084,7 @@ function CompVariantsCreateSlide() {
           }}
         />
         <div
-          className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+          className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
           style={{
             background: 'rgba(0,0,0,0.6)',
             color: 'rgba(255,255,255,0.8)'
@@ -2180,29 +2158,23 @@ function CompSlotSlide() {
             border: `1px solid ${d ? 'rgba(168,85,247,0.15)' : 'rgba(168,85,247,0.1)'}`
           }}
         >
-          <div className={`text-[15px] ${c.t2} font-semibold mb-4`}>Slotの作り方</div>
-          <div className={`text-[14px] ${c.t3} space-y-3`}>
-            <div className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center shrink-0 text-[13px] text-purple-400 font-semibold mt-0.5">1</div>
-              <div>
-                <div className="font-medium mb-1">コンポーネント内にフレームを作成</div>
-                <div className={`text-[13px] ${c.t4}`}>Slotとして使いたいエリアをフレームで作成します</div>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center shrink-0 text-[13px] text-purple-400 font-semibold mt-0.5">2</div>
-              <div>
-                <div className="font-medium mb-1">右パネルで「Add slot」を選択</div>
-                <div className={`text-[13px] ${c.t4}`}>レイヤーを選択した状態で、右パネルのContent欄から「Add slot」をクリック</div>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center shrink-0 text-[13px] text-purple-400 font-semibold mt-0.5">3</div>
-              <div>
-                <div className="font-medium mb-1">インスタンス側で要素を配置</div>
-                <div className={`text-[13px] ${c.t4}`}>Slotエリアにドラッグ&ドロップで任意の要素を配置できます</div>
-              </div>
-            </div>
+          <div className={`text-[15px] ${c.t2} font-semibold mb-4`}>Slotの使い方</div>
+          <div className={`text-[14px] ${c.t3} leading-relaxed mb-4`}>
+            メインコンポーネントにスロットが設定されると、そのインスタンスを取得して、スロットにコンテンツを追加できるようになります。最上位コンポーネントを選択またはマウスオーバーすると、スロットの周囲にピンク色の枠が表示されます。
+          </div>
+          <div className={`text-[14px] ${c.t3} leading-relaxed mb-4`}>
+            スロットにはあらゆる種類のレイヤーを追加できます。
+          </div>
+          <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}` }}>
+            <img
+              src="/images/slots-add-content.gif"
+              alt="Slotにコンテンツを追加する方法"
+              style={{
+                width: '100%',
+                height: 'auto',
+                display: 'block'
+              }}
+            />
           </div>
         </div>
 
@@ -2210,11 +2182,11 @@ function CompSlotSlide() {
           <div
             className="rounded-xl p-5"
             style={{
-              background: d ? 'rgba(59,130,246,0.04)' : 'rgba(59,130,246,0.02)',
-              border: `1px solid ${d ? 'rgba(59,130,246,0.2)' : 'rgba(59,130,246,0.15)'}`
+              background: d ? 'rgba(16,185,129,0.08)' : 'rgba(16,185,129,0.04)',
+              border: `1px solid ${d ? 'rgba(16,185,129,0.25)' : 'rgba(16,185,129,0.2)'}`
             }}
           >
-            <div className="text-[13px] text-blue-400 font-semibold mb-3 flex items-center gap-2">
+            <div className="text-[13px] text-emerald-400 font-semibold mb-3 flex items-center gap-2">
               <span>✓</span>
               Slotが向いている場面
             </div>
@@ -2229,16 +2201,19 @@ function CompSlotSlide() {
           <div
             className="rounded-xl p-5"
             style={{
-              background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
-              border: `1px solid ${d ? 'rgba(168,85,247,0.15)' : 'rgba(168,85,247,0.1)'}`
+              background: d ? 'rgba(16,185,129,0.08)' : 'rgba(16,185,129,0.04)',
+              border: `1px solid ${d ? 'rgba(16,185,129,0.25)' : 'rgba(16,185,129,0.2)'}`
             }}
           >
-            <div className={`text-[13px] text-purple-400 font-semibold mb-3`}>Slotの利点</div>
+            <div className={`text-[13px] text-emerald-400 font-semibold mb-3 flex items-center gap-2`}>
+              <span>✓</span>
+              Slotの利点
+            </div>
             <div className={`text-[13px] ${c.t4} space-y-2`}>
               <div>• どんな要素でも差し込める柔軟性</div>
               <div>• プロパティよりも自由度が高い</div>
               <div>• ネストしたコンポーネントも配置可</div>
-              <div>• オートレイアウトと組み合わせ可</div>
+              <div>• Auto Layoutと組み合わせ可</div>
             </div>
           </div>
         </div>
@@ -2278,13 +2253,13 @@ function CompVariantsBestPracticesSlide() {
           <div className="mb-3">
             <div className="flex items-center gap-1.5 mb-2">
               <XCircle className="w-3.5 h-3.5 text-rose-400" />
-              <span className="text-[11px] text-rose-400 font-medium">悪い例</span>
+              <span className="text-[12px] text-rose-400 font-medium">悪い例</span>
             </div>
             <div className="flex gap-2">
               {['Variant1', 'Variant2', 'Variant3'].map(name => (
                 <div
                   key={name}
-                  className="px-2.5 py-1.5 rounded text-[10px] flex-1 text-center"
+                  className="px-2.5 py-1.5 rounded text-[12px] flex-1 text-center"
                   style={{
                     background: d ? 'rgba(244,63,94,0.08)' : 'rgba(244,63,94,0.06)',
                     border: `1px solid ${d ? 'rgba(244,63,94,0.2)' : 'rgba(244,63,94,0.15)'}`,
@@ -2301,13 +2276,13 @@ function CompVariantsBestPracticesSlide() {
           <div>
             <div className="flex items-center gap-1.5 mb-2">
               <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="text-[11px] text-emerald-400 font-medium">良い例</span>
+              <span className="text-[12px] text-emerald-400 font-medium">良い例</span>
             </div>
             <div className="flex gap-2">
               {['Hierarchy', 'Size', 'State'].map(name => (
                 <div
                   key={name}
-                  className="px-2.5 py-1.5 rounded text-[10px] flex-1 text-center"
+                  className="px-2.5 py-1.5 rounded text-[12px] flex-1 text-center"
                   style={{
                     background: d ? 'rgba(16,185,129,0.08)' : 'rgba(16,185,129,0.06)',
                     border: `1px solid ${d ? 'rgba(16,185,129,0.25)' : 'rgba(16,185,129,0.2)'}`,
@@ -2339,22 +2314,22 @@ function CompVariantsBestPracticesSlide() {
 
           {/* Variant Example */}
           <div className="mb-3">
-            <div className="text-[11px] text-purple-400 font-medium mb-2">バリアント：見た目が変わる</div>
+            <div className="text-[12px] text-purple-400 font-medium mb-2">バリアント：見た目が変わる</div>
             <div className="flex gap-2">
               <div
-                className="flex-1 rounded-lg px-3 py-2 text-[10px] text-center text-white"
+                className="flex-1 rounded-lg px-3 py-2 text-[12px] text-center text-white"
                 style={{ background: 'linear-gradient(135deg, #7c3aed, #a855f7)' }}
               >
                 Default
               </div>
               <div
-                className="flex-1 rounded-lg px-3 py-2 text-[10px] text-center text-white"
+                className="flex-1 rounded-lg px-3 py-2 text-[12px] text-center text-white"
                 style={{ background: 'linear-gradient(135deg, #6d28d9, #7c3aed)' }}
               >
                 Hover
               </div>
               <div
-                className="flex-1 rounded-lg px-3 py-2 text-[10px] text-center"
+                className="flex-1 rounded-lg px-3 py-2 text-[12px] text-center"
                 style={{
                   background: d ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
                   color: d ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)'
@@ -2367,10 +2342,10 @@ function CompVariantsBestPracticesSlide() {
 
           {/* Property Example */}
           <div>
-            <div className="text-[11px] text-blue-400 font-medium mb-2">プロパティ：値が変わる</div>
+            <div className="text-[12px] text-blue-400 font-medium mb-2">プロパティ：値が変わる</div>
             <div className="space-y-1.5">
               <div
-                className="rounded-lg px-3 py-2 text-[10px] text-center"
+                className="rounded-lg px-3 py-2 text-[12px] text-center"
                 style={{
                   background: d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)',
                   border: `1px solid ${d ? 'rgba(59,130,246,0.2)' : 'rgba(59,130,246,0.15)'}`,
@@ -2380,7 +2355,7 @@ function CompVariantsBestPracticesSlide() {
                 Label = "送信"
               </div>
               <div
-                className="rounded-lg px-3 py-2 text-[10px] text-center"
+                className="rounded-lg px-3 py-2 text-[12px] text-center"
                 style={{
                   background: d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)',
                   border: `1px solid ${d ? 'rgba(59,130,246,0.2)' : 'rgba(59,130,246,0.15)'}`,
@@ -2414,7 +2389,7 @@ function CompVariantsBestPracticesSlide() {
             <div>
               <div className="flex items-center gap-1.5 mb-2">
                 <XCircle className="w-3.5 h-3.5 text-rose-400" />
-                <span className="text-[10px] text-rose-400 font-medium">3軸 × 3値 × アイコン有無 = 54バリアント 😱</span>
+                <span className="text-[12px] text-rose-400 font-medium">3軸 × 3値 × アイコン有無 = 54バリアント 😱</span>
               </div>
               <div className="grid grid-cols-6 gap-1">
                 {Array.from({ length: 18 }).map((_, i) => (
@@ -2434,7 +2409,7 @@ function CompVariantsBestPracticesSlide() {
             <div>
               <div className="flex items-center gap-1.5 mb-2">
                 <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="text-[10px] text-emerald-400 font-medium">3軸 × 3値 + Boolean = 27バリアント ✨</span>
+                <span className="text-[12px] text-emerald-400 font-medium">3軸 × 3値 + Boolean = 27バリアント ✨</span>
               </div>
               <div className="grid grid-cols-6 gap-1">
                 {Array.from({ length: 9 }).map((_, i) => (
@@ -2469,7 +2444,7 @@ function CompVariantsBestPracticesSlide() {
           </div>
 
           <div className="space-y-3">
-            <div className={`text-[11px] ${c.t4}`}>
+            <div className={`text-[12px] ${c.t4}`}>
               最もよく使うバリアントをデフォルトに設定
             </div>
 
@@ -2485,24 +2460,24 @@ function CompVariantsBestPracticesSlide() {
             >
               <div className="flex items-center gap-2 mb-2">
                 <Star className="w-4 h-4 text-purple-400 fill-purple-400" />
-                <span className={`text-[11px] font-semibold ${d ? 'text-purple-200' : 'text-purple-700'}`}>
+                <span className={`text-[12px] font-semibold ${d ? 'text-purple-200' : 'text-purple-700'}`}>
                   Default Variant
                 </span>
               </div>
               <div className="space-y-1.5">
-                <div className={`text-[10px] ${d ? 'text-purple-100' : 'text-purple-900'}`}>
+                <div className={`text-[12px] ${d ? 'text-purple-100' : 'text-purple-900'}`}>
                   <span className="font-mono bg-purple-500/10 px-1.5 py-0.5 rounded">Priority</span> = Primary
                 </div>
-                <div className={`text-[10px] ${d ? 'text-purple-100' : 'text-purple-900'}`}>
+                <div className={`text-[12px] ${d ? 'text-purple-100' : 'text-purple-900'}`}>
                   <span className="font-mono bg-purple-500/10 px-1.5 py-0.5 rounded">Size</span> = Medium
                 </div>
-                <div className={`text-[10px] ${d ? 'text-purple-100' : 'text-purple-900'}`}>
+                <div className={`text-[12px] ${d ? 'text-purple-100' : 'text-purple-900'}`}>
                   <span className="font-mono bg-purple-500/10 px-1.5 py-0.5 rounded">State</span> = Default
                 </div>
               </div>
             </div>
 
-            <div className={`text-[10px] ${c.t5} text-center`}>
+            <div className={`text-[12px] ${c.t5} text-center`}>
               インスタンス挿入時の手間が減る
             </div>
           </div>
@@ -2556,7 +2531,7 @@ function CompVariantsSlide() {
             </tbody>
           </table>
         </div>
-        <div className={`text-[11px] ${c.t5} mt-3 text-center`}>+ size (Small / Medium / Large) で3次元のマトリクスになる</div>
+        <div className={`text-[12px] ${c.t5} mt-3 text-center`}>+ size (Small / Medium / Large) で3次元のマトリクスになる</div>
       </Vis>
       <Tip>「見た目が変わるならバリアント、値が変わるならプロパティ」が基本の判断軸</Tip>
     </div>
@@ -2591,21 +2566,21 @@ function VarBasicsSlide() {
               <div className="mb-2 px-3 py-1.5 rounded-lg text-white text-[12px] font-medium" style={{ background: '#7c3aed' }}>
                 ボタン
               </div>
-              <div className={`text-[10px] ${c.t5} font-mono`}>#7c3aed</div>
+              <div className={`text-[12px] ${c.t5} font-mono`}>#7c3aed</div>
             </div>
 
             <div className="text-center">
               <div className={`mb-2 text-[16px] font-bold`} style={{ color: '#7c3aed' }}>
                 見出し
               </div>
-              <div className={`text-[10px] ${c.t5} font-mono`}>#7c3aed</div>
+              <div className={`text-[12px] ${c.t5} font-mono`}>#7c3aed</div>
             </div>
 
             <div className="text-center">
               <div className="mb-2 w-10 h-10 rounded-lg flex items-center justify-center mx-auto" style={{ background: '#7c3aed' }}>
                 <Star className="w-5 h-5 text-white" />
               </div>
-              <div className={`text-[10px] ${c.t5} font-mono`}>#7c3aed</div>
+              <div className={`text-[12px] ${c.t5} font-mono`}>#7c3aed</div>
             </div>
           </div>
 
@@ -2730,7 +2705,7 @@ function VarApplySlide() {
                 <div className={`text-[12px] ${c.t3} font-mono`}>gray-100</div>
               </div>
             </div>
-            <div className={`text-[11px] ${c.t5} mt-3`}>※ 実際の色コードを定義</div>
+            <div className={`text-[12px] ${c.t5} mt-3`}>※ 実際の色コードを定義</div>
           </div>
 
           {/* Arrow */}
@@ -2764,7 +2739,7 @@ function VarApplySlide() {
                 color/background = gray-100
               </div>
             </div>
-            <div className={`text-[11px] ${c.t5} mt-3`}>※ 役割で名前をつける</div>
+            <div className={`text-[12px] ${c.t5} mt-3`}>※ 役割で名前をつける</div>
           </div>
 
           {/* Arrow */}
@@ -2788,7 +2763,7 @@ function VarApplySlide() {
               <div className="px-4 py-2 rounded-lg text-white text-[13px] font-medium" style={{ background: '#7c3aed' }}>
                 ボタン
               </div>
-              <div className={`text-[11px] ${c.t5}`}>背景 = color/primary</div>
+              <div className={`text-[12px] ${c.t5}`}>背景 = color/primary</div>
             </div>
           </div>
         </div>
@@ -2823,7 +2798,7 @@ function VarApplySlide() {
           </div>
 
           <div className={`text-[12px] ${c.t4} pt-2`}>
-            フレームをDarkにすると、その中のレイヤーは自動でDarkの値を使います。
+            FrameをDarkにすると、その中のレイヤーは自動でDarkの値を使います。
           </div>
         </div>
 
@@ -2833,7 +2808,7 @@ function VarApplySlide() {
             alt="バリアブルのモード切り替え"
           />
           <div
-            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
             style={{
               background: 'rgba(0,0,0,0.6)',
               color: 'rgba(255,255,255,0.8)'
@@ -2873,7 +2848,7 @@ function VarAliasSlide() {
             alt="トークンの定義"
           />
           <div
-            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
             style={{
               background: 'rgba(0,0,0,0.6)',
               color: 'rgba(255,255,255,0.8)'
@@ -2899,7 +2874,7 @@ function VarAliasSlide() {
             alt="エイリアスの動作"
           />
           <div
-            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
             style={{
               background: 'rgba(0,0,0,0.6)',
               color: 'rgba(255,255,255,0.8)'
@@ -3062,7 +3037,7 @@ function VarAliasSlide() {
               </tr>
             </tbody>
           </table>
-          <div className={`text-right text-[11px] ${c.t4} mt-2`}>
+          <div className={`text-right text-[12px] ${c.t4} mt-2`}>
             出典：fumufumuUI
           </div>
         </div>
@@ -3079,7 +3054,7 @@ function VarAliasSlide() {
             alt="トークンの階層構造"
           />
           <div
-            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
             style={{
               background: 'rgba(0,0,0,0.6)',
               color: 'rgba(255,255,255,0.8)'
@@ -3109,7 +3084,7 @@ function VarAliasSlide() {
             alt="部分的な変更"
           />
           <div
-            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[10px]"
+            className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
             style={{
               background: 'rgba(0,0,0,0.6)',
               color: 'rgba(255,255,255,0.8)'
@@ -3160,7 +3135,7 @@ function LibBasicsSlide() {
             <BookOpen className="w-5 h-5 text-purple-400" />
             <div>
               <div className={`text-[14px] font-medium ${d ? "text-purple-200" : "text-purple-700"}`}>Design System Library</div>
-              <div className="text-[11px] text-purple-400">Components + Styles + Variables</div>
+              <div className="text-[12px] text-purple-400">Components + Styles + Variables</div>
             </div>
           </div>
           <div className="flex gap-2">{[0,1,2].map((i) => <div key={i} className="w-px h-6 bg-purple-500/20" />)}</div>
@@ -3168,7 +3143,7 @@ function LibBasicsSlide() {
             {["プロダクトA","プロダクトB","LP・マーケ"].map((name) => (
               <div key={name} className="rounded-xl px-4 py-3 text-center shadow-sm" style={{ background: c.glass2, border: c.glassBd }}>
                 <div className={`text-[12px] ${c.t3}`}>{name}</div>
-                <div className={`text-[10px] ${c.t5} mt-0.5`}>Figma file</div>
+                <div className={`text-[12px] ${c.t5} mt-0.5`}>Figma file</div>
               </div>
             ))}
           </div>
@@ -3217,7 +3192,7 @@ function LibPublishSlide() {
 
               {/* Changes List */}
               <div className="p-4 space-y-2">
-                <div className={`text-[11px] ${d ? 'text-gray-400' : 'text-gray-600'} mb-3`}>
+                <div className={`text-[12px] ${d ? 'text-gray-400' : 'text-gray-600'} mb-3`}>
                   3 changes will be published
                 </div>
 
@@ -3236,7 +3211,7 @@ function LibPublishSlide() {
                       {change.name}
                     </span>
                     <span
-                      className="text-[10px] px-1.5 py-0.5 rounded ml-auto"
+                      className="text-[12px] px-1.5 py-0.5 rounded ml-auto"
                       style={{
                         background: change.color + '20',
                         color: change.color
@@ -3250,7 +3225,7 @@ function LibPublishSlide() {
 
               {/* Description Field */}
               <div className="px-4 pb-4">
-                <div className={`text-[11px] ${d ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
+                <div className={`text-[12px] ${d ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
                   Describe your changes
                 </div>
                 <div
@@ -3303,7 +3278,7 @@ function LibPublishSlide() {
                 <div className={`text-[13px] font-semibold ${d ? 'text-white' : 'text-gray-900'}`}>
                   Library updates available
                 </div>
-                <div className={`text-[11px] ${d ? 'text-gray-400' : 'text-gray-600'} mt-1`}>
+                <div className={`text-[12px] ${d ? 'text-gray-400' : 'text-gray-600'} mt-1`}>
                   Design System Library
                 </div>
               </div>
@@ -3333,10 +3308,10 @@ function LibPublishSlide() {
                       <div className={`text-[12px] font-medium ${d ? 'text-gray-300' : 'text-gray-700'}`}>
                         {update.type}
                       </div>
-                      <div className={`text-[11px] ${d ? 'text-gray-500' : 'text-gray-500'} mt-0.5`}>
+                      <div className={`text-[12px] ${d ? 'text-gray-500' : 'text-gray-500'} mt-0.5`}>
                         {update.desc}
                       </div>
-                      <div className={`text-[10px] ${d ? 'text-gray-600' : 'text-gray-400'} mt-1`}>
+                      <div className={`text-[12px] ${d ? 'text-gray-600' : 'text-gray-400'} mt-1`}>
                         {update.instances} instances
                       </div>
                     </div>
@@ -3370,32 +3345,28 @@ function LibPublishSlide() {
         </div>
       </div>
 
-      <div className="rounded-xl p-6 mt-8" style={{ background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)', border: `1px solid ${d ? 'rgba(168,85,247,0.1)' : 'rgba(168,85,247,0.08)'}` }}>
-        <div className="grid grid-cols-[1fr_auto_1fr] gap-6 items-center">
-          <div>
-            <div className="text-[13px] text-rose-400 font-semibold mb-3 flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4" />
-              やりがちな失敗
-            </div>
-            <div className={`text-[14px] ${c.t4} space-y-2`}>
-              <div>• 変更内容を説明せずにPublishしてしまう</div>
-              <div>• Breaking changeを告知せずにリリースしてしまう</div>
-              <div>• 全ての更新を無条件にUpdateしてしまう（レビュー不足）</div>
-            </div>
+      <div className="space-y-4 mt-8">
+        <div className="rounded-xl p-6" style={{ background: d ? 'rgba(249,115,22,0.08)' : 'rgba(249,115,22,0.04)', border: `1px solid ${d ? 'rgba(249,115,22,0.25)' : 'rgba(249,115,22,0.18)'}` }}>
+          <div className="text-[13px] text-orange-500 font-semibold mb-3 flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4" />
+            やりがちな失敗
           </div>
+          <div className={`text-[14px] ${c.t4} space-y-2`}>
+            <div>• 変更内容を説明せずにPublishしてしまう</div>
+            <div>• Breaking changeを告知せずにリリースしてしまう</div>
+            <div>• 全ての更新を無条件にUpdateしてしまう（レビュー不足）</div>
+          </div>
+        </div>
 
-          <div className="text-[24px] text-purple-400 mr-4">→</div>
-
-          <div>
-            <div className="text-[13px] text-emerald-400 font-semibold mb-3 flex items-center gap-2">
-              <span>✓</span>
-              おすすめのやり方
-            </div>
-            <div className={`text-[14px] ${c.t4} space-y-2`}>
-              <div>• Publish時に変更内容を詳しく説明する</div>
-              <div>• Breaking changeは事前に告知してバージョン管理</div>
-              <div>• 更新前に必ずレビューして影響範囲を確認する</div>
-            </div>
+        <div className="rounded-xl p-6" style={{ background: d ? 'rgba(16,185,129,0.12)' : 'rgba(16,185,129,0.06)', border: `2px solid ${d ? 'rgba(16,185,129,0.3)' : 'rgba(16,185,129,0.2)'}` }}>
+          <div className="text-[13px] text-emerald-400 font-semibold mb-3 flex items-center gap-2">
+            <span>✓</span>
+            おすすめのやり方
+          </div>
+          <div className={`text-[14px] ${c.t4} space-y-2`}>
+            <div>• Publish時に変更内容を詳しく説明する</div>
+            <div>• Breaking changeは事前に告知してバージョン管理</div>
+            <div>• 更新前に必ずレビューして影響範囲を確認する</div>
           </div>
         </div>
       </div>
@@ -3414,7 +3385,7 @@ function LibPublishSlide() {
               <div className="rounded-xl p-3 text-center flex-1" style={{ background: c.glass2, border: c.glassBd }}>
                 <div className="text-[20px] mb-1">{step.icon}</div>
                 <div className={`text-[12px] font-medium ${c.t2}`}>{step.label}</div>
-                <div className={`text-[10px] ${c.t5} mt-0.5`}>{step.sub}</div>
+                <div className={`text-[12px] ${c.t5} mt-0.5`}>{step.sub}</div>
               </div>
             </React.Fragment>
           ))}
@@ -3446,11 +3417,11 @@ function TokenBasicsSlide() {
               <div className={`rounded-xl border px-5 py-3 ${tier.color}`}>
                 <div className="flex items-baseline gap-2 mb-1">
                   <span className="text-[14px] font-medium">{tier.level}</span>
-                  <span className="text-[11px] opacity-60">{tier.desc}</span>
+                  <span className="text-[12px] opacity-60">{tier.desc}</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {tier.examples.map((ex) => (
-                    <span key={ex} className={`text-[11px] ${d ? "bg-white/5" : "bg-black/5"} rounded-lg px-2 py-0.5`}>{ex}</span>
+                    <span key={ex} className={`text-[12px] ${d ? "bg-white/5" : "bg-black/5"} rounded-lg px-2 py-0.5`}>{ex}</span>
                   ))}
                 </div>
               </div>
@@ -3490,7 +3461,7 @@ function TokenSemanticSlide() {
                 {group.items.map((ci) => (
                   <div key={ci.name} className={`flex items-center gap-2 rounded-lg border ${c.bd2} px-3 py-1.5`} style={{ background: c.glass }}>
                     <div className={`w-4 h-4 rounded-full border ${c.bd1}`} style={{ backgroundColor: ci.hex }} />
-                    <span className={`text-[11px] ${c.t4}`}>{group.title.includes("Text") ? "text" : group.title.includes("Background") ? "bg" : "border"}/{ci.name}</span>
+                    <span className={`text-[12px] ${c.t4}`}>{group.title.includes("Text") ? "text" : group.title.includes("Background") ? "bg" : "border"}/{ci.name}</span>
                   </div>
                 ))}
               </div>
@@ -3502,14 +3473,14 @@ function TokenSemanticSlide() {
         <Label>UIへの適用例（フォーム入力）</Label>
         <div className="max-w-xs mx-auto space-y-1">
           <div className={`text-[12px] ${c.t2} font-medium`}>
-            <span className="text-[10px] text-emerald-400 bg-emerald-500/10 px-1 rounded">text/default</span> メールアドレス
+            <span className="text-[12px] text-emerald-400 bg-emerald-500/10 px-1 rounded">text/default</span> メールアドレス
           </div>
           <div className="border-2 rounded-lg px-3 py-2 flex items-center gap-2 border-purple-400" style={{ background: c.glass }}>
             <span className={`text-[12px] ${c.t2}`}>user@example.com</span>
-            <span className="text-[10px] text-purple-400 bg-purple-500/10 px-1 rounded ml-auto">border/focus</span>
+            <span className="text-[12px] text-purple-400 bg-purple-500/10 px-1 rounded ml-auto">border/focus</span>
           </div>
-          <div className="text-[11px] text-red-400 flex items-center gap-1">
-            <span className="text-[10px] text-red-400 bg-red-500/10 px-1 rounded">text/error</span> 有効なメールアドレスを入力してください
+          <div className="text-[12px] text-red-400 flex items-center gap-1">
+            <span className="text-[12px] text-red-400 bg-red-500/10 px-1 rounded">text/error</span> 有効なメールアドレスを入力してください
           </div>
         </div>
       </div>
@@ -3549,6 +3520,29 @@ function TokenHexSlide() {
   );
 }
 
+function TokenAppearanceSlide() {
+  const theme = useTheme();
+  const c = tc(theme);
+  const d = theme === "dark";
+  return (
+    <div className="space-y-10">
+      <Msg><strong>Appearance</strong>パネルからLight/Dark modeを切り替えられる</Msg>
+      <Points items={["FigmaのVariablesを使ってLight/Dark modeに対応","Semantic Colorを活用することで、テーマ切り替えが簡単に","デザイン時にLight/Darkの両方を確認できる"]} />
+      <img
+        src="/images/figma-appearance.png"
+        alt="Figma Appearance設定"
+        className="rounded-xl"
+        style={{
+          width: '100%',
+          height: 'auto',
+          border: `1px solid ${d ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}`,
+        }}
+      />
+      <Tip>Light/Dark両方で見た目を確認しながらデザインすることで、どちらのモードでも快適なUIを作れる</Tip>
+    </div>
+  );
+}
+
 function TokenTypoSlide() {
   const theme = useTheme();
   const c = tc(theme);
@@ -3570,12 +3564,12 @@ function TokenTypoSlide() {
             <div key={t.role} className={`flex items-baseline gap-4 border-l-3 ${t.color} pl-4 py-1`}>
               <div className="w-20 shrink-0">
                 <div className={`text-[13px] font-medium ${c.t2}`}>{t.role}</div>
-                <div className={`text-[10px] ${c.t5}`}>{t.desc}</div>
+                <div className={`text-[12px] ${c.t5}`}>{t.desc}</div>
               </div>
               <div className="flex-1 min-w-0">
                 <span style={{ fontSize: t.size, fontWeight: t.weight, lineHeight: t.lh }} className={d ? "text-gray-100" : "text-gray-800"}>{t.sample}</span>
               </div>
-              <div className={`text-[10px] ${c.t5} shrink-0 text-right`}>{t.size} / {t.lh}</div>
+              <div className={`text-[12px] ${c.t5} shrink-0 text-right`}>{t.size} / {t.lh}</div>
             </div>
           ))}
         </div>
@@ -3602,7 +3596,7 @@ function AlRealExampleSlide() {
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>実際のカードコンポーネントで<strong>オートレイアウトの威力</strong>を確認する</Msg>
+      <Msg>実際のカードコンポーネントで<strong>Auto Layoutの威力</strong>を確認する</Msg>
       <Points items={["画像・タイトル・説明文・ボタンを持つカード","文言変更や画像サイズ変更に自動対応","一度構造を作れば、あとは中身を変えるだけ"]} />
 
       <div className="w-full">
@@ -3649,7 +3643,7 @@ function AlRealExampleSlide() {
                 <AlertTriangle className="w-5 h-5 text-rose-400" />
               </div>
             </div>
-            <div className={`text-[11px] text-rose-400 text-center`}>
+            <div className={`text-[12px] text-rose-400 text-center`}>
               文言が増えると重なって崩壊 💥
             </div>
           </div>
@@ -3658,7 +3652,7 @@ function AlRealExampleSlide() {
           <div className="space-y-3">
             <div className="text-[13px] text-purple-400 mb-2 font-medium flex items-center gap-2">
               <CheckCircle className="w-4 h-4" />
-              <span>成功例：オートレイアウト</span>
+              <span>成功例：Auto Layout</span>
             </div>
             <div
               className="h-[380px] rounded-2xl p-5 flex flex-col gap-3"
@@ -3710,14 +3704,14 @@ function AlRealExampleSlide() {
                 <div className="text-[8px] text-purple-400/50 font-mono">12</div>
               </div>
             </div>
-            <div className="text-[11px] text-purple-400 text-center font-medium">
+            <div className="text-[12px] text-purple-400 text-center font-medium">
               文言が変わっても構造を維持 ✨
             </div>
           </div>
         </div>
       </div>
 
-      <Tip>カードのような複合コンポーネントこそ、オートレイアウトの真価が発揮される</Tip>
+      <Tip>カードのような複合コンポーネントこそ、Auto Layoutの真価が発揮される</Tip>
     </div>
   );
 }
@@ -3836,32 +3830,28 @@ function CompRealExampleSlide() {
         </div>
       </div>
 
-      <div className="rounded-xl p-6 mt-8" style={{ background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)', border: `1px solid ${d ? 'rgba(168,85,247,0.1)' : 'rgba(168,85,247,0.08)'}` }}>
-        <div className="grid grid-cols-[1fr_auto_1fr] gap-6 items-center">
-          <div>
-            <div className="text-[13px] text-rose-400 font-semibold mb-3 flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4" />
-              やりがちな失敗
-            </div>
-            <div className={`text-[14px] ${c.t4} space-y-2`}>
-              <div>• Primary と Secondary の使い分けがない（全部同じ見た目）</div>
-              <div>• Hover や Disabled 状態を設計していない</div>
-              <div>• サイズバリエーションを個別コンポーネントで作ってしまう</div>
-            </div>
+      <div className="space-y-4 mt-8">
+        <div className="rounded-xl p-6" style={{ background: d ? 'rgba(249,115,22,0.08)' : 'rgba(249,115,22,0.04)', border: `1px solid ${d ? 'rgba(249,115,22,0.25)' : 'rgba(249,115,22,0.18)'}` }}>
+          <div className="text-[13px] text-orange-500 font-semibold mb-3 flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4" />
+            やりがちな失敗
           </div>
+          <div className={`text-[14px] ${c.t4} space-y-2`}>
+            <div>• Primary と Secondary の使い分けがない（全部同じ見た目）</div>
+            <div>• Hover や Disabled 状態を設計していない</div>
+            <div>• サイズバリエーションを個別コンポーネントで作ってしまう</div>
+          </div>
+        </div>
 
-          <div className="text-[24px] text-purple-400 mr-4">→</div>
-
-          <div>
-            <div className="text-[13px] text-emerald-400 font-semibold mb-3 flex items-center gap-2">
-              <span>✓</span>
-              おすすめのやり方
-            </div>
-            <div className={`text-[14px] ${c.t4} space-y-2`}>
-              <div>• 階層（Primary/Secondary/Tertiary）で役割を明確に</div>
-              <div>• 全ての状態（Hover/Active/Disabled）を設計する</div>
-              <div>• バリアントで統一的にサイズ管理する</div>
-            </div>
+        <div className="rounded-xl p-6" style={{ background: d ? 'rgba(16,185,129,0.12)' : 'rgba(16,185,129,0.06)', border: `2px solid ${d ? 'rgba(16,185,129,0.3)' : 'rgba(16,185,129,0.2)'}` }}>
+          <div className="text-[13px] text-emerald-400 font-semibold mb-3 flex items-center gap-2">
+            <span>✓</span>
+            おすすめのやり方
+          </div>
+          <div className={`text-[14px] ${c.t4} space-y-2`}>
+            <div>• 階層（Primary/Secondary/Tertiary）で役割を明確に</div>
+            <div>• 全ての状態（Hover/Active/Disabled）を設計する</div>
+            <div>• バリアントで統一的にサイズ管理する</div>
           </div>
         </div>
       </div>
@@ -3908,7 +3898,7 @@ function VarRealExampleSlide() {
       >
         {/* Primitive tokens */}
         <div>
-          <div className="text-[11px] text-purple-400 uppercase tracking-wider font-medium mb-3">Primitive Tokens（基礎値）</div>
+          <div className="text-[12px] text-purple-400 uppercase tracking-wider font-medium mb-3">Primitive Tokens（基礎値）</div>
           <div className="grid grid-cols-5 gap-3">
             {[
               { name: 'purple-500', hex: '#a855f7', bg: '#a855f7' },
@@ -3925,7 +3915,7 @@ function VarRealExampleSlide() {
                     boxShadow: `0 4px 12px ${token.bg}40`
                   }}
                 />
-                <div className={`text-[10px] ${c.t5} font-mono text-center`}>{token.name}</div>
+                <div className={`text-[12px] ${c.t5} font-mono text-center`}>{token.name}</div>
               </div>
             ))}
           </div>
@@ -3938,7 +3928,7 @@ function VarRealExampleSlide() {
 
         {/* Semantic tokens */}
         <div>
-          <div className="text-[11px] text-purple-400 uppercase tracking-wider font-medium mb-3">Semantic Tokens（意味のある名前）</div>
+          <div className="text-[12px] text-purple-400 uppercase tracking-wider font-medium mb-3">Semantic Tokens（意味のある名前）</div>
           <div className="grid grid-cols-4 gap-4">
             {[
               { name: 'Primary', desc: 'ブランドカラー', primitive: 'purple-500', bg: '#a855f7', text: 'white' },
@@ -3964,7 +3954,7 @@ function VarRealExampleSlide() {
                 >
                   {token.name}
                 </div>
-                <div className={`text-[11px] ${c.t4} text-center mb-1`}>{token.desc}</div>
+                <div className={`text-[12px] ${c.t4} text-center mb-1`}>{token.desc}</div>
                 <div className={`text-[9px] ${c.t5} text-center font-mono`}>= {token.primitive}</div>
               </div>
             ))}
@@ -3972,155 +3962,33 @@ function VarRealExampleSlide() {
         </div>
       </div>
 
-      <div className="rounded-xl p-6 mt-8" style={{ background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)', border: `1px solid ${d ? 'rgba(168,85,247,0.1)' : 'rgba(168,85,247,0.08)'}` }}>
-        <div className="grid grid-cols-[1fr_auto_1fr] gap-6 items-center">
-          <div>
-            <div className="text-[13px] text-rose-400 font-semibold mb-3 flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4" />
-              やりがちな失敗
-            </div>
-            <div className={`text-[14px] ${c.t4} space-y-2`}>
-              <div>• HEXコードを直接使ってしまう（#7c3aed をベタ書き）</div>
-              <div>• 色名でトークン化してしまう（button-purple, text-blue など）</div>
-              <div>• 全ての色にトークンを作ってしまう（管理コストが増大）</div>
-            </div>
+      <div className="space-y-4 mt-8">
+        <div className="rounded-xl p-6" style={{ background: d ? 'rgba(249,115,22,0.08)' : 'rgba(249,115,22,0.04)', border: `1px solid ${d ? 'rgba(249,115,22,0.25)' : 'rgba(249,115,22,0.18)'}` }}>
+          <div className="text-[13px] text-orange-500 font-semibold mb-3 flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4" />
+            やりがちな失敗
           </div>
+          <div className={`text-[14px] ${c.t4} space-y-2`}>
+            <div>• HEXコードを直接使ってしまう（#7c3aed をベタ書き）</div>
+            <div>• 色名でトークン化してしまう（button-purple, text-blue など）</div>
+            <div>• 全ての色にトークンを作ってしまう（管理コストが増大）</div>
+          </div>
+        </div>
 
-          <div className="text-[24px] text-purple-400 mr-4">→</div>
-
-          <div>
-            <div className="text-[13px] text-emerald-400 font-semibold mb-3 flex items-center gap-2">
-              <span>✓</span>
-              おすすめのやり方
-            </div>
-            <div className={`text-[14px] ${c.t4} space-y-2`}>
-              <div>• トークンを使って一元管理する</div>
-              <div>• 役割ベースの名前をつける（primary/success/warning など）</div>
-              <div>• 本当に必要なトークンだけに絞る</div>
-            </div>
+        <div className="rounded-xl p-6" style={{ background: d ? 'rgba(16,185,129,0.12)' : 'rgba(16,185,129,0.06)', border: `2px solid ${d ? 'rgba(16,185,129,0.3)' : 'rgba(16,185,129,0.2)'}` }}>
+          <div className="text-[13px] text-emerald-400 font-semibold mb-3 flex items-center gap-2">
+            <span>✓</span>
+            おすすめのやり方
+          </div>
+          <div className={`text-[14px] ${c.t4} space-y-2`}>
+            <div>• トークンを使って一元管理する</div>
+            <div>• 役割ベースの名前をつける（primary/success/warning など）</div>
+            <div>• 本当に必要なトークンだけに絞る</div>
           </div>
         </div>
       </div>
 
       <Tip>色は「purple」「blue」ではなく、「primary」「success」で管理する</Tip>
-    </div>
-  );
-}
-
-function WorkflowExampleSlide() {
-  const theme = useTheme();
-  const c = tc(theme);
-  const d = theme === "dark";
-  return (
-    <div className="space-y-10">
-      <Msg>デザインシステムが<strong>実務でどう機能するか</strong>を理解する</Msg>
-      <Points items={["デザイナーはコンポーネントとトークンで設計","エンジニアは同じトークン名でコードを実装","変更時は一箇所の修正で全体に反映"]} />
-
-      <div
-        className="w-full rounded-2xl p-8"
-        style={{
-          background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
-          border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
-          boxShadow: d
-            ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
-            : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
-        }}
-      >
-        <div className="space-y-8">
-          {/* Designer */}
-          <div className="flex items-start gap-6">
-            <div className="w-32 shrink-0">
-              <div className="text-[13px] text-purple-400 font-semibold mb-1">1. デザイナー</div>
-              <div className={`text-[11px] ${c.t5}`}>Figmaで設計</div>
-            </div>
-            <div
-              className="flex-1 rounded-xl p-5"
-              style={{
-                background: d ? 'rgba(168,85,247,0.08)' : 'rgba(168,85,247,0.06)',
-                border: `1px solid ${d ? 'rgba(168,85,247,0.25)' : 'rgba(168,85,247,0.2)'}`,
-                boxShadow: '0 4px 16px rgba(168,85,247,0.1)'
-              }}
-            >
-              <div className={`text-[12px] ${d ? 'text-purple-300' : 'text-purple-700'} font-mono space-y-2`}>
-                <div>• Button コンポーネント使用</div>
-                <div>• color/primary トークン適用</div>
-                <div>• space/4（16px）で余白設定</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Arrow */}
-          <div className="flex justify-center">
-            <ArrowDown className="w-6 h-6 text-purple-400" />
-          </div>
-
-          {/* Engineer */}
-          <div className="flex items-start gap-6">
-            <div className="w-32 shrink-0">
-              <div className={`text-[13px] ${d ? 'text-blue-400' : 'text-blue-600'} font-semibold mb-1`}>2. エンジニア</div>
-              <div className={`text-[11px] ${c.t5}`}>コードで実装</div>
-            </div>
-            <div
-              className="flex-1 rounded-xl p-5"
-              style={{
-                background: d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)',
-                border: `1px solid ${d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.2)'}`,
-                boxShadow: '0 4px 16px rgba(59,130,246,0.1)'
-              }}
-            >
-              <div className={`text-[12px] ${d ? 'text-blue-300' : 'text-blue-700'} font-mono space-y-2`}>
-                <div>{'<Button variant="primary">'}</div>
-                <div className="pl-4">送信する</div>
-                <div>{'</Button>'}</div>
-                <div className="text-[10px] opacity-70 mt-2">※ 同じトークン名を使用</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Arrow */}
-          <div className="flex justify-center">
-            <ArrowDown className="w-6 h-6 text-purple-400" />
-          </div>
-
-          {/* Update */}
-          <div className="flex items-start gap-6">
-            <div className="w-32 shrink-0">
-              <div className={`text-[13px] ${d ? 'text-emerald-400' : 'text-emerald-600'} font-semibold mb-1`}>3. 変更時</div>
-              <div className={`text-[11px] ${c.t5}`}>一箇所の修正</div>
-            </div>
-            <div
-              className="flex-1 rounded-xl p-5"
-              style={{
-                background: d ? 'rgba(16,185,129,0.08)' : 'rgba(16,185,129,0.06)',
-                border: `1px solid ${d ? 'rgba(16,185,129,0.25)' : 'rgba(16,185,129,0.2)'}`,
-                boxShadow: '0 4px 16px rgba(16,185,129,0.1)'
-              }}
-            >
-              <div className={`text-[12px] ${d ? 'text-emerald-300' : 'text-emerald-700'} space-y-2`}>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4" />
-                  <span className="font-mono">color/primary の値を変更</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <ArrowRight className="w-4 h-4" />
-                  <span>Figmaとコード両方に自動反映</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" />
-                  <span>全てのボタンが一括で更新される</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="rounded-xl p-5 text-center" style={{ background: 'linear-gradient(135deg, #7c3aed, #a855f7, #c084fc)' }}>
-        <div className="text-white text-[15px] leading-relaxed">
-          デザインシステムは「作業を楽にする」ためではなく<br />
-          <strong className="text-[17px]">「チームの共通言語を作る」</strong>ため
-        </div>
-      </div>
     </div>
   );
 }
@@ -4143,7 +4011,7 @@ function OthersDsSlide() {
                 </div>
               ))}
             </div>
-            <div className={`text-[11px] ${c.t5} mt-2`}>サイズ・線幅・メタファーを統一</div>
+            <div className={`text-[12px] ${c.t5} mt-2`}>サイズ・線幅・メタファーを統一</div>
           </div>
           <div className="rounded-xl p-4" style={{ background: c.glass2, border: c.glassBd }}>
             <div className={`text-[14px] font-medium ${c.t2} mb-1`}>エレベーション</div>
@@ -4155,7 +4023,7 @@ function OthersDsSlide() {
                 { l: "2", s: "0 4px 8px rgba(0,0,0,0.4)" },
                 { l: "3", s: "0 12px 24px rgba(0,0,0,0.5)" },
               ].map((e) => (
-                <div key={e.l} className={`w-14 h-14 rounded-xl flex items-center justify-center text-[11px] ${c.t4}`} style={{ boxShadow: e.s, background: c.glass3 }}>Lv.{e.l}</div>
+                <div key={e.l} className={`w-14 h-14 rounded-xl flex items-center justify-center text-[12px] ${c.t4}`} style={{ boxShadow: e.s, background: c.glass3 }}>Lv.{e.l}</div>
               ))}
             </div>
           </div>
@@ -4166,7 +4034,7 @@ function OthersDsSlide() {
               {[{r:"0",label:"none"},{r:"4px",label:"sm"},{r:"8px",label:"md"},{r:"16px",label:"lg"},{r:"999px",label:"full"}].map((item) => (
                 <div key={item.label} className="text-center">
                   <div className="w-11 h-11 bg-purple-500/20 mx-auto" style={{ borderRadius: item.r }} />
-                  <div className={`text-[10px] ${c.t5} mt-1`}>{item.label}</div>
+                  <div className={`text-[12px] ${c.t5} mt-1`}>{item.label}</div>
                 </div>
               ))}
             </div>
@@ -4177,7 +4045,7 @@ function OthersDsSlide() {
             <div className="space-y-2">
               {[{label:"4",w:16},{label:"8",w:32},{label:"16",w:64},{label:"24",w:96},{label:"32",w:128}].map((s) => (
                 <div key={s.label} className="flex items-center gap-2">
-                  <div className={`w-6 text-[10px] ${c.t5} text-right`}>{s.label}</div>
+                  <div className={`w-6 text-[12px] ${c.t5} text-right`}>{s.label}</div>
                   <div className="bg-purple-500/25 h-3 rounded-full" style={{ width: s.w }} />
                 </div>
               ))}
@@ -4200,7 +4068,7 @@ function SummarySlide() {
       <Vis className="py-6">
         <div className="space-y-3 max-w-md mx-auto">
           {[
-            { icon: <Layers className="w-4 h-4" />, label: "オートレイアウト", sub: "関係性を設計する" },
+            { icon: <Layers className="w-4 h-4" />, label: "Auto Layout", sub: "関係性を設計する" },
             { icon: <Component className="w-4 h-4" />, label: "Component", sub: "判断を再利用する" },
             { icon: <Variable className="w-4 h-4" />, label: "Variable", sub: "値を再利用する" },
             { icon: <Library className="w-4 h-4" />, label: "Library", sub: "チームで共有する" },
@@ -4228,306 +4096,572 @@ function SummarySlide() {
 }
 
 
-function ProductListPracticeSlide() {
+/* ══════════════════════════════════════════════════════════
+   Practice Slides - Figma研修 基本課題
+══════════════════════════════════════════════════════════ */
+
+// 1. タイトル・目的・身につけたいこと
+function PracticeIntroSlide() {
   const theme = useTheme();
   const c = tc(theme);
   const d = theme === "dark";
 
   return (
-    <div className="flex gap-16 items-center justify-center">
-      <div>
-        <div className={`text-[17px] ${c.t1} font-bold mb-6 text-center`}>① 商品一覧画面</div>
-        <div className={`w-[300px] h-[640px] ${d ? "bg-gray-900/60" : "bg-white"} rounded-3xl overflow-hidden p-8`} style={{ border: `2px solid ${d ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`, boxShadow: d ? "0 8px 24px rgba(0,0,0,0.5)" : "0 8px 24px rgba(0,0,0,0.08)" }}>
-          {/* Header */}
-          <div className="mb-6">
-            <div className={`h-6 w-32 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-2`}></div>
-            <div className={`h-3 w-48 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
+    <div className="space-y-8">
+      <div className="text-center space-y-3">
+        <div className="text-[13px] text-purple-400 tracking-widest uppercase">Figma研修 基本課題</div>
+        <h2 className={`text-[28px] ${c.t1} leading-tight`} style={{ fontWeight: 800 }}>
+          モバイルオーダーUI<br />コンポーネント作成
+        </h2>
+        <p className={`text-[13px] ${c.t4}`}>Auto Layout / Component / Instance / State を手を動かして理解する</p>
+      </div>
+
+      <div className="grid grid-cols-2 gap-8 mt-10">
+        <Vis className="space-y-4">
+          <div className="flex items-center gap-2 mb-2">
+            <Target className="w-5 h-5 text-purple-400" />
+            <div className={`text-[16px] ${c.t1} font-bold`}>この課題の目的</div>
           </div>
-
-          {/* Search */}
-          <div className={`h-12 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded-xl mb-6`}></div>
-
-          {/* Category Tabs */}
-          <div className="flex gap-2 mb-6">
-            <div className={`h-9 w-20 ${d ? "bg-gray-700" : "bg-gray-300"} rounded-full`}></div>
-            <div className={`h-9 w-20 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-full`}></div>
-            <div className={`h-9 w-16 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-full`}></div>
+          <div className={`text-[14px] ${c.t2} leading-relaxed mb-4`}>
+            この課題は、<strong>完成度の高いUIを作ることが目的ではなく</strong>、手を動かしながら Figma の構造的な考え方に触れることが目的です
           </div>
+          <ul className="space-y-2">
+            <Point>Auto Layout に触れる</Point>
+            <Point>コンポーネントとインスタンスを使う</Point>
+            <Point>状態差分を整理する</Point>
+            <Point>今後の業務につなげる</Point>
+          </ul>
+        </Vis>
 
-          {/* Product Cards */}
+        <Vis className="space-y-4">
+          <div className="flex items-center gap-2 mb-2">
+            <Sparkles className="w-5 h-5 text-purple-400" />
+            <div className={`text-[16px] ${c.t1} font-bold`}>身につけたいこと</div>
+          </div>
+          <ul className="space-y-2.5">
+            <Point>繰り返し要素を整理する</Point>
+            <Point>状態違いを別物として増やしすぎない</Point>
+            <Point>テキスト量が変わっても崩れない構造を作る</Point>
+            <Point>一覧と詳細で情報の優先順位を意識する</Point>
+          </ul>
+        </Vis>
+      </div>
+    </div>
+  );
+}
+
+// 2. 課題テーマ・進め方・画面構成
+function PracticeOverviewSlide() {
+  const theme = useTheme();
+  const c = tc(theme);
+  const d = theme === "dark";
+
+  return (
+    <div className="space-y-8">
+      <Vis className="space-y-4">
+        <div className="flex items-center gap-2 mb-2">
+          <Box className="w-5 h-5 text-purple-400" />
+          <div className={`text-[16px] ${c.t1} font-bold`}>課題テーマ</div>
+        </div>
+        <div className={`text-[15px] ${c.t1} font-bold mb-2`}>モバイルオーダーUIのコンポーネント作成</div>
+        <div className={`text-[14px] ${c.t3} leading-relaxed mb-3`}>
+          実在サービスの完全再現ではなく、モバイルオーダーにありがちな画面や状態を題材に、UIコンポーネントを整理しながら作る
+        </div>
+        {/* Agent i Design System Semantic Color: Background/Notice-Info */}
+        <div
+          className="rounded-xl p-3"
+          style={{
+            background: d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)',
+            border: `1px solid ${d ? 'rgba(59,130,246,0.2)' : 'rgba(59,130,246,0.15)'}`
+          }}
+        >
+          <div className={`text-[13px] ${c.t2} leading-relaxed space-y-1.5`}>
+            <div><strong>テーマは自由</strong>（ハンバーガーショップ、カフェ、ベーカリー）</div>
+            <div>商品名や価格のダミーデータは<strong>AIを活用</strong>して用意してみましょう！</div>
+          </div>
+        </div>
+      </Vis>
+
+      <div className="grid grid-cols-2 gap-8">
+        <Vis className="space-y-4">
+          <div className="flex items-center gap-2 mb-2">
+            <Clock className="w-5 h-5 text-purple-400" />
+            <div className={`text-[16px] ${c.t1} font-bold`}>進め方</div>
+          </div>
+          <ul className="space-y-2.5">
+            <Point>質問があれば、<strong>Slack</strong>で気軽に声をかけてください🙌</Point>
+            <Point><strong>Figmaコメント</strong>での質問や相談も大歓迎です✨</Point>
+            <Point>Figmaを巡回しながらフィードバックしていきます👀💬</Point>
+            <Point>構造を見るためにレイヤーを直接触ったりもするので触ってもOKなページ、まだ編集中のページが分かるように<strong>ステータスを使ってもらえると助かります</strong>！</Point>
+          </ul>
+          <div className="mt-4 space-y-3">
+            <img
+              src="/images/figma-status.png"
+              alt="Figmaステータスの使い方"
+              className="rounded-xl"
+              style={{
+                width: '100%',
+                maxWidth: '500px',
+                height: 'auto',
+                border: `1px solid ${d ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}`,
+              }}
+            />
+            <div className={`text-[13px] ${c.t3}`}>
+              Figmaにステータスコンポーネントを用意したのでよければ使ってください！使わなくてもステータス分かればなんでもOKです◎
+            </div>
+            <a
+              href="https://www.figma.com/design/Lzxkw6F9BxPWo8DoTEU5Ul/%E6%96%B0%E5%8D%92%E3%83%87%E3%82%B6%E3%82%A4%E3%83%8A%E3%83%BC%E7%A0%94%E4%BF%AE_Day1-5-1-?node-id=4025-113&t=5wwuypRuuweHMgLO-4"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-[13px] font-medium transition-all"
+              style={{
+                background: d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)',
+                border: `1px solid ${d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.15)'}`,
+                color: d ? '#93c5fd' : '#2563eb',
+                textDecoration: 'none'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = d ? 'rgba(59,130,246,0.15)' : 'rgba(59,130,246,0.1)';
+                e.currentTarget.style.borderColor = d ? 'rgba(59,130,246,0.35)' : 'rgba(59,130,246,0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)';
+                e.currentTarget.style.borderColor = d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.15)';
+              }}
+            >
+              🔗ステータスコンポーネント
+            </a>
+          </div>
+        </Vis>
+
+        <Vis className="space-y-4">
+          <div className="flex items-center gap-2 mb-2">
+            <LayoutGrid className="w-5 h-5 text-purple-400" />
+            <div className={`text-[16px] ${c.t1} font-bold`}>画面構成</div>
+          </div>
           <div className="space-y-4">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className={`${d ? "bg-gray-800/40" : "bg-gray-50"} rounded-2xl p-4`} style={{ border: `1px solid ${d ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}` }}>
-                <div className="flex gap-3">
-                  <div className={`w-16 h-16 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded-xl shrink-0`}></div>
-                  <div className="flex-1">
-                    <div className={`h-4 w-28 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-2`}></div>
-                    <div className={`h-3 w-20 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded mb-3`}></div>
-                    <div className="flex items-center justify-between">
-                      <div className={`h-3 w-12 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded`}></div>
-                      <div className={`h-4 w-14 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
+            <div
+              className="rounded-xl p-4"
+              style={{
+                background: d ? 'rgba(168,85,247,0.08)' : 'rgba(168,85,247,0.06)',
+                border: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`
+              }}
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <CheckCircle className="w-4 h-4 text-purple-400" />
+                <div className={`text-[13px] ${c.t1} font-bold`}>必須画面</div>
+              </div>
+              <ul className="space-y-1.5">
+                <Point>商品一覧</Point>
+                <Point>商品詳細</Point>
+              </ul>
+            </div>
+            <div
+              className="rounded-xl p-4"
+              style={{
+                background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.03)',
+                border: `1px solid ${d ? 'rgba(168,85,247,0.15)' : 'rgba(168,85,247,0.1)'}`
+              }}
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <Plus className="w-4 h-4 text-purple-400" />
+                <div className={`text-[13px] ${c.t1} font-bold`}>余力があれば</div>
+              </div>
+              <ul className="space-y-1.5">
+                <Point>店舗選択</Point>
+                <Point>カート</Point>
+                <Point>受け取り</Point>
+              </ul>
+            </div>
+          </div>
+        </Vis>
+      </div>
+
+      {/* Agent i Design System section */}
+      <Vis className="space-y-4">
+        <div className="flex items-center gap-2 mb-2">
+          <Palette className="w-5 h-5 text-purple-400" />
+          <div className={`text-[16px] ${c.t1} font-bold`}>Agent i Design System</div>
+        </div>
+        <div className={`text-[14px] ${c.t3} leading-relaxed mb-4`}>
+          以下のAssetを追加して、Semanticカラーを使ってデザインしてみましょう！
+        </div>
+        <div className="space-y-6">
+          <div>
+            <div className={`text-[13px] ${c.t2} font-semibold mb-3`}>① Assetを追加</div>
+            <div
+              className="rounded-2xl overflow-hidden"
+              style={{
+                background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                boxShadow: d
+                  ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
+                  : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+              }}
+            >
+              <ExpandableVideo src="/images/agent-i-add-asset.mov" />
+            </div>
+          </div>
+          <div>
+            <div className={`text-[13px] ${c.t2} font-semibold mb-3`}>② カラーの使い方</div>
+            <div
+              className="rounded-2xl overflow-hidden"
+              style={{
+                background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                boxShadow: d
+                  ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
+                  : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+              }}
+            >
+              <ExpandableVideo src="/images/agent-i-color-usage.mov" />
+            </div>
+          </div>
+        </div>
+        <div className={`text-[14px] ${c.t3} leading-relaxed mt-6 mb-4`}>
+          コンテンツ間のマージンや角丸もバリアブルを使ってみましょう！
+        </div>
+        <div className="space-y-6">
+          <div>
+            <div className={`text-[13px] ${c.t2} font-semibold mb-3`}>③ スペーシング</div>
+            <div
+              className="rounded-2xl overflow-hidden"
+              style={{
+                background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                boxShadow: d
+                  ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
+                  : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+              }}
+            >
+              <ExpandableVideo src="/images/agent-i-spacing.mov" />
+            </div>
+          </div>
+          <div>
+            <div className={`text-[13px] ${c.t2} font-semibold mb-3`}>④ 角丸（Border Radius）</div>
+            <div
+              className="rounded-2xl overflow-hidden"
+              style={{
+                background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+                border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                boxShadow: d
+                  ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
+                  : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+              }}
+            >
+              <ExpandableVideo src="/images/agent-i-radius.mov" />
+            </div>
+          </div>
+        </div>
+      </Vis>
+    </div>
+  );
+}
+
+// 3. 商品一覧 & 商品詳細（統合）
+function PracticeRequiredScreensSlide() {
+  const theme = useTheme();
+  const c = tc(theme);
+  const d = theme === "dark";
+
+  return (
+    <div className="space-y-14">
+      {/* 商品一覧 */}
+      <div className="space-y-4">
+        <div className={`text-[16px] ${c.t1} font-bold`}>① 商品一覧</div>
+        <div className="flex gap-12 items-start">
+          <div className="shrink-0">
+            <div className={`w-[260px] h-[520px] ${d ? "bg-gray-900/60" : "bg-white"} rounded-3xl overflow-hidden p-7`} style={{ border: `2px solid ${d ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`, boxShadow: d ? "0 8px 24px rgba(0,0,0,0.5)" : "0 8px 24px rgba(0,0,0,0.08)" }}>
+              <div className={`h-5 w-28 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-4`}></div>
+              <div className={`h-10 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded-xl mb-5`}></div>
+              <div className="flex gap-2 mb-5">
+                <div className={`h-8 w-18 ${d ? "bg-gray-700" : "bg-gray-300"} rounded-full`}></div>
+                <div className={`h-8 w-18 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-full`}></div>
+                <div className={`h-8 w-14 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-full`}></div>
+              </div>
+              <div className="space-y-3">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className={`${d ? "bg-gray-800/40" : "bg-gray-50"} rounded-2xl p-3`}>
+                    <div className="flex gap-2.5">
+                      <div className={`w-14 h-14 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded-xl shrink-0`}></div>
+                      <div className="flex-1 space-y-1.5">
+                        <div className={`h-3.5 w-20 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
+                        <div className={`h-2.5 w-16 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded`}></div>
+                        <div className="flex items-center justify-between">
+                          <div className={`h-2.5 w-12 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded`}></div>
+                          <div className={`h-3.5 w-14 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
+
+          <div className="flex-1 space-y-4">
+          <Vis className="space-y-3">
+            <div className="flex items-center gap-2">
+              <Box className="w-4 h-4 text-purple-400" />
+              <div className={`text-[14px] ${c.t1} font-semibold`}>作る想定のUIエレメント</div>
+            </div>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+              <Point>カテゴリタブ</Point>
+              <Point>商品カード</Point>
+              <Point>価格表示</Point>
+              <Point>状態ラベル / バッジ</Point>
+            </div>
+          </Vis>
+          <Vis className="space-y-3">
+            <div className="flex items-center gap-2">
+              <ToggleLeft className="w-4 h-4 text-purple-400" />
+              <div className={`text-[14px] ${c.t1} font-semibold`}>やってほしいこと</div>
+            </div>
+            <ul className="space-y-1.5">
+              <Point>商品カード：未選択 / 選択中 の2つのパターンを作る</Point>
+              <Point>商品ラベル：通常 / おすすめ / 売り切れ の3つのパターンを作る</Point>
+              <Point>商品が増えても減っても崩れないカードとリストを作る</Point>
+            </ul>
+          </Vis>
+          <Vis className="space-y-3">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-purple-400" />
+              <div className={`text-[14px] ${c.t1} font-semibold`}>意識してほしいこと</div>
+            </div>
+            <ul className="space-y-1.5">
+              <Point><strong>できるだけ少ないコンポーネント</strong>で状態違いを整理</Point>
+              <Point>商品カードを<strong>インスタンス化</strong>して使う</Point>
+              <Point><strong>Auto Layout</strong> で崩れないレイアウト設計</Point>
+            </ul>
+          </Vis>
         </div>
       </div>
-
-      <div className="w-[420px]">
-        <div className={`text-[17px] ${c.t1} font-bold mb-6`}>作るべきエレメント</div>
-        <div className="space-y-5">
-          {[
-            { name: "検索バー", desc: "アイコン + プレースホルダーテキスト、オートレイアウトで横配置" },
-            { name: "カテゴリタブ", desc: "横スクロール可能なボタングループ、ボタンのバリアント作成" },
-            { name: "商品カード", desc: "画像・タイトル・価格・評価・バッジを含む、柔軟なレイアウト" },
-            { name: "リスト構造", desc: "カードの繰り返し配置、オートレイアウトで縦配置" },
-            { name: "バッジ", desc: "「人気」「NEW」などのラベル、テキストのバリアント" },
-          ].map((el, idx) => (
-            <div key={idx} className="flex items-start gap-3">
-              <div className={`w-6 h-6 rounded-lg ${d ? "bg-purple-500/20" : "bg-purple-100"} flex items-center justify-center shrink-0 mt-0.5`}>
-                <div className={`text-[12px] font-bold ${d ? "text-purple-300" : "text-purple-600"}`}>{idx + 1}</div>
-              </div>
-              <div className="flex-1">
-                <div className={`text-[15px] font-bold ${c.t1} mb-1`}>{el.name}</div>
-                <div className={`text-[13px] ${c.t3} leading-relaxed`}>{el.desc}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ProductDetailPracticeSlide() {
-  const theme = useTheme();
-  const c = tc(theme);
-  const d = theme === "dark";
-
-  return (
-    <div className="flex gap-16 items-center justify-center">
-      <div>
-        <div className={`text-[17px] ${c.t1} font-bold mb-6 text-center`}>② 商品詳細画面</div>
-        <div className={`w-[300px] h-[640px] ${d ? "bg-gray-900/60" : "bg-white"} rounded-3xl overflow-hidden p-8`} style={{ border: `2px solid ${d ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`, boxShadow: d ? "0 8px 24px rgba(0,0,0,0.5)" : "0 8px 24px rgba(0,0,0,0.08)" }}>
-          {/* Product Image */}
-          <div className={`w-full h-40 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded-2xl mb-6`}></div>
-
-          {/* Title & Badge */}
-          <div className="flex items-start justify-between mb-4">
-            <div className="flex-1">
-              <div className={`h-5 w-32 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-2`}></div>
-              <div className={`h-3 w-24 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
-            </div>
-            <div className={`h-5 w-12 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded-full`}></div>
-          </div>
-
-          {/* Rating */}
-          <div className="flex items-center gap-2 mb-4">
-            <div className={`h-3 w-3 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
-            <div className={`h-3 w-8 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
-            <div className={`h-3 w-12 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
-          </div>
-
-          {/* Description */}
-          <div className={`h-3 w-full ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded mb-1`}></div>
-          <div className={`h-3 w-4/5 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded mb-5`}></div>
-
-          {/* Price Box */}
-          <div className={`${d ? "bg-gray-800/40" : "bg-gray-50"} rounded-2xl p-4 mb-5`}>
-            <div className="flex items-center justify-between">
-              <div className={`h-3 w-16 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
-              <div className={`h-6 w-20 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
-            </div>
-          </div>
-
-          {/* Size Options */}
-          <div className="mb-4">
-            <div className={`h-3 w-12 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-3`}></div>
-            <div className="grid grid-cols-3 gap-2">
-              <div className={`h-9 ${d ? "bg-gray-700" : "bg-gray-300"} rounded-xl`}></div>
-              <div className={`h-9 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-xl`}></div>
-              <div className={`h-9 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-xl`}></div>
-            </div>
-          </div>
-
-          {/* Temperature Options */}
-          <div className="mb-4">
-            <div className={`h-3 w-12 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-3`}></div>
-            <div className="grid grid-cols-2 gap-2">
-              <div className={`h-9 ${d ? "bg-gray-700" : "bg-gray-300"} rounded-xl`}></div>
-              <div className={`h-9 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-xl`}></div>
-            </div>
-          </div>
-
-          {/* Quantity Control */}
-          <div className="mb-5">
-            <div className={`h-3 w-12 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-3`}></div>
-            <div className="flex items-center justify-center gap-4">
-              <div className={`w-10 h-10 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-xl`}></div>
-              <div className={`h-5 w-8 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
-              <div className={`w-10 h-10 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-xl`}></div>
-            </div>
-          </div>
-
-          {/* Add to Cart Button */}
-          <div className={`h-12 ${d ? "bg-gray-700" : "bg-gray-300"} rounded-2xl`}></div>
-        </div>
       </div>
 
-      <div className="w-[420px]">
-        <div className={`text-[17px] ${c.t1} font-bold mb-6`}>作るべきエレメント</div>
-        <div className="space-y-5">
-          {[
-            { name: "商品画像エリア", desc: "大きな画像プレースホルダー、固定比率で配置" },
-            { name: "商品情報", desc: "タイトル・評価・説明文の階層構造、情報の優先順位を意識" },
-            { name: "オプション選択", desc: "サイズ・温度などのボタングループ、グリッドレイアウト" },
-            { name: "数量コントロール", desc: "－ボタン・数字・＋ボタンの横並び配置" },
-            { name: "CTAボタン", desc: "固定配置の購入ボタン、目立つ配置とスタイル" },
-          ].map((el, idx) => (
-            <div key={idx} className="flex items-start gap-3">
-              <div className={`w-6 h-6 rounded-lg ${d ? "bg-purple-500/20" : "bg-purple-100"} flex items-center justify-center shrink-0 mt-0.5`}>
-                <div className={`text-[12px] font-bold ${d ? "text-purple-300" : "text-purple-600"}`}>{idx + 1}</div>
-              </div>
-              <div className="flex-1">
-                <div className={`text-[15px] font-bold ${c.t1} mb-1`}>{el.name}</div>
-                <div className={`text-[13px] ${c.t3} leading-relaxed`}>{el.desc}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function PickupPracticeSlide() {
-  const theme = useTheme();
-  const c = tc(theme);
-  const d = theme === "dark";
-
-  return (
-    <div className="flex gap-16 items-center justify-center">
-      <div>
-        <div className={`text-[17px] ${c.t1} font-bold mb-6 text-center`}>③ 受け取り画面</div>
-        <div className={`w-[300px] h-[640px] ${d ? "bg-gray-900/60" : "bg-white"} rounded-3xl overflow-hidden p-8`} style={{ border: `2px solid ${d ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`, boxShadow: d ? "0 8px 24px rgba(0,0,0,0.5)" : "0 8px 24px rgba(0,0,0,0.08)" }}>
-          {/* Header */}
-          <div className="mb-6">
-            <div className={`h-6 w-28 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-2`}></div>
-            <div className={`h-3 w-40 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
-          </div>
-
-          {/* Store Info */}
-          <div className={`${d ? "bg-gray-800/40" : "bg-gray-50"} rounded-2xl p-4 mb-4`}>
-            <div className="flex items-center gap-3">
-              <div className={`w-8 h-8 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded-xl shrink-0`}></div>
-              <div className="flex-1">
-                <div className={`h-2 w-16 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded mb-2`}></div>
-                <div className={`h-3 w-32 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
-              </div>
-            </div>
-          </div>
-
-          {/* Order Cards */}
-          <div className="space-y-3">
-            {/* Active Order - Emphasized */}
-            <div className={`${d ? "bg-gray-800/60" : "bg-gray-50"} rounded-2xl p-4`} style={{ border: `2px solid ${d ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"}` }}>
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className={`w-5 h-5 ${d ? "bg-gray-700" : "bg-gray-300"} rounded`}></div>
-                    <div className={`h-3 w-20 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
-                  </div>
-                  <div className={`h-8 w-20 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-1`}></div>
-                  <div className={`h-2 w-16 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
-                </div>
-                <div>
-                  <div className={`h-5 w-14 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-1`}></div>
-                  <div className={`h-2 w-12 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
-                </div>
-              </div>
-
-              <div className="mb-4">
-                <div className={`h-2 w-16 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded mb-2`}></div>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className={`h-3 w-28 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
-                    <div className={`h-3 w-8 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className={`h-3 w-24 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
-                    <div className={`h-3 w-8 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
-                  </div>
-                </div>
-              </div>
-
-              <div className={`h-10 ${d ? "bg-gray-700" : "bg-gray-300"} rounded-xl`}></div>
-            </div>
-
-            {/* Preparing Order */}
-            <div className={`${d ? "bg-gray-800/30" : "bg-gray-50/60"} rounded-2xl p-4`} style={{ border: `1px solid ${d ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}` }}>
+      {/* 商品詳細 */}
+      <div className="space-y-4">
+        <div className={`text-[16px] ${c.t1} font-bold`}>② 商品詳細</div>
+        <div className="flex gap-12 items-start">
+          <div className="shrink-0">
+            <div className={`w-[260px] h-[520px] ${d ? "bg-gray-900/60" : "bg-white"} rounded-3xl overflow-hidden p-7`} style={{ border: `2px solid ${d ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`, boxShadow: d ? "0 8px 24px rgba(0,0,0,0.5)" : "0 8px 24px rgba(0,0,0,0.08)" }}>
+              <div className={`w-full h-32 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded-2xl mb-5`}></div>
               <div className="flex items-start justify-between mb-3">
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className={`w-5 h-5 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
-                    <div className={`h-3 w-16 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
-                  </div>
-                  <div className={`h-7 w-20 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded mb-1`}></div>
-                  <div className={`h-2 w-16 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded`}></div>
+                <div className="flex-1">
+                  <div className={`h-4 w-28 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-2`}></div>
+                  <div className={`h-2.5 w-20 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
                 </div>
-                <div>
-                  <div className={`h-5 w-14 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded mb-1`}></div>
-                  <div className={`h-2 w-12 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded`}></div>
+                <div className={`h-4 w-12 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded-full`}></div>
+              </div>
+              <div className={`h-2.5 w-full ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded mb-1`}></div>
+              <div className={`h-2.5 w-4/5 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded mb-4`}></div>
+              <div className={`${d ? "bg-gray-800/40" : "bg-gray-50"} rounded-2xl p-3 mb-4`}>
+                <div className="flex items-center justify-between">
+                  <div className={`h-2.5 w-14 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
+                  <div className={`h-5 w-16 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
                 </div>
               </div>
-
-              <div className={`h-8 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-xl`}></div>
-            </div>
-
-            {/* Completed Order */}
-            <div className={`${d ? "bg-gray-800/20" : "bg-gray-50/40"} rounded-2xl p-4`} style={{ border: `1px solid ${d ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"}` }}>
-              <div className="flex items-start justify-between mb-2">
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className={`w-5 h-5 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
-                    <div className={`h-3 w-20 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded`}></div>
-                  </div>
-                  <div className={`h-7 w-20 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded mb-1`}></div>
-                  <div className={`h-2 w-16 ${d ? "bg-gray-800/30" : "bg-gray-100"} rounded`}></div>
-                </div>
-                <div>
-                  <div className={`h-5 w-14 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded mb-1`}></div>
-                  <div className={`h-2 w-12 ${d ? "bg-gray-800/30" : "bg-gray-100"} rounded`}></div>
-                </div>
+              <div className="grid grid-cols-3 gap-2 mb-3">
+                <div className={`h-8 ${d ? "bg-gray-700" : "bg-gray-300"} rounded-xl`}></div>
+                <div className={`h-8 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-xl`}></div>
+                <div className={`h-8 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded-xl`}></div>
               </div>
-
-              <div className={`h-3 w-36 ${d ? "bg-gray-800/30" : "bg-gray-100"} rounded mx-auto`}></div>
+              <div className={`h-10 ${d ? "bg-gray-700" : "bg-gray-300"} rounded-2xl`}></div>
             </div>
           </div>
+
+          <div className="flex-1 space-y-4">
+          <Vis className="space-y-3">
+            <div className="flex items-center gap-2">
+              <Box className="w-4 h-4 text-purple-400" />
+              <div className={`text-[14px] ${c.t1} font-semibold`}>作る想定のUIエレメント</div>
+            </div>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+              <Point>商品画像</Point>
+              <Point>商品名・説明</Point>
+              <Point>価格表示</Point>
+              <Point>オプション選択</Point>
+              <Point>追加ボタン</Point>
+              <Point>期間限定ラベル</Point>
+            </div>
+          </Vis>
+          <Vis className="space-y-3">
+            <div className="flex items-center gap-2">
+              <ToggleLeft className="w-4 h-4 text-purple-400" />
+              <div className={`text-[14px] ${c.t1} font-semibold`}>やってほしいこと</div>
+            </div>
+            <ul className="space-y-1.5">
+              <Point>追加ボタン：押せる状態 / 押せない状態 の2つのパターンを作る</Point>
+              <Point>オプション選択：未選択 / 選択中 の2つのパターンを作る</Point>
+              <Point>期間限定ラベル：表示 / 非表示 を切り替えられるようにする</Point>
+              <Point>長い説明文は2行で切って「...」で省略表示する</Point>
+            </ul>
+          </Vis>
+          <Vis className="space-y-3">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-purple-400" />
+              <div className={`text-[14px] ${c.t1} font-semibold`}>意識してほしいこと</div>
+            </div>
+            <ul className="space-y-1.5">
+              <Point>商品情報の量が変わっても<strong>崩れない Auto Layout</strong></Point>
+              <Point>状態に応じた<strong>CTA の見せ分け</strong></Point>
+              <Point>補足情報を含めた<strong>情報の優先順位整理</strong></Point>
+            </ul>
+          </Vis>
+        </div>
+      </div>
+      </div>
+    </div>
+  );
+}
+
+// 4. 追加課題の見どころ
+function PracticeAdditionalSlide() {
+  const theme = useTheme();
+  const c = tc(theme);
+  const d = theme === "dark";
+
+  return (
+    <div className="space-y-6">
+      {/* Info banner */}
+      <div className={`flex items-center gap-3 px-4 py-3 rounded-xl`} style={{
+        background: d ? "rgba(168,85,247,0.08)" : "rgba(168,85,247,0.06)",
+        border: `1px solid ${d ? "rgba(168,85,247,0.2)" : "rgba(168,85,247,0.15)"}`
+      }}>
+        <AlertTriangle className={`w-5 h-5 shrink-0 ${d ? "text-purple-300" : "text-purple-600"}`} />
+        <div className={`text-[13px] ${d ? "text-purple-200" : "text-purple-700"} leading-relaxed`}>
+          これらは必須ではありません。手が空いた人用の追加課題です！
         </div>
       </div>
 
-      <div className="w-[420px]">
-        <div className={`text-[17px] ${c.t1} font-bold mb-6`}>作るべきエレメント</div>
-        <div className="space-y-5">
-          {[
-            { name: "店舗情報カード", desc: "アイコン + 店舗名・住所、情報の整理" },
-            { name: "注文カード", desc: "ステータス・番号・時刻・商品リスト、状態に応じたスタイル" },
-            { name: "ステータス表示", desc: "アイコン + ラベル（受取可能・準備中・完了）、視覚的な差分" },
-            { name: "受取番号", desc: "大きな文字で目立たせる、タイポグラフィの強弱" },
-            { name: "アクションボタン", desc: "状態に応じて変わるボタン、優先順位の表現" },
-          ].map((el, idx) => (
-            <div key={idx} className="flex items-start gap-3">
-              <div className={`w-6 h-6 rounded-lg ${d ? "bg-purple-500/20" : "bg-purple-100"} flex items-center justify-center shrink-0 mt-0.5`}>
-                <div className={`text-[12px] font-bold ${d ? "text-purple-300" : "text-purple-600"}`}>{idx + 1}</div>
-              </div>
-              <div className="flex-1">
-                <div className={`text-[15px] font-bold ${c.t1} mb-1`}>{el.name}</div>
-                <div className={`text-[13px] ${c.t3} leading-relaxed`}>{el.desc}</div>
-              </div>
+      <div className="flex gap-12 items-start">
+        {/* Mobile mockup illustration */}
+        <div className="shrink-0">
+          <div className={`w-[260px] h-[520px] ${d ? "bg-gray-900/60" : "bg-white"} rounded-3xl overflow-hidden p-7`} style={{ border: `2px solid ${d ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`, boxShadow: d ? "0 8px 24px rgba(0,0,0,0.5)" : "0 8px 24px rgba(0,0,0,0.08)" }}>
+            <div className={`h-6 w-20 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded mb-6`}></div>
+            <div className="space-y-4">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className={`${d ? "bg-gray-800/40" : "bg-gray-50"} rounded-2xl p-4`}>
+                  <div className="flex gap-3 mb-3">
+                    <div className={`w-12 h-12 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded-xl shrink-0`}></div>
+                    <div className="flex-1 space-y-2">
+                      <div className={`h-4 w-24 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
+                      <div className={`h-3 w-16 ${d ? "bg-gray-800/40" : "bg-gray-100"} rounded`}></div>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className={`w-6 h-6 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
+                      <div className={`h-3 w-4 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
+                      <div className={`w-6 h-6 ${d ? "bg-gray-800/60" : "bg-gray-100"} rounded`}></div>
+                    </div>
+                    <div className={`h-4 w-12 ${d ? "bg-gray-700/60" : "bg-gray-200"} rounded`}></div>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+            <div className={`h-12 ${d ? "bg-gray-700" : "bg-gray-300"} rounded-2xl mt-5`}></div>
+          </div>
+        </div>
+
+      {/* Content */}
+      <div className="flex-1 space-y-5">
+        <Vis className="space-y-3">
+          <div className="flex items-center gap-2">
+            <MapPin className="w-4 h-4 text-purple-400" />
+            <div className={`text-[15px] ${c.t1} font-bold`}>店舗選択</div>
+          </div>
+          <div className={`text-[13px] ${c.t3} leading-relaxed mb-2`}>
+            店舗カードの通常 / 選択中 / 無効状態
+          </div>
+          <div className="pl-3 border-l-2" style={{ borderColor: d ? "rgba(168,85,247,0.2)" : "rgba(168,85,247,0.15)" }}>
+            <div className={`text-[12px] ${c.t1} font-semibold mb-1.5`}>やってほしいこと</div>
+            <ul className="space-y-1">
+              <li className={`text-[12px] ${c.t3}`}>• 店舗カード：通常 / 選択中 / 無効 の3つのパターンを作る</li>
+              <li className={`text-[12px] ${c.t3}`}>• 距離や営業時間のテキストが変わっても崩れないレイアウト</li>
+              <li className={`text-[12px] ${c.t3}`}>• 使えない店舗は色を薄くして押せないことが見た目でわかるように</li>
+            </ul>
+          </div>
+        </Vis>
+
+        <Vis className="space-y-3">
+          <div className="flex items-center gap-2">
+            <Layers className="w-4 h-4 text-purple-400" />
+            <div className={`text-[15px] ${c.t1} font-bold`}>カート</div>
+          </div>
+          <div className={`text-[13px] ${c.t3} leading-relaxed mb-2`}>
+            商品行の繰り返し、数量違い、オプション付き商品の表示
+          </div>
+          <div className="pl-3 border-l-2" style={{ borderColor: d ? "rgba(168,85,247,0.2)" : "rgba(168,85,247,0.15)" }}>
+            <div className={`text-[12px] ${c.t1} font-semibold mb-1.5`}>やってほしいこと</div>
+            <ul className="space-y-1">
+              <li className={`text-[12px] ${c.t3}`}>• 商品行：オプション情報の表示 / 非表示</li>
+              <li className={`text-[12px] ${c.t3}`}>• 商品を何個でも追加できる繰り返しの構造</li>
+              <li className={`text-[12px] ${c.t3}`}>• 商品が増えても減っても崩れないリストの作り方</li>
+            </ul>
+          </div>
+        </Vis>
+
+        <Vis className="space-y-3">
+          <div className="flex items-center gap-2">
+            <CheckCircle className="w-4 h-4 text-purple-400" />
+            <div className={`text-[15px] ${c.t1} font-bold`}>受け取り</div>
+          </div>
+          <div className={`text-[13px] ${c.t3} leading-relaxed mb-2`}>
+            注文ステータスの見せ分け、重要情報の優先順位、状態差分の整理
+          </div>
+          <div className="pl-3 border-l-2" style={{ borderColor: d ? "rgba(168,85,247,0.2)" : "rgba(168,85,247,0.15)" }}>
+            <div className={`text-[12px] ${c.t1} font-semibold mb-1.5`}>やってほしいこと</div>
+            <ul className="space-y-1">
+              <li className={`text-[12px] ${c.t3}`}>• 注文カード：準備中 / 受取可能 / 完了 の3つのパターンを作る</li>
+              <li className={`text-[12px] ${c.t3}`}>• 状態によってボタンを表示 / 非表示にする</li>
+              <li className={`text-[12px] ${c.t3}`}>• 注文番号とステータスをどう目立たせるか考える</li>
+            </ul>
+          </div>
+        </Vis>
+      </div>
+      </div>
+    </div>
+  );
+}
+
+// 6. 完成イメージ・最後に
+function PracticeSummarySlide() {
+  const theme = useTheme();
+  const c = tc(theme);
+  const d = theme === "dark";
+
+  return (
+    <div className="space-y-8">
+      <Vis className="space-y-4">
+        <div className="flex items-center gap-2 mb-2">
+          <CheckCircle className="w-5 h-5 text-purple-400" />
+          <div className={`text-[16px] ${c.t1} font-bold`}>この課題で目指す状態</div>
+        </div>
+        <ul className="space-y-2.5">
+          <Point>必須画面のコンポーネントが整理されている</Point>
+          <Point>繰り返し要素をコンポーネント / インスタンスで扱えている</Point>
+          <Point>状態違いを整理して持てている</Point>
+          <Point>テキスト量や表示差分に耐えられる Auto Layout になっている</Point>
+        </ul>
+      </Vis>
+
+      <div
+        className="rounded-xl p-6"
+        style={{
+          background: d ? 'rgba(168,85,247,0.05)' : 'rgba(168,85,247,0.04)',
+          border: `1px solid ${d ? 'rgba(168,85,247,0.15)' : 'rgba(168,85,247,0.12)'}`,
+        }}
+      >
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <Target className="w-5 h-5 text-purple-400 shrink-0" />
+            <div className={`text-[18px] ${c.t1} font-bold`}>今日大事なのは「完成度」より「構造」</div>
+          </div>
+          <div className={`text-[14px] ${c.t2} leading-relaxed pl-8`}>
+            見た目を作り切ることより、<br />
+            <strong className="text-purple-400">どう整理するか・どう繰り返すか・どう崩れにくく作るか</strong>を意識して取り組んでください💡<br />
+            今日の感覚を今後の業務につなげていきましょう！
+          </div>
         </div>
       </div>
     </div>
@@ -4539,20 +4673,19 @@ export const slides: Slide[] = [
   { id: "title", section: "intro", title: "Figmaを「描く道具」から「設計の道具」へ", message: "", content: <TitleSlide /> },
   { id: "goal", section: "intro", title: "今日のゴール", message: "デザインシステムの実践的な使い方をイメージできる・実践できる状態になる", content: <GoalSlide /> },
   { id: "overview", section: "intro", title: "全体像", message: "5つのテーマは別々の機能ではなく、実務ではつながっている", content: <OverviewSlide /> },
-  { id: "al-basics", section: "auto-layout", title: "オートレイアウトの基本", message: "オートレイアウトは整列機能ではなく、要素同士の関係をルールにする機能", content: <AlBasicsSlide /> },
-  { id: "al-apply", section: "auto-layout", title: "オートレイアウトとは", starred: true, message: "オートレイアウトは構造を持った配置ルールで柔軟なデザインを実現", content: <AlApplySlide /> },
-  { id: "al-direction", section: "auto-layout", title: "オートレイアウトの適用", starred: true, message: "方向・間隔・パディングの適切な設定で柔軟なレイアウトを実現", content: <AlDirectionSlide /> },
-  { id: "al-figma-ui", section: "auto-layout", title: "Figma UI：オートレイアウト設定", starred: true, message: "Figmaのオートレイアウト設定パネルを理解する", content: <AlFigmaUISlide /> },
+  { id: "al-basics", section: "auto-layout", title: "Auto Layoutの基本", message: "Auto Layoutは整列機能ではなく、要素同士の関係をルールにする機能", content: <AlBasicsSlide /> },
+  { id: "al-apply", section: "auto-layout", title: "Auto Layoutとは", starred: true, message: "Auto Layoutは構造を持った配置ルールで柔軟なデザインを実現", content: <AlApplySlide /> },
+  { id: "al-direction", section: "auto-layout", title: "Auto Layoutの適用", starred: true, message: "方向・間隔・パディングの適切な設定で柔軟なレイアウトを実現", content: <AlDirectionSlide /> },
+  { id: "al-figma-ui", section: "auto-layout", title: "Auto Layout設定", starred: true, message: "FigmaのAuto Layout設定パネルを理解する", content: <AlFigmaUISlide /> },
   { id: "al-text", section: "auto-layout", title: "テキストの取り扱い", starred: true, message: "テキストはもっとも変化しやすい要素なので、見た目より先に振る舞いを決める", content: <AlTextSlide /> },
   { id: "al-advanced", section: "auto-layout", title: "最小最大幅 / 比率維持 / 絶対位置", message: "可変レイアウトの中で、どこまで許容し、何を例外にするかを決める", content: <AlAdvancedSlide /> },
-  { id: "al-real-example", section: "auto-layout", title: "実例：商品カード", starred: true, message: "実際のカードコンポーネントでオートレイアウトの威力を体感する", content: <AlRealExampleSlide /> },
+  { id: "al-real-example", section: "auto-layout", title: "実例：商品カード", starred: true, message: "実際のカードコンポーネントでAuto Layoutの威力を体感する", content: <AlRealExampleSlide /> },
   { id: "comp-basics", section: "components", title: "コンポーネントの基本", message: "コンポーネントは、見た目の再利用ではなく、判断の再利用", content: <CompBasicsSlide /> },
   { id: "comp-props", section: "components", title: "プロパティについて", starred: true, message: "プロパティは「何を変えてよいか」を明示する、安全な自由度の設計", content: <CompPropsSlide /> },
-  { id: "comp-variants-properties", section: "components", title: "バリアントのプロパティと値", starred: true, message: "バリアントはプロパティと値の組み合わせで構成される", content: <CompVariantsPropertiesSlide /> },
-  { id: "comp-variants-button-example", section: "components", title: "実例：ボタンバリアント", starred: true, message: "ボタンコンポーネントでバリアントの実践的な使い方を理解する", content: <CompVariantsButtonExampleSlide /> },
-  { id: "comp-variants-create", section: "components", title: "バリアントの作成手順", starred: true, message: "Figmaでバリアントを作成する実際の手順を理解する", content: <CompVariantsCreateSlide /> },
+  { id: "comp-variants-properties", section: "components", title: "バリアントのプロパティと値", starred: true, message: "プロパティ = 何を切り替えるか、値 = どういう状態があるか", content: <CompVariantsPropertiesSlide /> },
+  { id: "comp-variants-create", section: "components", title: "バリアントの作成手順", message: "Figmaでバリアントを作成する実際の手順を理解する", content: <CompVariantsCreateSlide /> },
   { id: "comp-slot", section: "components", title: "Slot（スロット）", starred: true, message: "Slotでコンポーネント内に他の要素を自由に差し込める", content: <CompSlotSlide /> },
-  { id: "comp-real-example", section: "components", title: "実例：ボタンシステム", starred: true, message: "実際のボタンシステムでコンポーネント設計を理解する", content: <CompRealExampleSlide /> },
+  { id: "comp-real-example", section: "components", title: "実例：ボタンシステム", message: "実際のボタンシステムでコンポーネント設計を理解する", content: <CompRealExampleSlide /> },
   { id: "var-basics", section: "variables", title: "バリアブルの基本", message: "スタイルは見た目のまとまり、バリアブルは再利用する値の源泉", content: <VarBasicsSlide /> },
   { id: "var-apply", section: "variables", title: "バリアブルの適用", starred: true, message: "バリアブルの価値は、値を持つことではなく、変更の経路を設計すること", content: <VarApplySlide /> },
   { id: "var-alias", section: "variables", title: "トークンのエイリアス", starred: true, message: "トークンのエイリアスを使うと、デザインシステムを効率よく育てられる", content: <VarAliasSlide /> },
@@ -4561,12 +4694,14 @@ export const slides: Slide[] = [
   { id: "lib-publish", section: "library", title: "ライブラリの公開・更新", message: "ライブラリ更新は、単なる修正ではなくチームへのリリース", content: <LibPublishSlide /> },
   { id: "token-basics", section: "tokens", title: "デザイントークンの基本", message: "トークンは、値に名前をつけることではなく、判断を再利用できる形にすること", content: <TokenBasicsSlide /> },
   { id: "token-semantic", section: "tokens", title: "セマンティックカラー", starred: true, message: "色は「何色か」ではなく「何のための色か」で扱う", content: <TokenSemanticSlide /> },
-  { id: "token-hex", section: "tokens", title: "HEXカラーにトークンを適用する", starred: true, message: "HEXをトークン化する時は、値を置き換えるのではなく、意味を読み替える", content: <TokenHexSlide /> },
-  { id: "token-typo", section: "tokens", title: "タイポグラフィについて", starred: true, message: "タイポグラフィは文字サイズ表ではなく、情報の優先順位と読みやすさの設計", content: <TokenTypoSlide /> },
-  { id: "workflow-example", section: "others", title: "実例：実務フロー", starred: true, message: "デザインシステムが実務でどう機能するかを理解する", content: <WorkflowExampleSlide /> },
+  { id: "token-hex", section: "tokens", title: "HEXカラーにトークンを適用する", message: "HEXをトークン化する時は、値を置き換えるのではなく、意味を読み替える", content: <TokenHexSlide /> },
+  { id: "token-appearance", section: "tokens", title: "Light/Dark mode の切り替え", message: "AppearanceパネルからLight/Dark modeを切り替えられる", content: <TokenAppearanceSlide /> },
+  { id: "token-typo", section: "tokens", title: "タイポグラフィについて", message: "タイポグラフィは文字サイズ表ではなく、情報の優先順位と読みやすさの設計", content: <TokenTypoSlide /> },
   { id: "others-ds", section: "others", title: "その他のデザインシステム要素", message: "デザインシステムは色とコンポーネントだけではない", content: <OthersDsSlide /> },
   { id: "summary", section: "others", title: "まとめ", message: "Figmaの機能は、見た目を作るためではなく、運用できる構造を作るために使う", content: <SummarySlide /> },
-  { id: "practice-list", section: "practice", title: "① 商品一覧画面", starred: true, message: "左に画面サンプル、右に作るべきエレメント", content: <ProductListPracticeSlide /> },
-  { id: "practice-detail", section: "practice", title: "② 商品詳細画面", starred: true, message: "商品情報の階層とオプション選択の実装", content: <ProductDetailPracticeSlide /> },
-  { id: "practice-pickup", section: "practice", title: "③ 受け取り画面", starred: true, message: "ステータスによる状態差分と優先順位の表現", content: <PickupPracticeSlide /> },
+  { id: "practice-intro", section: "practice", title: "Figma研修 基本課題", starred: true, message: "完成度より構造を意識して、手を動かしながら学ぶ", content: <PracticeIntroSlide /> },
+  { id: "practice-overview", section: "practice", title: "課題概要", message: "モバイルオーダーUIコンポーネントを題材に、実践的な設計を学ぶ", content: <PracticeOverviewSlide /> },
+  { id: "practice-required-screens", section: "practice", title: "必須画面", starred: true, message: "商品一覧と商品詳細の作成ポイント", content: <PracticeRequiredScreensSlide /> },
+  { id: "practice-additional", section: "practice", title: "追加課題", message: "余力があれば店舗選択・カート・受け取り画面に挑戦", content: <PracticeAdditionalSlide /> },
+  { id: "practice-summary", section: "practice", title: "完成イメージ", starred: true, message: "今日大事なのは「完成度」より「構造」", content: <PracticeSummarySlide /> },
 ];

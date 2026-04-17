@@ -25,10 +25,10 @@ const sectionIcons: Record<string, React.ReactNode> = {
 /* ── Theme tokens ── */
 const t = {
   dark: {
-    bg: "linear-gradient(135deg, #0c0c18 0%, #12101f 30%, #16132a 60%, #0e0c1a 100%)",
-    sidebar: "rgba(18,16,30,0.8)",
-    sidebarBorder: "1px solid rgba(255,255,255,0.06)",
-    header: "rgba(12,12,24,0.6)",
+    bg: "#262335",
+    sidebar: "#241B2F",
+    sidebarBorder: "1px solid rgba(255,255,255,0.08)",
+    header: "rgba(36,27,47,0.7)",
     headerBorder: "1px solid rgba(255,255,255,0.06)",
     progressTrack: "rgba(255,255,255,0.04)",
     dotInactive: "rgba(255,255,255,0.12)",
@@ -50,10 +50,10 @@ const t = {
     menuBtn: "text-gray-400 hover:text-gray-200",
   },
   light: {
-    bg: "linear-gradient(135deg, #fdfcff 0%, #faf7fd 25%, #f9f5fc 50%, #fdf5fa 75%, #fefcff 100%)",
-    sidebar: "rgba(255,255,255,0.55)",
-    sidebarBorder: "1px solid rgba(200,170,230,0.12)",
-    header: "rgba(255,255,255,0.5)",
+    bg: "#FDFDFD",
+    sidebar: "#FFFFFF",
+    sidebarBorder: "1px solid rgba(200,170,230,0.2)",
+    header: "rgba(255,255,255,0.8)",
     headerBorder: "1px solid rgba(200,170,230,0.1)",
     progressTrack: "rgba(168,85,247,0.06)",
     dotInactive: "rgba(168,85,247,0.15)",
@@ -86,7 +86,7 @@ function App() {
   const [theme, setTheme] = useState<Theme>("dark");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
   const [error, setError] = useState("");
   const [bookmarks, setBookmarks] = useState<number[]>([]);
   const [memos, setMemos] = useState<Memo[]>([]);
@@ -287,7 +287,7 @@ function App() {
         <div
           className="flex items-center justify-center h-screen"
           style={{
-            fontFamily: "'Noto Sans JP', 'Inter', system-ui, sans-serif",
+            fontFamily: "'Montserrat', 'Noto Sans JP', system-ui, sans-serif",
             background: t.dark.bg,
           }}
         >
@@ -339,6 +339,7 @@ function App() {
                 className="w-full px-4 py-3 rounded-lg text-white font-medium transition"
                 style={{
                   background: "linear-gradient(135deg, #7c3aed, #a855f7)",
+                  animation: "hue-shift 8s ease-in-out infinite",
                 }}
               >
                 Let's GO !
@@ -355,7 +356,7 @@ function App() {
       <div
         className="flex h-screen"
         style={{
-          fontFamily: "'Noto Sans JP', 'Inter', system-ui, sans-serif",
+          fontFamily: "'Montserrat', 'Noto Sans JP', system-ui, sans-serif",
           background: c.bg,
         }}
       >
@@ -370,25 +371,18 @@ function App() {
             borderRight: c.sidebarBorder,
           }}
         >
-          {/* Resize handle */}
-          {sidebarOpen && (
-            <div
-              className="absolute top-0 right-0 w-1 h-full cursor-col-resize hover:bg-purple-400/50 transition-colors z-10"
-              onMouseDown={() => setIsResizingLeft(true)}
-            />
-          )}
           <div className="px-5 pt-6 pb-4">
             <div className={`text-[14px] ${c.title}`} style={{ fontWeight: 700 }}>Figma 研修資料</div>
-            <div className={`text-[11px] ${c.titleSub} mt-0.5`}>{total} slides / 新卒デザイナー向け</div>
+            <div className={`text-[12px] ${c.titleSub} mt-0.5`}>{total} slides / 新卒デザイナー向け</div>
           </div>
 
-          <nav className="flex-1 overflow-y-auto pb-4">
+          <nav className="flex-1 overflow-y-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {sectionList.map((sec) => {
               const secSlides = slides.filter((s) => s.section === sec.id);
               if (secSlides.length === 0) return null;
               return (
                 <div key={sec.id} className="mb-1">
-                  <div className={`px-5 pt-3 pb-1 text-[11px] ${c.sectionLabel} flex items-center gap-1.5 tracking-wide font-medium`}>
+                  <div className={`px-5 pt-3 pb-1 text-[12px] ${c.sectionLabel} flex items-center gap-1.5 tracking-wide font-medium`}>
                     {sectionIcons[sec.id]}
                     {sec.title}
                   </div>
@@ -498,17 +492,6 @@ function App() {
               <Moon className={`w-4 h-4 transition-colors ${theme === "dark" ? "text-purple-300" : c.toggleBtn}`} />
             </div>
           </header>
-
-          {/* Progress */}
-          <div className="h-[3px] shrink-0" style={{ background: c.progressTrack }}>
-            <div
-              className="h-full transition-all duration-500 ease-out rounded-r-full"
-              style={{
-                width: `${((idx + 1) / total) * 100}%`,
-                background: "linear-gradient(90deg, #7c3aed, #a855f7, #c084fc)",
-              }}
-            />
-          </div>
 
           {/* Content */}
           <div
@@ -634,7 +617,7 @@ function App() {
           )}
           <div className="px-5 pt-6 pb-4">
             <div className={`text-[14px] ${c.title}`} style={{ fontWeight: 700 }}>メモ</div>
-            <div className={`text-[11px] ${c.titleSub} mt-0.5`}>{memos.filter(m => m.slideIndex === idx).length}件（このページ）</div>
+            <div className={`text-[12px] ${c.titleSub} mt-0.5`}>{memos.filter(m => m.slideIndex === idx).length}件（このページ）</div>
           </div>
 
           {/* Add memo form */}
@@ -798,7 +781,7 @@ function App() {
                             </div>
                           )}
                           <div className="flex items-center justify-between">
-                            <div className={`text-[10px] ${c.titleSub}`}>
+                            <div className={`text-[12px] ${c.titleSub}`}>
                               {new Date(memo.createdAt).toLocaleString('ja-JP', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                             </div>
                             <div className="flex gap-1">
