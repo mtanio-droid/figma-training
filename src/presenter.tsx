@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { slides, sectionList } from "./app/components/slide-data";
 import { ChevronLeft, ChevronRight, Clock, Monitor, MousePointer2 } from "lucide-react";
+import { ThemeContext } from "./app/components/theme-context";
 
 export default function PresenterView() {
   const [idx, setIdx] = useState(0);
@@ -8,15 +9,26 @@ export default function PresenterView() {
   const [elapsed, setElapsed] = useState(0);
   const [channel] = useState(() => new BroadcastChannel('figma-presenter'));
   const [laserMode, setLaserMode] = useState(false);
+  const [localLaser, setLocalLaser] = useState<{ x: number; y: number } | null>(null);
+  const previewRef = useRef<HTMLDivElement>(null);
 
-  // レーザーポインターの座標送信
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!laserMode) return;
+  // プレビューエリアでのレーザーポインター操作
+  const handlePreviewMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!laserMode || !previewRef.current) return;
 
-    const x = (e.clientX / window.innerWidth) * 100;
-    const y = (e.clientY / window.innerHeight) * 100;
+    const rect = previewRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
 
+    // ローカルプレビューに表示
+    setLocalLaser({ x, y });
+
+    // メインappに送信
     channel.postMessage({ type: 'laser', x, y, active: true });
+  };
+
+  const handlePreviewMouseLeave = () => {
+    setLocalLaser(null);
   };
 
   const toggleLaser = () => {
@@ -25,6 +37,7 @@ export default function PresenterView() {
 
     if (!newMode) {
       // OFFにしたらレーザーを消す
+      setLocalLaser(null);
       channel.postMessage({ type: 'laser', active: false });
     }
   };
@@ -68,7 +81,7 @@ export default function PresenterView() {
   }, [idx]);
 
   return (
-    <div className="h-screen bg-gray-900 text-white flex flex-col" onMouseMove={handleMouseMove}>
+    <div className="h-screen bg-gray-900 text-white flex flex-col">
       {/* ヘッダー */}
       <div className="bg-gray-800 border-b border-gray-700 px-6 py-4">
         <div className="flex items-center justify-between">
@@ -116,6 +129,46 @@ export default function PresenterView() {
               <div className="flex items-center gap-2 text-sm text-purple-400 mb-3">
                 <span className="font-semibold">現在のスライド</span>
                 {currentSlide.starred && <span className="text-yellow-400">★</span>}
+              </div>
+
+              {/* スライドプレビュー */}
+              <div
+                ref={previewRef}
+                className={`relative bg-gray-900 rounded-lg border-2 mb-4 overflow-hidden ${
+                  laserMode ? 'border-pink-500 cursor-crosshair' : 'border-gray-700'
+                }`}
+                style={{ aspectRatio: '16/9' }}
+                onMouseMove={handlePreviewMouseMove}
+                onMouseLeave={handlePreviewMouseLeave}
+              >
+                <div className="absolute inset-0 flex items-center justify-center scale-[0.45] origin-center">
+                  <ThemeContext.Provider value="dark">
+                    <div className="w-[1920px] h-[1080px] bg-[#262335]">
+                      {currentSlide.content}
+                    </div>
+                  </ThemeContext.Provider>
+                </div>
+
+                {/* ローカルレーザーポインター */}
+                {laserMode && localLaser && (
+                  <div
+                    className="absolute pointer-events-none animate-pulse"
+                    style={{
+                      left: `${localLaser.x}%`,
+                      top: `${localLaser.y}%`,
+                      transform: 'translate(-50%, -50%)'
+                    }}
+                  >
+                    <div className="w-2 h-2 bg-pink-500 rounded-full opacity-90 shadow-lg shadow-pink-500/50" />
+                    <div className="absolute inset-0 w-2 h-2 bg-pink-400 rounded-full opacity-40 animate-ping" />
+                  </div>
+                )}
+
+                {laserMode && (
+                  <div className="absolute top-2 left-2 bg-pink-600 text-white text-xs px-2 py-1 rounded">
+                    レーザーモード ON
+                  </div>
+                )}
               </div>
 
               <div className="text-xs text-gray-500 mb-1">{currentSection?.title}</div>
