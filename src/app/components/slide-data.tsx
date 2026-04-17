@@ -625,57 +625,146 @@ function OverviewSlide() {
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>5つのテーマは別々の機能ではなく、実務では<strong>つながっている</strong></Msg>
-      <div
-        className="relative rounded-2xl p-10 overflow-hidden"
-        style={{
-          background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
-          border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
-          boxShadow: d
-            ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
-            : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
-        }}
-      >
-        <div className="flex flex-col items-center gap-8 relative z-10">
-          {/* Core concept */}
+      <Msg>5つのテーマを組み合わせて、<strong>壊れにくいデザイン</strong>を作る</Msg>
+
+      <div className="flex flex-col items-center gap-4 max-w-2xl mx-auto">
+        {/* Step 1: 基礎を作る */}
+        <div className={`w-full text-center text-[13px] font-semibold ${c.t3}`}>
+          ① 基礎を作る
+        </div>
+
+        <div className="grid grid-cols-3 gap-4 w-full">
+          {/* Auto Layout */}
           <div
-            className="text-white rounded-2xl px-8 py-4 text-[16px] font-bold shadow-xl"
+            className="rounded-xl px-4 py-3"
             style={{
-              background: "linear-gradient(135deg, #7c3aed, #a855f7, #c084fc)",
-              boxShadow: '0 8px 24px rgba(168,85,247,0.4), 0 0 48px rgba(168,85,247,0.2)'
+              background: d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)',
+              border: `2px solid ${d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.2)'}`,
+              boxShadow: d ? '0 4px 12px rgba(59,130,246,0.15)' : '0 4px 12px rgba(59,130,246,0.1)'
             }}
           >
-            壊れにくいUI構造
+            <div className="flex justify-center mb-2">
+              <Layers className="w-5 h-5 text-blue-400" />
+            </div>
+            <div className={`text-[13px] font-semibold mb-1 text-center ${d ? 'text-blue-200' : 'text-blue-700'}`}>
+              並び方を決める
+            </div>
+            <div className={`text-[11px] text-center ${c.t5}`}>Auto Layout</div>
           </div>
 
-          {/* Five pillars */}
-          <div className="grid grid-cols-3 gap-6 max-w-3xl w-full">
-            {[
-              { icon: <Layers className="w-5 h-5" />, label: "Auto Layout", sub: "関係を設計する", color: d ? 'rgba(59,130,246,0.12)' : 'rgba(59,130,246,0.08)', border: d ? 'rgba(59,130,246,0.3)' : 'rgba(59,130,246,0.2)', iconColor: 'text-blue-400' },
-              { icon: <Component className="w-5 h-5" />, label: "Component", sub: "判断を再利用する", color: d ? 'rgba(168,85,247,0.12)' : 'rgba(168,85,247,0.08)', border: d ? 'rgba(168,85,247,0.3)' : 'rgba(168,85,247,0.2)', iconColor: 'text-purple-400' },
-              { icon: <Variable className="w-5 h-5" />, label: "Variable", sub: "値を再利用する", color: d ? 'rgba(16,185,129,0.12)' : 'rgba(16,185,129,0.08)', border: d ? 'rgba(16,185,129,0.3)' : 'rgba(16,185,129,0.2)', iconColor: 'text-emerald-400' },
-              { icon: <Library className="w-5 h-5" />, label: "Library", sub: "チームで共有する", color: d ? 'rgba(249,115,22,0.12)' : 'rgba(249,115,22,0.08)', border: d ? 'rgba(249,115,22,0.3)' : 'rgba(249,115,22,0.2)', iconColor: 'text-orange-400' },
-              { icon: <Paintbrush className="w-5 h-5" />, label: "Token", sub: "意味で名前をつける", color: d ? 'rgba(236,72,153,0.12)' : 'rgba(236,72,153,0.08)', border: d ? 'rgba(236,72,153,0.3)' : 'rgba(236,72,153,0.2)', iconColor: 'text-pink-400' },
-            ].map((item, idx) => (
-              <div
-                key={item.label}
-                className={`rounded-xl px-5 py-4 text-center ${idx === 4 ? 'col-span-3 max-w-[240px] mx-auto' : ''}`}
-                style={{
-                  background: item.color,
-                  border: `1px solid ${item.border}`,
-                  boxShadow: d ? '0 4px 16px rgba(0,0,0,0.2)' : '0 4px 16px rgba(0,0,0,0.06)'
-                }}
-              >
-                <div className={`flex justify-center mb-2 ${item.iconColor}`}>{item.icon}</div>
-                <div className={`text-[14px] font-semibold mb-1 ${d ? 'text-white' : 'text-gray-800'}`}>{item.label}</div>
-                <div className={`text-[12px] ${d ? 'text-gray-400' : 'text-gray-600'}`}>{item.sub}</div>
-              </div>
-            ))}
+          {/* Component */}
+          <div
+            className="rounded-xl px-4 py-3"
+            style={{
+              background: d ? 'rgba(168,85,247,0.08)' : 'rgba(168,85,247,0.06)',
+              border: `2px solid ${d ? 'rgba(168,85,247,0.25)' : 'rgba(168,85,247,0.2)'}`,
+              boxShadow: d ? '0 4px 12px rgba(168,85,247,0.15)' : '0 4px 12px rgba(168,85,247,0.1)'
+            }}
+          >
+            <div className="flex justify-center mb-2">
+              <Component className="w-5 h-5 text-purple-400" />
+            </div>
+            <div className={`text-[13px] font-semibold mb-1 text-center ${d ? 'text-purple-200' : 'text-purple-700'}`}>
+              同じ部品をまとめる
+            </div>
+            <div className={`text-[11px] text-center ${c.t5}`}>Component</div>
+          </div>
+
+          {/* Variable */}
+          <div
+            className="rounded-xl px-4 py-3"
+            style={{
+              background: d ? 'rgba(16,185,129,0.08)' : 'rgba(16,185,129,0.06)',
+              border: `2px solid ${d ? 'rgba(16,185,129,0.25)' : 'rgba(16,185,129,0.2)'}`,
+              boxShadow: d ? '0 4px 12px rgba(16,185,129,0.15)' : '0 4px 12px rgba(16,185,129,0.1)'
+            }}
+          >
+            <div className="flex justify-center mb-2">
+              <Variable className="w-5 h-5 text-emerald-400" />
+            </div>
+            <div className={`text-[13px] font-semibold mb-1 text-center ${d ? 'text-emerald-200' : 'text-emerald-700'}`}>
+              色や余白をまとめる
+            </div>
+            <div className={`text-[11px] text-center ${c.t5}`}>Variable</div>
           </div>
         </div>
 
+        {/* Arrow down */}
+        <div className="flex justify-center">
+          <ChevronRight className={`w-6 h-6 ${c.t4} transform rotate-90`} />
+        </div>
+
+        {/* Step 2: ルールに名前をつける */}
+        <div className={`w-full text-center text-[13px] font-semibold ${c.t3}`}>
+          ② ルールに名前をつける
+        </div>
+
+        <div className="w-full max-w-xs">
+          <div
+            className="rounded-xl px-4 py-3"
+            style={{
+              background: d ? 'rgba(236,72,153,0.08)' : 'rgba(236,72,153,0.06)',
+              border: `2px solid ${d ? 'rgba(236,72,153,0.25)' : 'rgba(236,72,153,0.2)'}`,
+              boxShadow: d ? '0 4px 12px rgba(236,72,153,0.15)' : '0 4px 12px rgba(236,72,153,0.1)'
+            }}
+          >
+            <div className="flex justify-center mb-2">
+              <Paintbrush className="w-5 h-5 text-pink-400" />
+            </div>
+            <div className={`text-[13px] font-semibold mb-1 text-center ${d ? 'text-pink-200' : 'text-pink-700'}`}>
+              意味のある名前で管理
+            </div>
+            <div className={`text-[11px] text-center ${c.t5}`}>Token</div>
+          </div>
+        </div>
+
+        {/* Arrow down */}
+        <div className="flex justify-center">
+          <ChevronRight className={`w-6 h-6 ${c.t4} transform rotate-90`} />
+        </div>
+
+        {/* Step 3: チームで共有 */}
+        <div className={`w-full text-center text-[13px] font-semibold ${c.t3}`}>
+          ③ チームで共有する
+        </div>
+
+        <div className="w-full max-w-xs">
+          <div
+            className="rounded-xl px-4 py-3"
+            style={{
+              background: d ? 'rgba(249,115,22,0.08)' : 'rgba(249,115,22,0.06)',
+              border: `2px solid ${d ? 'rgba(249,115,22,0.25)' : 'rgba(249,115,22,0.2)'}`,
+              boxShadow: d ? '0 4px 12px rgba(249,115,22,0.15)' : '0 4px 12px rgba(249,115,22,0.1)'
+            }}
+          >
+            <div className="flex justify-center mb-2">
+              <Library className="w-5 h-5 text-orange-400" />
+            </div>
+            <div className={`text-[13px] font-semibold mb-1 text-center ${d ? 'text-orange-200' : 'text-orange-700'}`}>
+              みんなで使えるようにする
+            </div>
+            <div className={`text-[11px] text-center ${c.t5}`}>Library</div>
+          </div>
+        </div>
+
+        {/* Arrow down */}
+        <div className="flex justify-center">
+          <ChevronRight className={`w-6 h-6 ${c.t4} transform rotate-90`} />
+        </div>
+
+        {/* Result */}
+        <div
+          className="text-white rounded-2xl px-8 py-4 text-[16px] font-bold shadow-xl"
+          style={{
+            background: "linear-gradient(135deg, #7c3aed, #a855f7, #c084fc)",
+            boxShadow: '0 8px 24px rgba(168,85,247,0.4), 0 0 48px rgba(168,85,247,0.2)'
+          }}
+        >
+          ✨ 壊れにくいUI構造
+        </div>
       </div>
-      <Tip>それぞれの機能を点ではなく線でつなげて考えると、設計判断がブレにくくなる</Tip>
+
+      <Tip>一つずつ積み重ねることで、変更に強いデザインが完成する</Tip>
     </div>
   );
 }
