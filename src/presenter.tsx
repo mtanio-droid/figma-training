@@ -1,12 +1,33 @@
 import { useState, useEffect } from "react";
 import { slides, sectionList } from "./app/components/slide-data";
-import { ChevronLeft, ChevronRight, Clock, Monitor } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Monitor, MousePointer2 } from "lucide-react";
 
 export default function PresenterView() {
   const [idx, setIdx] = useState(0);
   const [startTime] = useState(Date.now());
   const [elapsed, setElapsed] = useState(0);
   const [channel] = useState(() => new BroadcastChannel('figma-presenter'));
+  const [laserMode, setLaserMode] = useState(false);
+
+  // レーザーポインターの座標送信
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!laserMode) return;
+
+    const x = (e.clientX / window.innerWidth) * 100;
+    const y = (e.clientY / window.innerHeight) * 100;
+
+    channel.postMessage({ type: 'laser', x, y, active: true });
+  };
+
+  const toggleLaser = () => {
+    const newMode = !laserMode;
+    setLaserMode(newMode);
+
+    if (!newMode) {
+      // OFFにしたらレーザーを消す
+      channel.postMessage({ type: 'laser', active: false });
+    }
+  };
 
   const total = slides.length;
   const currentSlide = slides[idx];
@@ -47,7 +68,7 @@ export default function PresenterView() {
   }, [idx]);
 
   return (
-    <div className="h-screen bg-gray-900 text-white flex flex-col">
+    <div className="h-screen bg-gray-900 text-white flex flex-col" onMouseMove={handleMouseMove}>
       {/* ヘッダー */}
       <div className="bg-gray-800 border-b border-gray-700 px-6 py-4">
         <div className="flex items-center justify-between">
@@ -56,6 +77,17 @@ export default function PresenterView() {
             <h1 className="text-lg font-semibold">発表者ビュー</h1>
           </div>
           <div className="flex items-center gap-6">
+            <button
+              onClick={toggleLaser}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
+                laserMode
+                  ? 'bg-red-600 text-white'
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+            >
+              <MousePointer2 className="w-4 h-4" />
+              <span className="text-sm font-semibold">レーザー</span>
+            </button>
             <div className="flex items-center gap-2 text-sm text-gray-400">
               <Clock className="w-4 h-4" />
               <span className="font-mono">{formatTime(elapsed)}</span>

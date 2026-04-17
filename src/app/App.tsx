@@ -99,6 +99,7 @@ function App() {
   const [editingMemoId, setEditingMemoId] = useState<string | null>(null);
   const [selectionPopup, setSelectionPopup] = useState<{ x: number; y: number; text: string } | null>(null);
   const [memoInputExpanded, setMemoInputExpanded] = useState(false);
+  const [laserPointer, setLaserPointer] = useState<{ x: number; y: number; active: boolean } | null>(null);
 
   const total = slides.length;
   const slide = slides[idx];
@@ -131,12 +132,18 @@ function App() {
     }
   }, []);
 
-  // カンペappからのページ移動を受信
+  // カンペappからのページ移動・レーザーポインターを受信
   useEffect(() => {
     const channel = new BroadcastChannel('figma-presenter');
     channel.onmessage = (event) => {
       if (event.data.type === 'navigate' && typeof event.data.index === 'number') {
         go(event.data.index);
+      } else if (event.data.type === 'laser') {
+        if (event.data.active) {
+          setLaserPointer({ x: event.data.x, y: event.data.y, active: true });
+        } else {
+          setLaserPointer(null);
+        }
       }
     };
     return () => channel.close();
@@ -821,6 +828,21 @@ function App() {
           </nav>
         </aside>
       </div>
+
+      {/* レーザーポインター */}
+      {laserPointer?.active && (
+        <div
+          className="fixed pointer-events-none z-[9999] animate-pulse"
+          style={{
+            left: `${laserPointer.x}%`,
+            top: `${laserPointer.y}%`,
+            transform: 'translate(-50%, -50%)'
+          }}
+        >
+          <div className="w-6 h-6 bg-red-500 rounded-full opacity-80 shadow-lg shadow-red-500/50" />
+          <div className="absolute inset-0 w-6 h-6 bg-red-500 rounded-full opacity-40 animate-ping" />
+        </div>
+      )}
     </ThemeContext.Provider>
   );
 }
