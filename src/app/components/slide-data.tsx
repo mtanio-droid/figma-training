@@ -944,45 +944,11 @@ function AlDirectionSlide() {
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>方向・間隔・パディングの<strong>適切な設定</strong>で柔軟なレイアウトを実現</Msg>
-
-      <div className={`text-[14px] ${c.t3} leading-relaxed`}>
-        <p>
-          Auto Layoutを適切に設定することで、横幅を変えてもレイアウトが崩れない、カードなどのパーツを作ったり、と柔軟なデザイン・レイアウトを作ることが出来ます。
-        </p>
-      </div>
-
-      <div
-        className="w-full rounded-2xl overflow-hidden relative"
-        style={{
-          background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
-          border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
-          boxShadow: d
-            ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
-            : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
-        }}
-      >
-        <ExpandableImage
-          src="/images/content_image-1711415488661.gif"
-          alt="Auto Layoutによる柔軟なレイアウトの例"
-        />
-        <div
-          className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
-          style={{
-            background: 'rgba(0,0,0,0.6)',
-            color: 'rgba(255,255,255,0.8)'
-          }}
-        >
-          出典：SKILLHUB
-        </div>
-      </div>
+      <Msg>Auto Layoutフレームの要素は、方向、間隔、パディング、整列、その他のAuto Layoutプロパティに基づいて<strong>自動的に配置</strong>されます</Msg>
 
       <div className={`text-[14px] ${c.t3} leading-relaxed space-y-4`}>
         <p>
-          Auto Layoutフレームの要素は、方向、間隔、パディング、整列、その他のAuto Layoutプロパティに基づいて自動的に配置されます。コンテンツが変更されたり、要素が追加、削除、サイズ変更された場合でも、レイアウトは手動で再配置する必要なく調整されます。
-        </p>
-        <p>
-          Auto Layoutを使用すると、以下のような応答性のあるデザインを作成できます。
+          コンテンツが変更されたり、要素が追加、削除、サイズ変更された場合でも、レイアウトは手動で再配置する必要なく調整されます。Auto Layoutを使用すると、以下のような応答性のあるデザインを作成できます。
         </p>
         <ul className="list-disc ml-6 space-y-1">
           <li>テキストラベルの編集に合わせて拡大/縮小するボタン</li>
@@ -1456,7 +1422,40 @@ function AlFigmaUISlide() {
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>Figmaの<strong>Auto Layout設定パネル</strong>を理解する</Msg>
+      <Msg>方向・間隔・パディングの<strong>適切な設定</strong>で柔軟なレイアウトを実現</Msg>
+
+      <div className={`text-[14px] ${c.t3} leading-relaxed`}>
+        <p>
+          Auto Layoutを適切に設定することで、横幅を変えてもレイアウトが崩れない、カードなどのパーツを作ったり、と柔軟なデザイン・レイアウトを作ることが出来ます。
+        </p>
+      </div>
+
+      <div
+        className="w-full rounded-2xl overflow-hidden relative"
+        style={{
+          background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
+          border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+          boxShadow: d
+            ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
+            : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+        }}
+      >
+        <ExpandableImage
+          src="/images/content_image-1711415488661.gif"
+          alt="Auto Layoutによる柔軟なレイアウトの例"
+        />
+        <div
+          className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
+          style={{
+            background: 'rgba(0,0,0,0.6)',
+            color: 'rgba(255,255,255,0.8)'
+          }}
+        >
+          出典：SKILLHUB
+        </div>
+      </div>
+
+      <div className={`text-[15px] ${c.t2} font-semibold`}>Figmaの設定パネル</div>
       <Points items={["Direction（縦/横の向き）","Gap（要素間の余白）","Padding（外枠との余白）","Alignment（配置）とResizing（伸縮）"]} />
 
       <div className="w-full">
@@ -3446,7 +3445,7 @@ function TokenSemanticSlide() {
         <div className="space-y-5">
           {[
             { title: "✍️ Text", items: [
-              { name: "default", hex: "#F9FAFB" },{ name: "subtle", hex: "#9CA3AF" },{ name: "disabled", hex: "#4B5563" },{ name: "inverse", hex: "#111827" },{ name: "link", hex: "#A855F7" },{ name: "error", hex: "#EF4444" },
+              { name: "default", hex: "#F9FAFB" },{ name: "subtle", hex: "#9CA3AF" },{ name: "disabled", hex: "#4B5563" },{ name: "inverse", hex: "#111827" },{ name: "link", hex: "#3B82F6" },{ name: "error", hex: "#EF4444" },
             ]},
             { title: "🖼 Background", items: [
               { name: "canvas", hex: "#0C0C18" },{ name: "surface", hex: "#16132A" },{ name: "elevated", hex: "#1E1B2E" },{ name: "primary", hex: "#7C3AED" },{ name: "error", hex: "#450A0A" },{ name: "success", hex: "#052E16" },
@@ -4675,8 +4674,8 @@ export const slides: Slide[] = [
   { id: "overview", section: "intro", title: "全体像", message: "5つのテーマは別々の機能ではなく、実務ではつながっている", content: <OverviewSlide /> },
   { id: "al-basics", section: "auto-layout", title: "Auto Layoutの基本", message: "Auto Layoutは整列機能ではなく、要素同士の関係をルールにする機能", content: <AlBasicsSlide /> },
   { id: "al-apply", section: "auto-layout", title: "Auto Layoutとは", starred: true, message: "Auto Layoutは構造を持った配置ルールで柔軟なデザインを実現", content: <AlApplySlide /> },
-  { id: "al-figma-ui", section: "auto-layout", title: "Auto Layout設定", message: "FigmaのAuto Layout設定パネルを理解する", content: <AlFigmaUISlide /> },
-  { id: "al-direction", section: "auto-layout", title: "Auto Layoutの適用", starred: true, message: "方向・間隔・パディングの適切な設定で柔軟なレイアウトを実現", content: <AlDirectionSlide /> },
+  { id: "al-figma-ui", section: "auto-layout", title: "Auto Layout設定", starred: true, message: "方向・間隔・パディングの適切な設定で柔軟なレイアウトを実現", content: <AlFigmaUISlide /> },
+  { id: "al-direction", section: "auto-layout", title: "Auto Layoutの適用", message: "コンテンツの変更や追加に応じて、レイアウトが自動で調整される", content: <AlDirectionSlide /> },
   { id: "al-text", section: "auto-layout", title: "テキストの取り扱い", starred: true, message: "テキストはもっとも変化しやすい要素なので、見た目より先に振る舞いを決める", content: <AlTextSlide /> },
   { id: "al-advanced", section: "auto-layout", title: "最小最大幅 / 比率維持 / 絶対位置", message: "可変レイアウトの中で、どこまで許容し、何を例外にするかを決める", content: <AlAdvancedSlide /> },
   { id: "al-real-example", section: "auto-layout", title: "実例：商品カード", starred: true, message: "実際のカードコンポーネントでAuto Layoutの威力を体感する", content: <AlRealExampleSlide /> },
