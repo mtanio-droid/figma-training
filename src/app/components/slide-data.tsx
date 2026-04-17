@@ -699,7 +699,7 @@ function OverviewSlide() {
           ② ルールに名前をつける
         </div>
 
-        <div className="w-full max-w-xs">
+        <div className="w-full">
           <div
             className="rounded-xl px-4 py-3"
             style={{
@@ -728,7 +728,7 @@ function OverviewSlide() {
           ③ チームで共有する
         </div>
 
-        <div className="w-full max-w-xs">
+        <div className="w-full">
           <div
             className="rounded-xl px-4 py-3"
             style={{
