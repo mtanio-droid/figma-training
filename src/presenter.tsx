@@ -122,19 +122,19 @@ export default function PresenterView() {
 
       {/* メインコンテンツ */}
       <div className="flex-1 overflow-auto p-6">
-        <div className="grid grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {/* 現在のスライド */}
-          <div className="col-span-2 space-y-4">
+        <div className="grid grid-cols-2 gap-6 max-w-7xl mx-auto">
+          {/* 左：スライドプレビュー */}
+          <div className="space-y-4">
             <div className="bg-gray-800 rounded-xl border border-gray-700 p-6">
               <div className="flex items-center gap-2 text-sm text-purple-400 mb-3">
-                <span className="font-semibold">現在のスライド</span>
+                <span className="font-semibold">スライドプレビュー</span>
                 {currentSlide.starred && <span className="text-yellow-400">★</span>}
               </div>
 
               {/* スライドプレビュー */}
               <div
                 ref={previewRef}
-                className={`relative bg-gray-900 rounded-lg border-2 mb-4 overflow-hidden ${
+                className={`relative bg-gray-900 rounded-lg border-2 overflow-hidden ${
                   laserMode ? 'border-pink-500 cursor-crosshair' : 'border-gray-700'
                 }`}
                 style={{ aspectRatio: '16/9' }}
@@ -170,7 +170,12 @@ export default function PresenterView() {
                   </div>
                 )}
               </div>
+            </div>
+          </div>
 
+          {/* 右：原稿 */}
+          <div className="space-y-4">
+            <div className="bg-gray-800 rounded-xl border border-gray-700 p-6">
               <div className="text-xs text-gray-500 mb-1">{currentSection?.title}</div>
               <h2 className="text-2xl font-bold mb-2">{currentSlide.title}</h2>
 
@@ -183,43 +188,12 @@ export default function PresenterView() {
               {currentSlide.speakerNotes && (
                 <div className="mt-6">
                   <div className="text-sm font-semibold text-emerald-400 mb-3">📝 読み上げ原稿</div>
-                  <div className="text-sm leading-relaxed text-gray-300 whitespace-pre-line p-4 bg-gray-900/70 rounded-lg border border-gray-700 max-h-96 overflow-y-auto">
+                  <div className="text-sm leading-relaxed text-gray-300 whitespace-pre-line p-4 bg-gray-900/70 rounded-lg border border-gray-700 max-h-[600px] overflow-y-auto">
                     {currentSlide.speakerNotes}
                   </div>
                 </div>
               )}
             </div>
-          </div>
-
-          {/* 次のスライド */}
-          <div className="space-y-4">
-            {nextSlide ? (
-              <div className="bg-gray-800 rounded-xl border border-gray-700 p-6 opacity-70">
-                <div className="text-sm text-blue-400 font-semibold mb-3">次のスライド →</div>
-
-                <div className="text-xs text-gray-500 mb-1">{nextSection?.title}</div>
-                <h3 className="text-xl font-bold mb-2">{nextSlide.title}</h3>
-
-                {nextSlide.message && (
-                  <div className="text-xs text-gray-400 p-2 bg-gray-900/50 rounded border border-gray-700">
-                    {nextSlide.message}
-                  </div>
-                )}
-
-                {nextSlide.speakerNotes && (
-                  <div className="mt-4">
-                    <div className="text-xs text-gray-500 mb-2">読み上げ原稿</div>
-                    <div className="text-xs leading-relaxed text-gray-400 whitespace-pre-line p-3 bg-gray-900/70 rounded border border-gray-700 max-h-32 overflow-y-auto line-clamp-6">
-                      {nextSlide.speakerNotes.slice(0, 200)}...
-                    </div>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="bg-gray-800 rounded-xl border border-gray-700 p-6 opacity-50 text-center">
-                <div className="text-gray-500">これが最後のスライドです</div>
-              </div>
-            )}
           </div>
         </div>
       </div>
