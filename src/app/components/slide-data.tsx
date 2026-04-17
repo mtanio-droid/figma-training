@@ -933,7 +933,7 @@ function AlApplySlide() {
           </div>
         </div>
       </div>
-      <Ng>「全部にAuto Layoutをかければ良い」は思考停止。意味の単位で判断する</Ng>
+      <Tip>「全部にAuto Layoutをかける」より、意味のある単位で判断することが大切</Tip>
     </div>
   );
 }
@@ -1577,7 +1577,7 @@ function AlTextSlide() {
           </div>
         </Comp>
       </div>
-      <Ng>「今のテキストで揃って見える」だけで完成とするのは危険。文言は必ず変わる</Ng>
+      <Tip>「今のテキストで揃って見える」だけでなく、文言が変わることを想定して設計しよう</Tip>
     </div>
   );
 }
@@ -1627,7 +1627,7 @@ function AlAdvancedSlide() {
           </div>
         </div>
       </Vis>
-      <Ng>絶対位置の多用は「見た目は合ってるが構造が壊れている」状態になりやすい</Ng>
+      <Tip>絶対位置を使いすぎると、構造的な柔軟性が失われやすい</Tip>
     </div>
   );
 }
@@ -3390,7 +3390,7 @@ function LibPublishSlide() {
           ))}
         </div>
       </Vis>
-      <Ng>更新説明なしの Publish は、コミットメッセージなしの push と同じ</Ng>
+      <Tip>Publish時には変更内容を説明することで、チームでの共有がスムーズになる</Tip>
     </div>
   );
 }
@@ -3514,7 +3514,7 @@ function TokenHexSlide() {
           ))}
         </div>
       </Vis>
-      <Ng>「同じ色だから同じトークン」はNG。色が同じでも意味が違えば別トークンにする</Ng>
+      <Tip>色が同じでも、意味が違えば別のトークンにすることで、管理しやすくなる</Tip>
     </div>
   );
 }
