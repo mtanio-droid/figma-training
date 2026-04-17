@@ -839,8 +839,8 @@ function App() {
             transform: 'translate(-50%, -50%)'
           }}
         >
-          <div className="w-6 h-6 bg-red-500 rounded-full opacity-80 shadow-lg shadow-red-500/50" />
-          <div className="absolute inset-0 w-6 h-6 bg-red-500 rounded-full opacity-40 animate-ping" />
+          <div className="w-3 h-3 bg-pink-500 rounded-full opacity-90 shadow-lg shadow-pink-500/50" />
+          <div className="absolute inset-0 w-3 h-3 bg-pink-400 rounded-full opacity-40 animate-ping" />
         </div>
       )}
     </ThemeContext.Provider>
