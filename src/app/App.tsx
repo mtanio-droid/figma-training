@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { slides, sectionList } from "./components/slide-data";
 import { ThemeContext, type Theme } from "./components/theme-context";
 import { Star, ChevronLeft, ChevronRight, Menu, X, Layers, Component, Variable, Library, Paintbrush, LayoutGrid, Sun, Moon, Bookmark, BookmarkCheck, StickyNote, Trash2, Edit3, Plus, Eye, EyeOff, Target } from "lucide-react";
@@ -132,7 +132,7 @@ function App() {
     }
   }, []);
 
-  // カンペappからのページ移動・レーザーポインターを受信
+  // Presenterからのページ移動・レーザーポインターを受信
   useEffect(() => {
     const channel = new BroadcastChannel('figma-presenter');
     channel.onmessage = (event) => {
@@ -444,7 +444,7 @@ function App() {
         </aside>
 
         {/* ── Main ── */}
-        <main className="flex-1 flex flex-col min-w-0">
+        <main className="flex-1 flex flex-col min-w-0 relative">
           {/* Header */}
           <header
             className="flex items-center gap-3 px-5 py-3 shrink-0"
@@ -513,7 +513,7 @@ function App() {
 
           {/* Content */}
           <div
-            className="flex-1 overflow-y-auto relative"
+            className="flex-1 overflow-y-auto"
             key={`${idx}-${theme}`}
             onMouseUp={(e) => {
               const selection = window.getSelection();
@@ -613,6 +613,21 @@ function App() {
               次へ <ChevronRight className="w-4 h-4" />
             </button>
           </footer>
+
+          {/* レーザーポインター */}
+          {laserPointer?.active && (
+            <div
+              className="absolute pointer-events-none z-[9999] animate-pulse"
+              style={{
+                left: `${laserPointer.x}%`,
+                top: `${laserPointer.y}%`,
+                transform: 'translate(-50%, -50%)'
+              }}
+            >
+              <div className="w-3 h-3 bg-pink-500 rounded-full opacity-90 shadow-lg shadow-pink-500/50" />
+              <div className="absolute inset-0 w-3 h-3 bg-pink-400 rounded-full opacity-40 animate-ping" />
+            </div>
+          )}
         </main>
 
         {/* ── Memo Sidebar ── */}
@@ -629,7 +644,7 @@ function App() {
           {/* Resize handle */}
           {memoSidebarOpen && (
             <div
-              className="absolute top-0 left-0 w-1 h-full cursor-col-resize hover:bg-purple-400/50 transition-colors z-10"
+              className="absolute top-0 left-0 w-3 h-full cursor-col-resize hover:bg-purple-400/50 transition-colors z-10"
               onMouseDown={() => setIsResizingRight(true)}
             />
           )}
@@ -829,20 +844,6 @@ function App() {
         </aside>
       </div>
 
-      {/* レーザーポインター */}
-      {laserPointer?.active && (
-        <div
-          className="fixed pointer-events-none z-[9999] animate-pulse"
-          style={{
-            left: `${laserPointer.x}%`,
-            top: `${laserPointer.y}%`,
-            transform: 'translate(-50%, -50%)'
-          }}
-        >
-          <div className="w-3 h-3 bg-pink-500 rounded-full opacity-90 shadow-lg shadow-pink-500/50" />
-          <div className="absolute inset-0 w-3 h-3 bg-pink-400 rounded-full opacity-40 animate-ping" />
-        </div>
-      )}
     </ThemeContext.Provider>
   );
 }

@@ -33,10 +33,7 @@ export default function PresenterView() {
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
 
-    // ローカルプレビューに表示
     setLocalLaser({ x, y });
-
-    // メインappに送信
     channel.postMessage({ type: 'laser', x, y, active: true });
   };
 
@@ -50,9 +47,24 @@ export default function PresenterView() {
 
   const total = slides.length;
   const currentSlide = slides[idx];
-  const nextSlide = idx < total - 1 ? slides[idx + 1] : null;
   const currentSection = sectionList.find((s) => s.id === currentSlide.section);
-  const nextSection = nextSlide ? sectionList.find((s) => s.id === nextSlide.section) : null;
+
+  // ページ移動
+  const navigate = (newIdx: number) => {
+    const targetIdx = Math.max(0, Math.min(total - 1, newIdx));
+    setIdx(targetIdx);
+    channel.postMessage({ type: 'navigate', index: targetIdx });
+  };
+
+  // キーボードショートカット
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') navigate(idx - 1);
+      if (e.key === 'ArrowRight') navigate(idx + 1);
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [idx]);
 
   // タイマー
   useEffect(() => {
@@ -82,12 +94,6 @@ export default function PresenterView() {
     return editedNotes[currentSlide.id] || currentSlide.speakerNotes || '';
   };
 
-  // ページ移動
-  const navigate = (newIdx: number) => {
-    const targetIdx = Math.max(0, Math.min(total - 1, newIdx));
-    setIdx(targetIdx);
-    channel.postMessage({ type: 'navigate', index: targetIdx });
-  };
 
   const formatTime = (ms: number) => {
     const seconds = Math.floor(ms / 1000);
@@ -96,18 +102,9 @@ export default function PresenterView() {
     return `${hours.toString().padStart(2, '0')}:${(minutes % 60).toString().padStart(2, '0')}:${(seconds % 60).toString().padStart(2, '0')}`;
   };
 
-  // キーボードショートカット
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') navigate(idx - 1);
-      if (e.key === 'ArrowRight') navigate(idx + 1);
-    };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [idx]);
 
   return (
-    <div className="h-screen bg-gray-900 text-white flex flex-col">
+    <div className="h-screen bg-gray-900 text-white flex flex-col overflow-hidden">
       {/* ヘッダー */}
       <div className="bg-gray-800 border-b border-gray-700 px-6 py-4">
         <div className="flex items-center justify-between">
@@ -136,43 +133,10 @@ export default function PresenterView() {
       </div>
 
       {/* メインコンテンツ */}
-      <div className="flex-1 overflow-hidden flex">
-        {/* 左サイドバー：ページ一覧 */}
-        <div className="w-64 bg-gray-800 border-r border-gray-700 overflow-y-auto">
-          <div className="p-4">
-            <h3 className="text-sm font-semibold text-gray-400 mb-3">ページ一覧</h3>
-            <div className="space-y-1">
-              {slides.map((slide, i) => {
-                const section = sectionList.find(s => s.id === slide.section);
-                return (
-                  <button
-                    key={slide.id}
-                    onClick={() => navigate(i)}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-                      i === idx
-                        ? 'bg-purple-600 text-white'
-                        : 'text-gray-300 hover:bg-gray-700'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-gray-500 font-mono">{i + 1}</span>
-                      {slide.starred && <Star className="w-3 h-3 text-yellow-400" />}
-                    </div>
-                    <div className="text-xs text-gray-500 mt-1">{section?.title}</div>
-                    <div className="font-medium truncate">{slide.title}</div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* 中央・右 */}
-        <div className="flex-1 overflow-auto p-6">
-          <div className="grid grid-cols-2 gap-6 h-full">
-          {/* 左：スライドプレビュー */}
-          <div className="space-y-4">
-            <div className="bg-gray-800 rounded-xl border border-gray-700 p-6">
+      <div className="flex-1 overflow-hidden flex p-6 gap-6">
+          {/* スライドプレビュー */}
+          <div className="w-[600px] shrink-0 flex flex-col gap-4">
+            <div className="bg-gray-800 rounded-xl border border-gray-700 p-4">
               <div className="flex items-center gap-2 text-sm text-purple-400 mb-3">
                 <span className="font-semibold">スライドプレビュー</span>
                 {currentSlide.starred && <span className="text-yellow-400">★</span>}
@@ -184,13 +148,13 @@ export default function PresenterView() {
                 className={`relative bg-gray-900 rounded-lg border-2 overflow-hidden cursor-crosshair select-none ${
                   isMouseDown ? 'border-pink-500' : 'border-gray-700'
                 }`}
-                style={{ aspectRatio: '16/9' }}
+                style={{ width: '100%', aspectRatio: '16/9' }}
                 onMouseDown={handlePreviewMouseDown}
                 onMouseUp={handlePreviewMouseUp}
                 onMouseMove={handlePreviewMouseMove}
                 onMouseLeave={handlePreviewMouseLeave}
               >
-                <div className="w-full h-full overflow-hidden">
+                <div className="w-full h-full">
                   <ThemeContext.Provider value="dark">
                     <div className="w-full h-full bg-[#262335] p-12 overflow-auto">
                       {currentSlide.content}
@@ -221,11 +185,38 @@ export default function PresenterView() {
                 )}
               </div>
             </div>
+
+            {/* ページ送りボタン */}
+            <div className="flex items-center justify-center gap-3">
+              <button
+                onClick={() => navigate(idx - 1)}
+                disabled={idx === 0}
+                className="px-4 py-2 bg-gray-700 hover:bg-gray-600 disabled:bg-gray-800 disabled:text-gray-600 rounded-lg flex items-center gap-2 transition-colors"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                <span className="text-sm font-semibold">前へ</span>
+              </button>
+
+              <div className="px-4 py-2 bg-purple-900/30 border border-purple-700/50 rounded-lg">
+                <span className="text-purple-300 font-mono text-sm font-semibold">
+                  {idx + 1} / {total}
+                </span>
+              </div>
+
+              <button
+                onClick={() => navigate(idx + 1)}
+                disabled={idx === total - 1}
+                className="px-4 py-2 bg-purple-600 hover:bg-purple-500 disabled:bg-gray-800 disabled:text-gray-600 rounded-lg flex items-center gap-2 transition-colors"
+              >
+                <span className="text-sm font-semibold">次へ</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
-          {/* 右：原稿 */}
-          <div className="space-y-4 h-full flex flex-col">
-            <div className="bg-gray-800 rounded-xl border border-gray-700 p-6 flex-1 flex flex-col">
+          {/* 原稿エリア */}
+          <div className="flex-1 flex flex-col min-w-0">
+            <div className="bg-gray-800 rounded-xl border border-gray-700 p-6 flex-1 flex flex-col min-h-0">
               <div className="text-xs text-gray-500 mb-1">{currentSection?.title}</div>
               <h2 className="text-xl font-bold mb-2">{currentSlide.title}</h2>
 
@@ -267,37 +258,6 @@ export default function PresenterView() {
             </div>
           </div>
         </div>
-        </div>
-      </div>
-
-      {/* フッター（ナビゲーション） */}
-      <div className="bg-gray-800 border-t border-gray-700 px-6 py-4">
-        <div className="flex items-center justify-center gap-4">
-          <button
-            onClick={() => navigate(idx - 1)}
-            disabled={idx === 0}
-            className="px-6 py-3 bg-gray-700 hover:bg-gray-600 disabled:bg-gray-800 disabled:text-gray-600 rounded-lg flex items-center gap-2 transition-colors"
-          >
-            <ChevronLeft className="w-4 h-4" />
-            <span className="font-semibold">前へ</span>
-          </button>
-
-          <div className="px-6 py-3 bg-purple-900/30 border border-purple-700/50 rounded-lg">
-            <span className="text-purple-300 font-mono font-semibold">
-              {idx + 1} / {total}
-            </span>
-          </div>
-
-          <button
-            onClick={() => navigate(idx + 1)}
-            disabled={idx === total - 1}
-            className="px-6 py-3 bg-purple-600 hover:bg-purple-500 disabled:bg-gray-800 disabled:text-gray-600 rounded-lg flex items-center gap-2 transition-colors"
-          >
-            <span className="font-semibold">次へ</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
