@@ -810,7 +810,7 @@ function InstructorSlide() {
               }}
             />
             <img
-              src="/instructor-icon.png"
+              src={`${import.meta.env.BASE_URL}instructor-icon.png`}
               alt="Instructor"
               className="relative w-40 h-40 rounded-2xl"
               style={{
@@ -860,7 +860,7 @@ function InstructorSlide() {
               </div>
 
               <div className={`flex items-center gap-2 text-[13px] ${c.t3}`}>
-                <img src="/slack-icon.png" className="w-4 h-4" alt="Slack" />
+                <img src={`${import.meta.env.BASE_URL}slack-icon.png`} className="w-4 h-4" alt="Slack" />
                 <span className="font-mono font-medium">#times-mtanio</span>
               </div>
 
@@ -1297,7 +1297,7 @@ function AlDirectionSlide() {
         }}
       >
         <ExpandableImage
-          src="/images/al-direction-ui3.png"
+          src={`${import.meta.env.BASE_URL}images/al-direction-ui3.png`}
           alt="縦横のレイアウトの例"
         />
         <div
@@ -1332,7 +1332,7 @@ function AlDirectionSlide() {
           }}
         >
           <ExpandableImage
-            src="/images/al-alignment.gif"
+            src={`${import.meta.env.BASE_URL}images/al-alignment.gif`}
             alt="アライメントの設定例"
           />
           <div
@@ -1365,7 +1365,7 @@ function AlDirectionSlide() {
           }}
         >
           <ExpandableImage
-            src="/images/al-alighment-auto.gif"
+            src={`${import.meta.env.BASE_URL}images/al-alighment-auto.gif`}
             alt="アライメントの自動設定"
           />
           <div
@@ -1400,7 +1400,7 @@ function AlDirectionSlide() {
           }}
         >
           <ExpandableImage
-            src="/images/al-gap-between-toggle.gif"
+            src={`${import.meta.env.BASE_URL}images/al-gap-between-toggle.gif`}
             alt="アイテム間の間隔の設定"
           />
           <div
@@ -1433,7 +1433,7 @@ function AlDirectionSlide() {
           }}
         >
           <ExpandableImage
-            src="/images/al-padding-resize-all-sides.gif"
+            src={`${import.meta.env.BASE_URL}images/al-padding-resize-all-sides.gif`}
             alt="パディングの設定"
           />
           <div
@@ -1462,7 +1462,7 @@ function AlDirectionSlide() {
           }}
         >
           <ExpandableImage
-            src="/images/individual-padding.mov.gif"
+            src={`${import.meta.env.BASE_URL}images/individual-padding.mov.gif`}
             alt="個別のパディング設定"
           />
           <div
@@ -1487,7 +1487,7 @@ function AlDirectionSlide() {
           }}
         >
           <ExpandableImage
-            src="/images/al-move-child-objects.gif"
+            src={`${import.meta.env.BASE_URL}images/al-move-child-objects.gif`}
             alt="オブジェクト操作のイメージ"
           />
           <div
@@ -1516,7 +1516,7 @@ function AlDirectionSlide() {
           }}
         >
           <ExpandableImage
-            src="/images/hold-ctrl-to-ignore-auto-layout.gif"
+            src={`${import.meta.env.BASE_URL}images/hold-ctrl-to-ignore-auto-layout.gif`}
             alt="絶対位置の設定"
           />
           <div
@@ -1769,7 +1769,7 @@ function AlFigmaUISlide() {
         }}
       >
         <ExpandableImage
-          src="/images/content_image-1711415488661.gif"
+          src={`${import.meta.env.BASE_URL}images/content_image-1711415488661.gif`}
           alt="Auto Layoutによる柔軟なレイアウトの例"
         />
         <div
@@ -1801,7 +1801,7 @@ function AlFigmaUISlide() {
               }}
             >
               <img
-                src="/images/Choice Result Card.svg"
+                src={`${import.meta.env.BASE_URL}images/Choice Result Card.svg`}
                 alt="Choice Result Card"
                 style={{
                   maxWidth: '100%',
@@ -1821,7 +1821,7 @@ function AlFigmaUISlide() {
               }}
             >
               <img
-                src="/images/al-figma-ui-panel.png"
+                src={`${import.meta.env.BASE_URL}images/al-figma-ui-panel.png`}
                 alt="Figma Auto Layout設定パネル"
                 style={{
                   maxWidth: '100%',
@@ -2184,7 +2184,7 @@ function CompPropsSlide() {
               }}
             >
               <img
-                src="/images/Figma1.png"
+                src={`${import.meta.env.BASE_URL}images/Figma1.png`}
                 alt="Figmaプロパティパネル"
                 style={{
                   maxWidth: '100%',
@@ -2330,7 +2330,7 @@ function CompVariantsPropertiesSlide() {
             }}
           >
             <ExpandableImage
-              src="/images/variant-naming.png"
+              src={`${import.meta.env.BASE_URL}images/variant-naming.png`}
               alt="バリアント命名規則"
             />
             <div
@@ -2361,7 +2361,7 @@ function CompVariantsPropertiesSlide() {
             }}
           >
             <ExpandableImage
-              src="/images/variant-grid.png"
+              src={`${import.meta.env.BASE_URL}images/variant-grid.png`}
               alt="バリアントのグリッド配置"
             />
             <div
@@ -2402,7 +2402,7 @@ function CompVariantsCreateSlide() {
         }}
       >
         <img
-          src="/images/variant-creation.gif"
+          src={`${import.meta.env.BASE_URL}images/variant-creation.gif`}
           alt="バリアントの作成手順"
           style={{
             maxWidth: '100%',
@@ -2494,7 +2494,7 @@ function CompSlotSlide() {
           </div>
           <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}` }}>
             <img
-              src="/images/slots-add-content.gif"
+              src={`${import.meta.env.BASE_URL}images/slots-add-content.gif`}
               alt="Slotにコンテンツを追加する方法"
               style={{
                 width: '100%',
@@ -3131,7 +3131,7 @@ function VarApplySlide() {
 
         <div className="w-full rounded-2xl overflow-hidden relative">
           <ExpandableImage
-            src="/images/variable-mode.gif"
+            src={`${import.meta.env.BASE_URL}images/variable-mode.gif`}
             alt="バリアブルのモード切り替え"
           />
           <div
@@ -3171,7 +3171,7 @@ function VarAliasSlide() {
         </div>
         <div className="w-full rounded-2xl overflow-hidden relative">
           <ExpandableImage
-            src="/images/alias-part2.png"
+            src={`${import.meta.env.BASE_URL}images/alias-part2.png`}
             alt="トークンの定義"
           />
           <div
@@ -3197,7 +3197,7 @@ function VarAliasSlide() {
         </div>
         <div className="w-full rounded-2xl overflow-hidden relative">
           <ExpandableImage
-            src="/images/alias-part1.png"
+            src={`${import.meta.env.BASE_URL}images/alias-part1.png`}
             alt="エイリアスの動作"
           />
           <div
@@ -3377,7 +3377,7 @@ function VarAliasSlide() {
         </div>
         <div className="w-full rounded-2xl overflow-hidden relative">
           <ExpandableImage
-            src="/images/variables-explain-1.gif"
+            src={`${import.meta.env.BASE_URL}images/variables-explain-1.gif`}
             alt="トークンの階層構造"
           />
           <div
@@ -3407,7 +3407,7 @@ function VarAliasSlide() {
         </div>
         <div className="w-full rounded-2xl overflow-hidden relative">
           <ExpandableImage
-            src="/images/variables-explain-2.gif"
+            src={`${import.meta.env.BASE_URL}images/variables-explain-2.gif`}
             alt="部分的な変更"
           />
           <div
@@ -3856,7 +3856,7 @@ function TokenAppearanceSlide() {
       <Msg><strong>Appearance</strong>パネルからLight/Dark modeを切り替えられる</Msg>
       <Points items={["FigmaのVariablesを使ってLight/Dark modeに対応","Semantic Colorを活用することで、テーマ切り替えが簡単に","デザイン時にLight/Darkの両方を確認できる"]} />
       <img
-        src="/images/figma-appearance.png"
+        src={`${import.meta.env.BASE_URL}images/figma-appearance.png`}
         alt="Figma Appearance設定"
         className="rounded-xl"
         style={{
@@ -4193,7 +4193,7 @@ function CompRealExampleSlide() {
         </div>
         <div className="w-full rounded-2xl overflow-hidden relative">
           <ExpandableImage
-            src="/images/button実例.svg"
+            src={`${import.meta.env.BASE_URL}images/button実例.svg`}
             alt="LYでのDesign Systemの一例"
           />
         </div>
@@ -4523,7 +4523,7 @@ function PracticeOverviewSlide() {
           </ul>
           <div className="mt-4 space-y-3">
             <img
-              src="/images/figma-status.png"
+              src={`${import.meta.env.BASE_URL}images/figma-status.png`}
               alt="Figmaステータスの使い方"
               className="rounded-xl"
               style={{
@@ -4626,7 +4626,7 @@ function PracticeOverviewSlide() {
                   : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
               }}
             >
-              <ExpandableVideo src="/images/agent-i-add-asset.mov" />
+              <ExpandableVideo src={`${import.meta.env.BASE_URL}images/agent-i-add-asset.mov`} />
             </div>
           </div>
           <div>
@@ -4641,7 +4641,7 @@ function PracticeOverviewSlide() {
                   : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
               }}
             >
-              <ExpandableVideo src="/images/agent-i-color-usage.mov" />
+              <ExpandableVideo src={`${import.meta.env.BASE_URL}images/agent-i-color-usage.mov`} />
             </div>
           </div>
         </div>
@@ -4661,7 +4661,7 @@ function PracticeOverviewSlide() {
                   : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
               }}
             >
-              <ExpandableVideo src="/images/agent-i-spacing.mov" />
+              <ExpandableVideo src={`${import.meta.env.BASE_URL}images/agent-i-spacing.mov`} />
             </div>
           </div>
           <div>
@@ -4676,7 +4676,7 @@ function PracticeOverviewSlide() {
                   : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
               }}
             >
-              <ExpandableVideo src="/images/agent-i-radius.mov" />
+              <ExpandableVideo src={`${import.meta.env.BASE_URL}images/agent-i-radius.mov`} />
             </div>
           </div>
         </div>
