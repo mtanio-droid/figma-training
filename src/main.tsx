@@ -3,7 +3,7 @@ import App from "./app/App.tsx";
 import PresenterView from "./presenter.tsx";
 import "./styles/index.css";
 
-const isPresenterView = window.location.pathname === '/presenter' || window.location.hash === '#/presenter';
+const isPresenterView = window.location.hash === '#/presenter';
 
 createRoot(document.getElementById("root")!).render(
   isPresenterView ? <PresenterView /> : <App />
