@@ -779,6 +779,241 @@ function OverviewSlide() {
   );
 }
 
+function InstructorSlide() {
+  const theme = useTheme();
+  const c = tc(theme);
+  const d = theme === "dark";
+
+  return (
+    <div className="space-y-10">
+      <Msg>本日の<strong>講師紹介</strong></Msg>
+
+      <div className="relative max-w-4xl mx-auto">
+        {/* 背景グロー効果 */}
+        <div
+          className="absolute inset-0 blur-3xl opacity-20"
+          style={{
+            background: 'radial-gradient(circle at 30% 50%, rgba(168,85,247,0.4), transparent 70%)'
+          }}
+        />
+
+        {/* メインコンテンツ */}
+        <div className="relative flex items-start gap-10">
+          {/* 左側：アイコン */}
+          <div className="shrink-0 relative">
+            <div
+              className="absolute inset-0 blur-xl opacity-40"
+              style={{
+                background: d
+                  ? 'linear-gradient(135deg, rgba(168,85,247,0.6), rgba(236,72,153,0.4))'
+                  : 'linear-gradient(135deg, rgba(168,85,247,0.4), rgba(236,72,153,0.3))'
+              }}
+            />
+            <img
+              src="/instructor-icon.png"
+              alt="Instructor"
+              className="relative w-40 h-40 rounded-2xl"
+              style={{
+                border: `2px solid ${d ? 'rgba(168,85,247,0.3)' : 'rgba(168,85,247,0.2)'}`,
+                boxShadow: d
+                  ? '0 20px 40px rgba(0,0,0,0.3)'
+                  : '0 20px 40px rgba(168,85,247,0.2)'
+              }}
+            />
+          </div>
+
+          {/* 右側：プロフィール */}
+          <div className="flex-1 space-y-5">
+            {/* 名前 */}
+            <div className="space-y-1">
+              <h3
+                className="text-[32px] font-bold tracking-tight"
+                style={{
+                  background: d
+                    ? 'linear-gradient(135deg, #ffffff, #c4b5fd)'
+                    : 'linear-gradient(135deg, #1f2937, #7c3aed)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}
+              >
+                谷尾美亜
+              </h3>
+              <p className={`text-[14px] font-medium tracking-wide ${c.t4}`}>Tanio Mia</p>
+            </div>
+
+            {/* 経歴 */}
+            <div className="space-y-3">
+              <div
+                className="inline-block px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide"
+                style={{
+                  background: d ? 'rgba(168,85,247,0.15)' : 'rgba(168,85,247,0.1)',
+                  color: d ? '#c4b5fd' : '#7c3aed'
+                }}
+              >
+                2023年入社（現在4年目）
+              </div>
+
+              <div className={`text-[12px] ${c.t3} leading-relaxed`}>
+                メディア・検索ドメインLY Agent・検索SBU<br />
+                デザインユニットUID2ディビジョン
+              </div>
+
+              <div className={`flex items-center gap-2 text-[13px] ${c.t3}`}>
+                <img src="/slack-icon.png" className="w-4 h-4" alt="Slack" />
+                <span className="font-mono font-medium">#times-mtanio</span>
+              </div>
+
+              <div className="space-y-2 mt-4">
+                <div className={`flex items-center gap-2 text-[12px] font-semibold ${c.t2}`}>
+                  <span className="text-[16px]">💼</span>
+                  <span>仕事内容</span>
+                </div>
+                <div className={`text-[13px] ${c.t2} leading-relaxed`}>
+                  最近はAgent i お買い物領域のUI/UXデザインがメイン<br />
+                  時々リサーチやったりバナー作ったり
+                </div>
+              </div>
+
+              <div className="space-y-2 mt-4">
+                <div className={`flex items-center gap-2 text-[12px] font-semibold ${c.t2}`}>
+                  <span className="text-[16px]">🍁</span>
+                  <span>出身地</span>
+                </div>
+                <div className={`text-[13px] ${c.t2} leading-relaxed`}>
+                  広島県広島市（現在は東京在住）
+                </div>
+              </div>
+
+              <div className="space-y-2 mt-4">
+                <div className={`flex items-center gap-2 text-[12px] font-semibold ${c.t2}`}>
+                  <span className="text-[16px]">🐶</span>
+                  <span>趣味</span>
+                </div>
+                <div className={`text-[13px] ${c.t2} leading-relaxed`}>
+                  ペット・お出かけ・かわいい全般
+                </div>
+              </div>
+            </div>
+
+            {/* メッセージ */}
+            <div className="space-y-2">
+              <div className={`flex items-center gap-2 text-[12px] font-semibold ${c.t2}`}>
+                <span className="text-[16px]">💬</span>
+                <span>メッセージ</span>
+              </div>
+            <div
+              className="relative p-5 rounded-xl overflow-hidden"
+              style={{
+                background: d
+                  ? 'linear-gradient(135deg, rgba(168,85,247,0.08), rgba(139,92,246,0.05))'
+                  : 'linear-gradient(135deg, rgba(168,85,247,0.06), rgba(139,92,246,0.03))',
+                border: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`
+              }}
+            >
+              <div
+                className="absolute top-0 left-0 w-1 h-full"
+                style={{
+                  background: 'linear-gradient(to bottom, rgba(168,85,247,0.8), rgba(236,72,153,0.8))'
+                }}
+              />
+              <p className={`text-[13px] ${c.t2} leading-relaxed pl-3`}>
+                最初は少し難しく感じるかもしれませんが、最初から全部できなくても大丈夫です！今日は一緒に少しずつ整理しながら見ていければと思います🙆‍♀️
+              </p>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ScheduleSlide() {
+  const theme = useTheme();
+  const c = tc(theme);
+  const d = theme === "dark";
+
+  const scheduleData = [
+    { time: "11:00～12:00", activity: "Figma講習", tag: "LECTURE", color: "purple" },
+    { time: "12:00～13:00", activity: "昼休憩", tag: "BREAK", color: "lightgray" },
+    { time: "13:00～13:15", activity: "課題説明", tag: "GUIDE", color: "pink" },
+    { time: "13:15～16:45", activity: "課題制作", tag: "WORK", color: "purple" },
+    { time: "16:45～17:00", activity: "講評", tag: "OUTRO", color: "pink" },
+  ];
+
+  const getTagColor = (color: string) => {
+    const colors = {
+      purple: { bg: d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)', text: d ? '#c4b5fd' : '#7c3aed' },
+      pink: { bg: d ? 'rgba(236,72,153,0.2)' : 'rgba(236,72,153,0.15)', text: d ? '#f9a8d4' : '#db2777' },
+      lightgray: { bg: '', text: d ? '#6b7280' : '#9ca3af' },
+    };
+    return colors[color as keyof typeof colors] || colors.purple;
+  };
+
+  return (
+    <div className="space-y-8">
+      <div className="max-w-4xl mx-auto space-y-3">
+        {scheduleData.map((item, index) => {
+          const tagColor = getTagColor(item.color);
+          return (
+            <div
+              key={index}
+              className="flex items-center gap-6 px-8 py-5 rounded-xl"
+              style={{
+                background: d ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)',
+                border: `1px solid ${d ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)'}`,
+              }}
+            >
+              {/* Tag */}
+              {item.tag ? (
+                <div
+                  className={`text-[10px] font-bold tracking-wider ${item.color !== 'lightgray' ? 'px-3 py-1.5 rounded-lg' : ''}`}
+                  style={{
+                    ...(item.color !== 'lightgray' && { background: tagColor.bg }),
+                    color: tagColor.text,
+                    width: '80px',
+                    textAlign: 'center'
+                  }}
+                >
+                  {item.tag}
+                </div>
+              ) : (
+                <div style={{ width: '80px' }} />
+              )}
+
+              {/* Time */}
+              <div
+                className={`font-montserrat font-semibold text-[15px] ${item.color !== 'lightgray' ? c.t2 : ''}`}
+                style={{
+                  width: '140px',
+                  ...(item.color === 'lightgray' && {
+                    color: d ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)'
+                  })
+                }}
+              >
+                {item.time}
+              </div>
+
+              {/* Activity */}
+              <div
+                className={`text-[16px] font-semibold ${item.color !== 'lightgray' ? c.t1 : ''}`}
+                style={{
+                  ...(item.color === 'lightgray' && {
+                    color: d ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)'
+                  })
+                }}
+              >
+                {item.activity}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function AlBasicsSlide() {
   const theme = useTheme();
   const c = tc(theme);
@@ -4780,12 +5015,21 @@ export const slides: Slide[] = [
     title: "今日のゴール",
     message: "デザインシステムの実践的な使い方をイメージできる・実践できる状態になる",
     content: <GoalSlide />,
-    speakerNotes: `Figmaを学ぶ理由って、作業を早くするためだけではないです。
-もちろん、作業効率が上がるのはすごく大事なんですけど、それ以上に、Figmaはチームでデザインを作るためのツールです。
-つまり、ひとりでなんとかするためではなくて、複数人で同じルールを使いながら、同じ品質で作り続けるための仕組みがたくさん入っています。
-なので、今日覚えてほしいのは、単なる機能の名前ではなくて、"なぜその機能が必要なのか"です。
-この視点があると、機能を丸暗記しなくても、実務の中でちゃんと使えるようになります。
-今日はぜひ、"どう作るか"だけじゃなくて、"なぜその設計にするのか"という視点で聞いてみてください。`
+    speakerNotes: `今日のゴールは、デザインシステムを実践的に使えるようになることです。
+
+新卒のうちは、デザインって「きれいな画面を作ること」だと思いがちなんですけど、実務ではそれだけじゃ足りません。
+
+なぜかというと、デザインは作って終わりじゃないからです。文言が変わったり、機能が追加されたり、別の画面にも展開されたり。こういう変更が日常的に起こります。
+
+そのときに、毎回ゼロから作り直してたら時間がかかりすぎるし、画面ごとにバラバラなデザインになってしまいます。
+
+なので今日は、コンポーネント、トークン、レイアウトシステムという3つの仕組みを学びます。
+
+左の図を見てください。これが「個別のデザイン」です。都度作成で、統一性がありません。カードがバラバラな方向を向いていて、ルールがない状態ですね。
+
+一方、右側が「デザインシステム」です。トークン、コンポーネント、レイアウトがしっかり定義されていて、どの画面でも同じルールで作れるようになっています。
+
+今日のゴールは、このデザインシステムの考え方を理解して、実務で使えるようになることです。`
   },
   {
     id: "overview",
@@ -4793,12 +5037,48 @@ export const slides: Slide[] = [
     title: "全体像",
     message: "5つのテーマを組み合わせて、壊れにくいデザインを作る",
     content: <OverviewSlide />,
-    speakerNotes: `まず最初に、壊れにくい設計って何かをそろえます。
-壊れにくい設計というのは、見た目がきれいな設計という意味ではありません。
-変更が入っても崩れにくい、他の人が触っても事故りにくい、量産や展開をしてもズレにくい。そういう設計のことです。
-たとえば、ボタンの文言が『保存』から『下書きを保存』に変わるとか、一覧カードにタグが1つ増えるとか、同じUIを別画面にも使うとか。こういう変更は実務ではすごく普通に起きます。
-そのときに、毎回見た目を手で整え直すような作り方だと、すぐしんどくなります。
-なので、壊れにくい設計というのは、"今きれいに見えること"よりも、"あとで変わっても保てること"が大事です。`
+    speakerNotes: `では、今日学ぶ内容の全体像を見ていきましょう。
+
+スライドを見てください。今日は5つのテーマを扱います。
+
+まず①基礎を作る段階として、3つの機能を学びます。
+
+1つ目が「Auto Layout」。これは要素の並び方を決める機能です。横並びか縦並びか、間隔はどうするか、といったレイアウトのルールを設定します。
+
+2つ目が「Component」。繰り返し使うボタンやカードを部品としてまとめる機能です。1つ直せば全部に反映されるようになります。
+
+3つ目が「Variable」。色や余白などの値をまとめて管理する機能です。「プライマリーカラーはこの色」みたいな定義ができます。
+
+次に②ルールに名前をつける段階として、「Token」を学びます。これは色や余白に意味のある名前をつけて管理する考え方です。たとえば「青」じゃなくて「Primary」、「16px」じゃなくて「spacing-md」みたいな名前をつけます。
+
+最後に③チームで共有する段階として、「Library」を学びます。作ったコンポーネントやトークンをチーム全体で使えるように公開する機能です。
+
+この5つを組み合わせることで、壊れにくいデザインが作れるようになります。順番に見ていきましょう。`
+  },
+  {
+    id: "instructor",
+    section: "intro",
+    title: "講師紹介",
+    message: "本日の講師",
+    content: <InstructorSlide />,
+    speakerNotes: `谷尾美亜です。2023年入社で、現在4年目になります。
+
+メディア・検索ドメイン、LY Agent・検索SBU、デザインユニットUID2ディビジョンに所属しています。
+
+出身は広島で、現在は東京に住んでいます。
+
+最近はAgent iのお買い物領域でUI/UXデザインをメインでやっていて、時々リサーチやったりバナー作ったりもしています。
+
+趣味はペットとお出かけと、かわいい全般です。
+
+何かあればSlackの #times-mtanio で気軽に声かけてください。よろしくお願いします！`
+  },
+  {
+    id: "schedule",
+    section: "intro",
+    title: "タイムスケジュール",
+    message: "Day1 - 5/1のスケジュール",
+    content: <ScheduleSlide />,
   },
   {
     id: "al-basics",

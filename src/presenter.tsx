@@ -133,13 +133,42 @@ export default function PresenterView() {
       </div>
 
       {/* メインコンテンツ */}
-      <div className="flex-1 overflow-hidden flex p-6 gap-6">
+      <div className="flex-1 overflow-hidden flex flex-col p-6 gap-6">
           {/* スライドプレビュー */}
-          <div className="w-[600px] shrink-0 flex flex-col gap-4">
+          <div className="flex flex-col gap-4 max-w-4xl mx-auto w-full">
             <div className="bg-gray-800 rounded-xl border border-gray-700 p-4">
-              <div className="flex items-center gap-2 text-sm text-purple-400 mb-3">
-                <span className="font-semibold">スライドプレビュー</span>
-                {currentSlide.starred && <span className="text-yellow-400">★</span>}
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2 text-sm text-purple-400">
+                  <span className="font-semibold">スライドプレビュー</span>
+                  {currentSlide.starred && <span className="text-yellow-400">★</span>}
+                </div>
+
+                {/* ページ送りボタン */}
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => navigate(idx - 1)}
+                    disabled={idx === 0}
+                    className="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 disabled:bg-gray-800 disabled:text-gray-600 rounded-lg flex items-center gap-1.5 transition-colors"
+                  >
+                    <ChevronLeft className="w-3.5 h-3.5" />
+                    <span className="text-xs font-semibold">前へ</span>
+                  </button>
+
+                  <div className="px-3 py-1.5 bg-purple-900/30 border border-purple-700/50 rounded-lg">
+                    <span className="text-purple-300 font-mono text-xs font-semibold">
+                      {idx + 1} / {total}
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={() => navigate(idx + 1)}
+                    disabled={idx === total - 1}
+                    className="px-3 py-1.5 bg-purple-600 hover:bg-purple-500 disabled:bg-gray-800 disabled:text-gray-600 rounded-lg flex items-center gap-1.5 transition-colors"
+                  >
+                    <span className="text-xs font-semibold">次へ</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
 
               {/* スライドプレビュー */}
@@ -185,48 +214,14 @@ export default function PresenterView() {
                 )}
               </div>
             </div>
-
-            {/* ページ送りボタン */}
-            <div className="flex items-center justify-center gap-3">
-              <button
-                onClick={() => navigate(idx - 1)}
-                disabled={idx === 0}
-                className="px-4 py-2 bg-gray-700 hover:bg-gray-600 disabled:bg-gray-800 disabled:text-gray-600 rounded-lg flex items-center gap-2 transition-colors"
-              >
-                <ChevronLeft className="w-4 h-4" />
-                <span className="text-sm font-semibold">前へ</span>
-              </button>
-
-              <div className="px-4 py-2 bg-purple-900/30 border border-purple-700/50 rounded-lg">
-                <span className="text-purple-300 font-mono text-sm font-semibold">
-                  {idx + 1} / {total}
-                </span>
-              </div>
-
-              <button
-                onClick={() => navigate(idx + 1)}
-                disabled={idx === total - 1}
-                className="px-4 py-2 bg-purple-600 hover:bg-purple-500 disabled:bg-gray-800 disabled:text-gray-600 rounded-lg flex items-center gap-2 transition-colors"
-              >
-                <span className="text-sm font-semibold">次へ</span>
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
           </div>
 
           {/* 原稿エリア */}
-          <div className="flex-1 flex flex-col min-w-0">
+          <div className="flex-1 flex flex-col min-h-0 max-w-4xl mx-auto w-full">
             <div className="bg-gray-800 rounded-xl border border-gray-700 p-6 flex-1 flex flex-col min-h-0">
-              <div className="text-xs text-gray-500 mb-1">{currentSection?.title}</div>
-              <h2 className="text-xl font-bold mb-2">{currentSlide.title}</h2>
+              <h2 className="text-xl font-bold mb-4">{currentSlide.title}</h2>
 
-              {currentSlide.message && (
-                <div className="text-sm text-gray-400 mb-4 p-3 bg-gray-900/50 rounded-lg border border-gray-700">
-                  {currentSlide.message}
-                </div>
-              )}
-
-              <div className="mt-4 flex-1 flex flex-col">
+              <div className="flex-1 flex flex-col">
                 <div className="flex items-center justify-between mb-3">
                   <div className="text-sm font-semibold text-emerald-400">📝 読み上げ原稿</div>
                   <button
