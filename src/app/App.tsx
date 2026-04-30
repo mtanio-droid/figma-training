@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { slides, sectionList } from "./components/slide-data";
 import { ThemeContext, type Theme } from "./components/theme-context";
-import { Star, ChevronLeft, ChevronRight, Menu, X, Layers, Component, Variable, Library, Paintbrush, LayoutGrid, Sun, Moon, Bookmark, BookmarkCheck, StickyNote, Trash2, Edit3, Plus, Eye, EyeOff, Target } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight, Menu, X, Layers, Component, Variable, Library, Paintbrush, LayoutGrid, Sun, Moon, Bookmark, BookmarkCheck, StickyNote, Trash2, Edit3, Plus, Eye, EyeOff, Target, Smartphone } from "lucide-react";
 
 interface Memo {
   id: string;
@@ -14,6 +14,7 @@ interface Memo {
 const sectionIcons: Record<string, React.ReactNode> = {
   intro: <LayoutGrid className="w-3.5 h-3.5" />,
   "auto-layout": <Layers className="w-3.5 h-3.5" />,
+  responsive: <Smartphone className="w-3.5 h-3.5" />,
   components: <Component className="w-3.5 h-3.5" />,
   variables: <Variable className="w-3.5 h-3.5" />,
   library: <Library className="w-3.5 h-3.5" />,
@@ -100,13 +101,42 @@ function App() {
   const [selectionPopup, setSelectionPopup] = useState<{ x: number; y: number; text: string } | null>(null);
   const [memoInputExpanded, setMemoInputExpanded] = useState(false);
   const [laserPointer, setLaserPointer] = useState<{ x: number; y: number; active: boolean } | null>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [channel] = useState(() => new BroadcastChannel('figma-presenter'));
 
   const total = slides.length;
   const slide = slides[idx];
   const section = sectionList.find((s) => s.id === slide.section);
   const c = t[theme];
 
-  const go = useCallback((i: number) => setIdx(Math.max(0, Math.min(total - 1, i))), [total]);
+  const go = useCallback((i: number) => {
+    const targetIdx = Math.max(0, Math.min(total - 1, i));
+    setIdx(targetIdx);
+    channel.postMessage({ type: 'navigate', index: targetIdx });
+  }, [total, channel]);
+
+  // NEWバッジ付きタイトルをレンダリング
+  const renderTitle = (title: string) => {
+    if (title.startsWith('[NEW] ')) {
+      const titleText = title.replace('[NEW] ', '');
+      return (
+        <>
+          <span
+            className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold mr-1.5 shrink-0"
+            style={{
+              background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+              color: '#fff',
+              boxShadow: '0 2px 4px rgba(239,68,68,0.3)'
+            }}
+          >
+            NEW
+          </span>
+          {titleText}
+        </>
+      );
+    }
+    return title;
+  };
 
   // 認証状態をlocalStorageから復元
   useEffect(() => {
@@ -132,22 +162,34 @@ function App() {
     }
   }, []);
 
-  // Presenterからのページ移動・レーザーポインターを受信
+  // Presenterからのページ移動・レーザーポインター・スクロールを受信
   useEffect(() => {
-    const channel = new BroadcastChannel('figma-presenter');
-    channel.onmessage = (event) => {
+    const handleMessage = (event: MessageEvent) => {
       if (event.data.type === 'navigate' && typeof event.data.index === 'number') {
-        go(event.data.index);
+        // presenter→Appの場合はchannelへの送信をスキップ
+        setIdx(Math.max(0, Math.min(total - 1, event.data.index)));
       } else if (event.data.type === 'laser') {
         if (event.data.active) {
           setLaserPointer({ x: event.data.x, y: event.data.y, active: true });
         } else {
           setLaserPointer(null);
         }
+      } else if (event.data.type === 'scroll' && contentRef.current) {
+        const scrollHeight = contentRef.current.scrollHeight - contentRef.current.clientHeight;
+        const scrollTop = (event.data.percentage / 100) * scrollHeight;
+        contentRef.current.scrollTop = scrollTop;
       }
     };
-    return () => channel.close();
-  }, [go]);
+    channel.addEventListener('message', handleMessage);
+    return () => channel.removeEventListener('message', handleMessage);
+  }, [channel, total]);
+
+  // ページが変わったらスクロールを一番上にリセット
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.scrollTop = 0;
+    }
+  }, [idx]);
 
   // ブックマークを追加・削除
   const toggleBookmark = (index: number) => {
@@ -420,7 +462,7 @@ function App() {
                           style={isActive ? { background: c.activeItemBg } : {}}
                         >
                           {sl.starred && <Star className="w-3 h-3 text-amber-400 fill-amber-400 shrink-0" />}
-                          <span className="truncate">{sl.title}</span>
+                          <span className="truncate flex items-center">{renderTitle(sl.title)}</span>
                         </button>
                         <button
                           onClick={(e) => {
@@ -470,7 +512,7 @@ function App() {
               <span className={c.breadcrumbSlash}>/</span>
               <span className={`${c.breadcrumbTitle} truncate flex items-center gap-1.5 font-medium`}>
                 {slide.starred && <Star className="w-3 h-3 text-amber-400 fill-amber-400 shrink-0" />}
-                {slide.title}
+                {renderTitle(slide.title)}
               </span>
             </div>
 
@@ -513,6 +555,7 @@ function App() {
 
           {/* Content */}
           <div
+            ref={contentRef}
             className="flex-1 overflow-y-auto"
             key={`${idx}-${theme}`}
             onMouseUp={(e) => {
@@ -574,8 +617,8 @@ function App() {
                     <span className={`text-[12px] ${c.slideNum}`}>{String(idx + 1).padStart(2, "0")}</span>
                     {slide.starred && <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />}
                   </div>
-                  <h2 className={`text-[24px] ${c.slideTitle} leading-snug`} style={{ fontWeight: 700 }}>
-                    {slide.title}
+                  <h2 className={`text-[24px] ${c.slideTitle} leading-snug flex items-center`} style={{ fontWeight: 700 }}>
+                    {renderTitle(slide.title)}
                   </h2>
                 </div>
               )}

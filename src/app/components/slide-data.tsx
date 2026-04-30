@@ -30,6 +30,7 @@ import {
   CheckCircle,
   XCircle,
   AlertTriangle,
+  Smartphone,
   Minus,
   X,
   MapPin,
@@ -37,6 +38,8 @@ import {
   Clock,
   Plus,
   Package,
+  Maximize,
+  Monitor,
 } from "lucide-react";
 import { useTheme, type Theme } from "./theme-context";
 
@@ -299,8 +302,9 @@ function Comp({ label, children }: { label?: string; children: React.ReactNode; 
 export const sectionList: SlideSection[] = [
   { id: "intro", title: "イントロ" },
   { id: "auto-layout", title: "Auto Layout" },
+  { id: "responsive", title: "レスポンシブ対応" },
   { id: "components", title: "コンポーネント" },
-  { id: "variables", title: "バリアブル" },
+  { id: "variables", title: "Variables" },
   { id: "library", title: "ライブラリ" },
   { id: "tokens", title: "デザイントークン" },
   { id: "others", title: "その他 & まとめ" },
@@ -873,6 +877,24 @@ function InstructorSlide() {
                   最近はAgent i お買い物領域のUI/UXデザインがメイン<br />
                   時々リサーチやったりバナー作ったり
                 </div>
+
+                {/* 仕事内容の画像 */}
+                <div className="relative mt-3 rounded-lg overflow-hidden max-w-xs" style={{ height: '280px' }}>
+                  <img
+                    src={`${import.meta.env.BASE_URL}images/work-example.svg`}
+                    alt="仕事内容の例"
+                    className="w-full"
+                  />
+                  {/* グラデーションオーバーレイ */}
+                  <div
+                    className="absolute bottom-0 left-0 right-0 h-16"
+                    style={{
+                      background: d
+                        ? 'linear-gradient(to bottom, transparent, rgba(38,35,53,0.95))'
+                        : 'linear-gradient(to bottom, transparent, rgba(253,253,253,0.95))'
+                    }}
+                  />
+                </div>
               </div>
 
               <div className="space-y-2 mt-4">
@@ -935,11 +957,11 @@ function ScheduleSlide() {
   const d = theme === "dark";
 
   const scheduleData = [
-    { time: "11:00～12:00", activity: "Figma講習", tag: "LECTURE", color: "purple" },
-    { time: "12:00～13:00", activity: "昼休憩", tag: "BREAK", color: "lightgray" },
-    { time: "13:00～13:15", activity: "課題説明", tag: "GUIDE", color: "pink" },
-    { time: "13:15～16:45", activity: "課題制作", tag: "WORK", color: "purple" },
-    { time: "16:45～17:00", activity: "講評", tag: "OUTRO", color: "pink" },
+    { time: "11:00～12:00", activity: "📚 Figma講習", tag: "LECTURE", color: "purple" },
+    { time: "12:00～13:00", activity: "🍔 昼休憩", tag: "BREAK", color: "lightgray" },
+    { time: "13:00～13:15", activity: "📋 課題説明", tag: "GUIDE", color: "pink" },
+    { time: "13:15～16:45", activity: "🎨 課題制作", tag: "WORK", color: "purple" },
+    { time: "16:45～17:00", activity: "💡 講評", tag: "OUTRO", color: "pink" },
   ];
 
   const getTagColor = (color: string) => {
@@ -1117,6 +1139,34 @@ function AlBasicsSlide() {
         </div>
       </div>
 
+      <div className="space-y-4 max-w-3xl">
+        <div className={`text-[14px] ${c.t3} font-medium`}>
+          具体例：ボタンのテキストが変わったとき
+        </div>
+        <div className="flex items-center gap-8">
+          <div className="space-y-2">
+            <img
+              src={`${import.meta.env.BASE_URL}images/Button_保存.svg`}
+              alt="保存ボタン"
+              className="h-12"
+            />
+            <div className={`text-[12px] ${c.t4}`}>短いテキスト</div>
+          </div>
+          <div className="text-purple-400 text-2xl">→</div>
+          <div className="space-y-2">
+            <img
+              src={`${import.meta.env.BASE_URL}images/Button_下書きを保存.svg`}
+              alt="下書きを保存ボタン"
+              className="h-12"
+            />
+            <div className={`text-[12px] ${c.t4}`}>長いテキストに変更</div>
+          </div>
+        </div>
+        <div className={`text-[13px] text-purple-400 font-medium`}>
+          Auto Layoutなら、ボタンの幅が自動で広がる
+        </div>
+      </div>
+
       <Tip>「ピクセルが揃っている」と「構造が設計されている」はまったく別のこと</Tip>
     </div>
   );
@@ -1130,6 +1180,197 @@ function AlApplySlide() {
     <div className="space-y-10">
       <Msg>Auto Layoutは<strong>構造を持った配置ルール</strong>で柔軟なデザインを実現</Msg>
       <Points items={["ボタン、リスト1行、カード、モーダルなどは適用しやすい","装飾的な自由配置やビジュアル演出には無理に使わない",<>Group / Frame / Auto Layout の<strong>役割の違い</strong>を理解する</>,"意味のある単位で適用する"]} />
+
+      {/* 手動整列 vs Auto Layout の比較 */}
+      <div className="w-full">
+        <div className="grid grid-cols-2 gap-8">
+          {/* NG例 */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-[13px] text-rose-400 font-medium">
+              <XCircle className="w-4 h-4" />
+              <span>NG例：固定幅で崩れる</span>
+            </div>
+            <div
+              className="rounded-xl overflow-hidden"
+              style={{
+                background: '#FFFFFF',
+                border: `2px solid ${d ? 'rgba(244,63,94,0.2)' : 'rgba(244,63,94,0.15)'}`,
+              }}
+            >
+              <img
+                src={`${import.meta.env.BASE_URL}images/responsive-ng.svg`}
+                alt="レスポンシブNG例"
+                className="w-full"
+              />
+            </div>
+          </div>
+
+          {/* OK例 */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 text-[13px] text-emerald-400 font-medium">
+              <CheckCircle className="w-4 h-4" />
+              <span>OK例：柔軟に対応</span>
+            </div>
+            <div
+              className="rounded-xl overflow-hidden"
+              style={{
+                background: '#FFFFFF',
+                border: `2px solid ${d ? 'rgba(16,185,129,0.2)' : 'rgba(16,185,129,0.15)'}`,
+              }}
+            >
+              <img
+                src={`${import.meta.env.BASE_URL}images/responsive-ok.svg`}
+                alt="レスポンシブOK例"
+                className="w-full"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Figmaリンク */}
+        <div className="mt-8">
+          <a
+            href="https://www.figma.com/design/Lzxkw6F9BxPWo8DoTEU5Ul/%E6%96%B0%E5%8D%92%E3%83%87%E3%82%B6%E3%82%A4%E3%83%8A%E3%83%BC%E7%A0%94%E4%BF%AE_Day1-5-1-?node-id=4040-896&t=anEt3oDM4VKXbPJh-4"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-[13px] font-medium transition-all"
+            style={{
+              background: d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)',
+              border: `1px solid ${d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.15)'}`,
+              color: d ? '#93c5fd' : '#2563eb',
+              textDecoration: 'none'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = d ? 'rgba(59,130,246,0.15)' : 'rgba(59,130,246,0.1)';
+              e.currentTarget.style.borderColor = d ? 'rgba(59,130,246,0.35)' : 'rgba(59,130,246,0.25)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)';
+              e.currentTarget.style.borderColor = d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.15)';
+            }}
+          >
+            <Link2 className="w-3.5 h-3.5" />
+            実際のFigmaコンポーネント
+          </a>
+        </div>
+      </div>
+
+      {/* ボタンの具体例 */}
+      <div className="space-y-4 max-w-3xl">
+        <div className={`text-[14px] ${c.t3} font-medium`}>
+          具体例：ボタンのテキストが変わったとき
+        </div>
+        <div className="space-y-2">
+          <div className="flex items-center gap-8">
+            <img
+              src={`${import.meta.env.BASE_URL}images/Button_保存.svg`}
+              alt="保存ボタン"
+              className="h-12"
+            />
+            <div className="text-purple-400 text-2xl">→</div>
+            <img
+              src={`${import.meta.env.BASE_URL}images/Button_下書きを保存.svg`}
+              alt="下書きを保存ボタン"
+              className="h-12"
+            />
+          </div>
+          <div className="flex items-center gap-8">
+            <div className={`text-[12px] ${c.t4} text-center`} style={{width: '100px'}}>短いテキスト</div>
+            <div style={{width: '32px'}}></div>
+            <div className={`text-[12px] ${c.t4} text-center`} style={{width: '150px'}}>長いテキストに変更</div>
+          </div>
+        </div>
+        <div className={`text-[13px] text-purple-400 font-medium`}>
+          Auto Layoutなら、ボタンの幅が自動で広がる
+        </div>
+      </div>
+
+      {/* Auto Layoutのルール */}
+      <div className="space-y-4">
+        <div className={`text-[14px] ${c.t3} leading-relaxed`}>
+          横に並べるのか、縦に並べるのか。間隔はどれくらいか。親要素に対してどう広がるのか。こういったルールを決めることで、内容が変わっても壊れないデザインが作れます。
+        </div>
+        <div className="grid grid-cols-3 gap-4">
+          {/* 方向 */}
+          <div
+            className="rounded-xl p-4 space-y-3"
+            style={{
+              background: d ? 'rgba(168,85,247,0.06)' : 'rgba(168,85,247,0.04)',
+              border: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+            }}
+          >
+            <div className="text-[13px] text-purple-400 font-semibold">方向</div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-1.5">
+                {[1,2,3].map(i => (
+                  <div key={i} className="w-5 h-5 rounded bg-purple-500/30" />
+                ))}
+              </div>
+              <div className={`text-[11px] ${c.t5}`}>横並び →</div>
+            </div>
+            <div className="space-y-2">
+              <div className="flex flex-col gap-1.5">
+                {[1,2,3].map(i => (
+                  <div key={i} className="w-5 h-5 rounded bg-purple-500/30" />
+                ))}
+              </div>
+              <div className={`text-[11px] ${c.t5}`}>縦並び ↓</div>
+            </div>
+          </div>
+
+          {/* 間隔 */}
+          <div
+            className="rounded-xl p-4 space-y-3"
+            style={{
+              background: d ? 'rgba(168,85,247,0.06)' : 'rgba(168,85,247,0.04)',
+              border: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+            }}
+          >
+            <div className="text-[13px] text-purple-400 font-semibold">間隔</div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-1">
+                <div className="w-6 h-6 rounded bg-purple-500/30" />
+                <div className="w-6 h-6 rounded bg-purple-500/30" />
+              </div>
+              <div className={`text-[11px] ${c.t5}`}>狭い (8px)</div>
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-3">
+                <div className="w-6 h-6 rounded bg-purple-500/30" />
+                <div className="w-6 h-6 rounded bg-purple-500/30" />
+              </div>
+              <div className={`text-[11px] ${c.t5}`}>広い (16px)</div>
+            </div>
+          </div>
+
+          {/* 伸縮 */}
+          <div
+            className="rounded-xl p-4 space-y-3"
+            style={{
+              background: d ? 'rgba(168,85,247,0.06)' : 'rgba(168,85,247,0.04)',
+              border: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+            }}
+          >
+            <div className="text-[13px] text-purple-400 font-semibold">伸縮</div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-1.5">
+                <div className="w-8 h-5 rounded bg-purple-500/30 flex items-center justify-center">
+                  <div className="w-4 h-2 bg-purple-500/60 rounded-sm" />
+                </div>
+              </div>
+              <div className={`text-[11px] ${c.t5}`}>Hug (内容に合わせる)</div>
+            </div>
+            <div className="space-y-2">
+              <div className="w-full h-5 rounded bg-purple-500/30 flex items-center justify-center">
+                <div className="w-12 h-2 bg-purple-500/60 rounded-sm" />
+              </div>
+              <div className={`text-[11px] ${c.t5}`}>Fill (親に合わせる)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 適用場面 */}
       <div className="w-full">
         <div className="grid grid-cols-2 gap-8">
           {/* Should apply */}
@@ -1241,6 +1482,7 @@ function AlApplySlide() {
         </div>
       </div>
 
+      {/* Group / Frame / Auto Layoutの使い分け */}
       <div className="rounded-xl p-4" style={{ background: c.glass, border: c.glassBd }}>
         <Label>Group / Frame / Auto Layout の使い分け</Label>
         <div className={`grid grid-cols-3 gap-3 text-[12px] ${c.t3}`}>
@@ -1261,6 +1503,7 @@ function AlApplySlide() {
           </div>
         </div>
       </div>
+
       <Tip>「全部にAuto Layoutをかける」より、意味のある単位で判断することが大切</Tip>
     </div>
   );
@@ -1873,6 +2116,41 @@ function AlTextSlide() {
     <div className="space-y-10">
       <Msg>テキストはもっとも変化しやすい要素なので、<strong>見た目より先に振る舞い</strong>を決める</Msg>
       <Points items={["伸びてよいか、折り返してよいか、省略してよいか、他要素を押し広げてよいかを先に決める","意味が違うテキストは分ける","省略は見た目合わせではなく、優先順位の設計","「今の文言で収まっている」は設計ではない"]} />
+
+      {/* コンポーネント作成時と実際の使用例 */}
+      <div className="space-y-4">
+        <div className={`text-[14px] ${c.t3} leading-relaxed`}>
+          コンポーネントを作る時に短い仮テキストを入れることがよくあります。しかし、その場合も実際の使用パターンを考慮しながら作る必要があります。
+        </div>
+        <div className="grid grid-cols-2 gap-8 max-w-3xl mx-auto">
+          {/* コンポーネント作成時 */}
+          <div className="space-y-3">
+            <div className={`text-[13px] ${c.t2} font-semibold`}>コンポーネント作成時</div>
+            <div className="rounded-xl overflow-hidden">
+              <img
+                src={`${import.meta.env.BASE_URL}images/text-component-creation.svg`}
+                alt="コンポーネント作成時"
+                className="w-full"
+              />
+            </div>
+            <div className={`text-[12px] ${c.t5} text-center`}>短い仮テキストで作成</div>
+          </div>
+
+          {/* 実際の使用例 */}
+          <div className="space-y-3">
+            <div className={`text-[13px] ${c.t2} font-semibold`}>実際の使用例</div>
+            <div className="rounded-xl overflow-hidden">
+              <img
+                src={`${import.meta.env.BASE_URL}images/text-actual-usage.svg`}
+                alt="実際の使用例"
+                className="w-full"
+              />
+            </div>
+            <div className={`text-[12px] ${c.t5} text-center`}>長いテキストで崩れる可能性</div>
+          </div>
+        </div>
+      </div>
+
       <Vis>
         <Label>同じカードで、短文・長文・省略の3パターン</Label>
         <div className="grid grid-cols-3 gap-4">
@@ -1900,8 +2178,8 @@ function AlTextSlide() {
         </Comp>
         <Comp label="✅ 意味ごとに分割">
           <div className="flex flex-col gap-1.5">
-            <div className={`rounded-lg px-3 py-1.5 text-[12px] font-medium ${c.t2}`} style={{ background: "rgba(168,85,247,0.08)", border: "1px solid rgba(168,85,247,0.15)" }}>カードタイトル</div>
-            <div className={`rounded-lg px-3 py-1.5 text-[12px] ${c.t4}`} style={{ background: "rgba(168,85,247,0.08)", border: "1px solid rgba(168,85,247,0.15)" }}>説明文がここに入ります。</div>
+            <div className={`rounded-lg px-3 py-1.5 text-[12px] font-medium ${c.t2}`} style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.15)" }}>カードタイトル</div>
+            <div className={`rounded-lg px-3 py-1.5 text-[12px] ${c.t4}`} style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.15)" }}>説明文がここに入ります。</div>
           </div>
         </Comp>
       </div>
@@ -1916,7 +2194,7 @@ function AlAdvancedSlide() {
   return (
     <div className="space-y-10">
       <Msg>可変レイアウトの中で、<strong>どこまで許容し、何を例外にするか</strong>を決める</Msg>
-      <Points items={["最小幅 / 最大幅は使いやすさの下限と上限を��める","画像やサムネイルは比率維持が重要","絶対位置はレイアウトの例外処理として使う","バッジや閉じるボタンには向くが、本文や主ボタンには多用しない"]} />
+      <Points items={["最小幅 / 最大幅は使いやすさの下限と上限を決める","画像やサムネイルは比率維持が重要","絶対位置はレイアウトの例外処理として使う","バッジや閉じるボタンには向くが、本文や主ボタンには多用しない"]} />
       <Vis>
         <div className="grid grid-cols-3 gap-5">
           <div>
@@ -2265,7 +2543,7 @@ function CompVariantsPropertiesSlide() {
 
       <div className={`text-[14px] ${c.t3} leading-relaxed space-y-4`}>
         <p>
-          バリアントを作るときは、まず「何が変わるのか」を整理します。
+          Variantsを作るときは、まず「何が変わるのか」を整理します。
         </p>
         <p>
           例えばタブなら「選択されているか・いないか」が変わります。これが<strong>プロパティ（切り替える軸）</strong>です。
@@ -2306,18 +2584,76 @@ function CompVariantsPropertiesSlide() {
         <div className={`text-[13px] ${c.t4} mt-4 italic`}>
           最初は1つのプロパティから考えればOK
         </div>
+
+        {/* カテゴリータブの実例 */}
+        <div className="mt-6">
+          <div className={`text-[14px] ${c.t3} mb-3`}>実際の例：</div>
+          <div className="grid grid-cols-2 gap-4">
+            <div
+              className="rounded-xl overflow-hidden"
+              style={{
+                border: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+              }}
+            >
+              <img
+                src={`${import.meta.env.BASE_URL}images/category-tabs-example.png`}
+                alt="カテゴリータブの例1"
+                className="w-full"
+              />
+            </div>
+            <div
+              className="rounded-xl overflow-hidden"
+              style={{
+                border: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+              }}
+            >
+              <img
+                src={`${import.meta.env.BASE_URL}images/category-tabs-variants.png`}
+                alt="カテゴリータブの例2"
+                className="w-full"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Figmaリンク */}
+        <div className="mt-4">
+          <a
+            href="https://www.figma.com/design/Lzxkw6F9BxPWo8DoTEU5Ul/%E6%96%B0%E5%8D%92%E3%83%87%E3%82%B6%E3%82%A4%E3%83%8A%E3%83%BC%E7%A0%94%E4%BF%AE_Day1-5-1-?node-id=4052-930&t=anEt3oDM4VKXbPJh-4"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-[13px] font-medium transition-all"
+            style={{
+              background: d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)',
+              border: `1px solid ${d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.15)'}`,
+              color: d ? '#93c5fd' : '#2563eb',
+              textDecoration: 'none'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = d ? 'rgba(59,130,246,0.15)' : 'rgba(59,130,246,0.1)';
+              e.currentTarget.style.borderColor = d ? 'rgba(59,130,246,0.35)' : 'rgba(59,130,246,0.25)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)';
+              e.currentTarget.style.borderColor = d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.15)';
+            }}
+          >
+            <Link2 className="w-3.5 h-3.5" />
+            実際のFigmaコンポーネント
+          </a>
+        </div>
       </div>
 
-      {/* 実例：ボタンバリアント */}
+      {/* 実例：ボタンVariants */}
       <div>
         <div className={`text-[16px] ${c.t2} font-semibold mb-4`}>
-          実例：ボタンバリアント
+          実例：ボタンVariants
         </div>
 
         {/* 命名規則 */}
         <div className="mb-6">
           <div className={`text-[14px] ${c.t3} mb-3 leading-relaxed`}>
-            複数のプロパティを持つ場合、バリアント名は <strong>Button/Primary/Large/Default/False</strong> のように表現されます。
+            複数のプロパティを持つ場合、Variants名は <strong>Button/Primary/Large/Default/False</strong> のように表現されます。
           </div>
           <div
             className="w-full rounded-2xl overflow-hidden relative"
@@ -2331,7 +2667,7 @@ function CompVariantsPropertiesSlide() {
           >
             <ExpandableImage
               src={`${import.meta.env.BASE_URL}images/variant-naming.png`}
-              alt="バリアント命名規則"
+              alt="Variants命名規則"
             />
             <div
               className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
@@ -2348,7 +2684,7 @@ function CompVariantsPropertiesSlide() {
         {/* グリッド配置 */}
         <div>
           <div className={`text-[14px] ${c.t3} mb-3 leading-relaxed`}>
-            バリアントが多い場合は、<strong>グリッドで整理</strong>すると使いやすくなります。
+            Variantsが多い場合は、<strong>グリッドで整理</strong>すると使いやすくなります。
           </div>
           <div
             className="w-full rounded-2xl overflow-hidden relative"
@@ -2362,7 +2698,7 @@ function CompVariantsPropertiesSlide() {
           >
             <ExpandableImage
               src={`${import.meta.env.BASE_URL}images/variant-grid.png`}
-              alt="バリアントのグリッド配置"
+              alt="Variantsのグリッド配置"
             />
             <div
               className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
@@ -2377,7 +2713,7 @@ function CompVariantsPropertiesSlide() {
         </div>
       </div>
 
-      <Points items={["最初は state のような1つの軸から考えればよい","プロパティ名は見た目ではなく意味でつける（「青いボタン」ではなく「primary」）","バリアントが多い場合はグリッドで整理する"]} />
+      <Points items={["最初は state のような1つの軸から考えればよい","プロパティ名は見た目ではなく意味でつける（「青いボタン」ではなく「primary」）","Variantsが多い場合はグリッドで整理する"]} />
     </div>
   );
 }
@@ -2388,7 +2724,7 @@ function CompVariantsCreateSlide() {
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>Figmaでバリアントを作成する<strong>実際の手順</strong></Msg>
+      <Msg>FigmaでVariantsを作成する<strong>実際の手順</strong></Msg>
 
       {/* GIF Container */}
       <div
@@ -2403,7 +2739,7 @@ function CompVariantsCreateSlide() {
       >
         <img
           src={`${import.meta.env.BASE_URL}images/variant-creation.gif`}
-          alt="バリアントの作成手順"
+          alt="Variantsの作成手順"
           style={{
             maxWidth: '100%',
             height: 'auto',
@@ -2430,7 +2766,7 @@ function CompVariantsCreateSlide() {
         }}
       >
         <div className={`text-[14px] ${c.t2} font-semibold mb-3`}>
-          新しいバリアントの作成方法
+          新しいVariantsの作成方法
         </div>
         <div className={`text-[14px] ${c.t4} space-y-2.5`}>
           <div>メインコンポーネントを選択し、次のいずれかを実行：</div>
@@ -2441,17 +2777,17 @@ function CompVariantsCreateSlide() {
             </div>
             <div className="flex items-start gap-2">
               <span className="text-purple-400">•</span>
-              <span>右クリック → [メインコンポーネント] → [バリアントを追加]</span>
+              <span>右クリック → [メインコンポーネント] → [Variantsを追加]</span>
             </div>
             <div className="flex items-start gap-2">
               <span className="text-purple-400">•</span>
-              <span>右サイドバーの[プロパティ]セクションで<span className="font-mono bg-purple-500/10 px-1.5 py-0.5 rounded text-purple-400">+</span> → [バリアント]</span>
+              <span>右サイドバーの[プロパティ]セクションで<span className="font-mono bg-purple-500/10 px-1.5 py-0.5 rounded text-purple-400">+</span> → [Variants]</span>
             </div>
           </div>
         </div>
       </div>
 
-      <Tip>コンポーネントセットの下の<span className="font-mono bg-purple-500/10 px-1.5 py-0.5 rounded text-purple-400">+</span>をクリックして、さらにバリアントを追加できる</Tip>
+      <Tip>コンポーネントセットの下の<span className="font-mono bg-purple-500/10 px-1.5 py-0.5 rounded text-purple-400">+</span>をクリックして、さらにVariantsを追加できる</Tip>
     </div>
   );
 }
@@ -2557,7 +2893,7 @@ function CompVariantsBestPracticesSlide() {
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>バリアントを効果的に使う<strong>ベストプラクティス</strong></Msg>
+      <Msg>Variantsを効果的に使う<strong>ベストプラクティス</strong></Msg>
 
       <div className="grid grid-cols-2 gap-6">
         {/* Practice 1: Property Naming */}
@@ -2635,13 +2971,13 @@ function CompVariantsBestPracticesSlide() {
           <div className="flex items-center gap-2 mb-4">
             <CheckCircle className="w-5 h-5 text-emerald-400" />
             <div className={`text-[13px] font-semibold ${c.t2}`}>
-              バリアント vs プロパティ
+              Variants vs プロパティ
             </div>
           </div>
 
           {/* Variant Example */}
           <div className="mb-3">
-            <div className="text-[12px] text-purple-400 font-medium mb-2">バリアント：見た目が変わる</div>
+            <div className="text-[12px] text-purple-400 font-medium mb-2">Variants：見た目が変わる</div>
             <div className="flex gap-2">
               <div
                 className="flex-1 rounded-lg px-3 py-2 text-[12px] text-center text-white"
@@ -2707,7 +3043,7 @@ function CompVariantsBestPracticesSlide() {
           <div className="flex items-center gap-2 mb-4">
             <CheckCircle className="w-5 h-5 text-emerald-400" />
             <div className={`text-[13px] font-semibold ${c.t2}`}>
-              バリアント数を適切に保つ
+              Variants数を適切に保つ
             </div>
           </div>
 
@@ -2716,7 +3052,7 @@ function CompVariantsBestPracticesSlide() {
             <div>
               <div className="flex items-center gap-1.5 mb-2">
                 <XCircle className="w-3.5 h-3.5 text-rose-400" />
-                <span className="text-[12px] text-rose-400 font-medium">3軸 × 3値 × アイコン有無 = 54バリアント 😱</span>
+                <span className="text-[12px] text-rose-400 font-medium">3軸 × 3値 × アイコン有無 = 54Variants 😱</span>
               </div>
               <div className="grid grid-cols-6 gap-1">
                 {Array.from({ length: 18 }).map((_, i) => (
@@ -2736,7 +3072,7 @@ function CompVariantsBestPracticesSlide() {
             <div>
               <div className="flex items-center gap-1.5 mb-2">
                 <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="text-[12px] text-emerald-400 font-medium">3軸 × 3値 + Boolean = 27バリアント ✨</span>
+                <span className="text-[12px] text-emerald-400 font-medium">3軸 × 3値 + Boolean = 27Variants ✨</span>
               </div>
               <div className="grid grid-cols-6 gap-1">
                 {Array.from({ length: 9 }).map((_, i) => (
@@ -2766,13 +3102,13 @@ function CompVariantsBestPracticesSlide() {
           <div className="flex items-center gap-2 mb-4">
             <CheckCircle className="w-5 h-5 text-emerald-400" />
             <div className={`text-[13px] font-semibold ${c.t2}`}>
-              デフォルトバリアントを設定
+              デフォルトVariantsを設定
             </div>
           </div>
 
           <div className="space-y-3">
             <div className={`text-[12px] ${c.t4}`}>
-              最もよく使うバリアントをデフォルトに設定
+              最もよく使うVariantsをデフォルトに設定
             </div>
 
             <div
@@ -2811,7 +3147,7 @@ function CompVariantsBestPracticesSlide() {
         </div>
       </div>
 
-      <Tip>バリアントは「状態モデルの可視化」— 実装と1対1対応するように設計すると、開発者とのコミュニケーションが円滑になる</Tip>
+      <Tip>Variantsは「状態モデルの可視化」— 実装と1対1対応するように設計すると、開発者とのコミュニケーションが円滑になる</Tip>
     </div>
   );
 }
@@ -2822,8 +3158,8 @@ function CompVariantsSlide() {
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>バリアントは、同じコンポーネントの<strong>状態や種類を管理する</strong>仕組み</Msg>
-      <Points items={["state、size、hierarchy などを軸として持たせる","アイコンの有無や文言差し替えはプロパティで持つ","すべてをバリアント化しない","バリアントはUIの状態モデルを表す"]} />
+      <Msg>Variantsは、同じコンポーネントの<strong>状態や種類を管理する</strong>仕組み</Msg>
+      <Points items={["state、size、hierarchy などを軸として持たせる","アイコンの有無や文言差し替えはプロパティで持つ","すべてをVariants化しない","VariantsはUIの状態モデルを表す"]} />
       <Vis>
         <Label>state × hierarchy × size のマトリクス</Label>
         <div className="overflow-x-auto">
@@ -2860,7 +3196,7 @@ function CompVariantsSlide() {
         </div>
         <div className={`text-[12px] ${c.t5} mt-3 text-center`}>+ size (Small / Medium / Large) で3次元のマトリクスになる</div>
       </Vis>
-      <Tip>「見た目が変わるならバリアント、値が変わるならプロパティ」が基本の判断軸</Tip>
+      <Tip>「見た目が変わるならVariants、値が変わるならプロパティ」が基本の判断軸</Tip>
     </div>
   );
 }
@@ -2871,7 +3207,7 @@ function VarBasicsSlide() {
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>バリアブルを使えば、<strong>値を1箇所変えるだけで複数の場所に一括反映</strong>できる</Msg>
+      <Msg>Variablesを使えば、<strong>値を1箇所変えるだけで複数の場所に一括反映</strong>できる</Msg>
       <Points items={["色（ブランドカラー）の一元管理","余白（8px, 16px, 24px）の統一","サイズ（ボタンの高さなど）の管理"]} />
 
       <div className="space-y-6">
@@ -2917,9 +3253,9 @@ function VarBasicsSlide() {
         </div>
 
         {/* Arrow */}
-        <div className="flex items-center justify-center">
-          <div className={`text-[14px] ${c.t4} font-semibold`}>バリアブル化</div>
-          <ChevronRight className={`w-5 h-5 ${c.t4} mx-2`} />
+        <div className="flex flex-col items-center justify-center">
+          <div className={`text-[14px] ${c.t4} font-semibold`}>Variables化</div>
+          <ArrowDown className={`w-5 h-5 ${c.t4} mt-2`} />
         </div>
 
         {/* After */}
@@ -2932,7 +3268,7 @@ function VarBasicsSlide() {
         >
           <div className="flex items-center gap-2 mb-4">
             <span className="text-emerald-400 text-[14px]">✓</span>
-            <div className={`text-[14px] font-semibold ${c.t2}`}>After: バリアブルで管理</div>
+            <div className={`text-[14px] font-semibold ${c.t2}`}>After: Variablesで管理</div>
           </div>
 
           <div className="flex flex-col items-center mb-4">
@@ -2982,15 +3318,15 @@ function VarBasicsSlide() {
       </div>
 
       <div className="rounded-xl p-4" style={{ background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)', border: `1px solid ${d ? 'rgba(168,85,247,0.1)' : 'rgba(168,85,247,0.08)'}` }}>
-        <div className={`text-[13px] ${c.t2} font-semibold mb-2`}>スタイルとバリアブルの違い</div>
+        <div className={`text-[13px] ${c.t2} font-semibold mb-2`}>スタイルとVariablesの違い</div>
         <div className={`text-[13px] ${c.t4} space-y-1`}>
           <div>• <strong>スタイル</strong> = 見た目のセット（複数の設定をまとめる）</div>
-          <div>• <strong>バリアブル</strong> = 1つの値（色だけ、サイズだけ）</div>
+          <div>• <strong>Variables</strong> = 1つの値（色だけ、サイズだけ）</div>
           <div className={`text-[12px] ${c.t5} mt-2 pl-4`}>例: 料理の「レシピ」 vs 「食材」</div>
         </div>
       </div>
 
-      <Tip>バリアブルは「値の一元管理」— 変更に強いデザインの基礎</Tip>
+      <Tip>Variablesは「値の一元管理」— 変更に強いデザインの基礎</Tip>
     </div>
   );
 }
@@ -3036,32 +3372,32 @@ function VarApplySlide() {
           </div>
 
           {/* Arrow */}
-          <div className="flex items-center justify-center gap-2">
-            <div className={`text-[12px] ${c.t5}`}>alias（参照）</div>
-            <ChevronRight className={`w-4 h-4 ${c.t5}`} />
+          <div className="flex flex-col items-center justify-center gap-2">
+            <div className={`text-[12px] ${c.t5}`}>エイリアス（次ページ参照）</div>
+            <ArrowDown className={`w-4 h-4 ${c.t5}`} />
           </div>
 
           {/* Layer 2: Semantic */}
           <div
             className="rounded-2xl p-5"
             style={{
-              background: d ? 'rgba(16,185,129,0.06)' : 'rgba(16,185,129,0.04)',
-              border: `1px solid ${d ? 'rgba(16,185,129,0.2)' : 'rgba(16,185,129,0.15)'}`,
+              background: d ? 'rgba(168,85,247,0.06)' : 'rgba(168,85,247,0.04)',
+              border: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
             }}
           >
             <div className="flex items-center gap-2 mb-4">
-              <div className={`text-[13px] font-semibold ${d ? 'text-emerald-300' : 'text-emerald-600'}`}>2層目: Semantic（意味のある名前）</div>
+              <div className={`text-[13px] font-semibold ${d ? 'text-purple-300' : 'text-purple-700'}`}>2層目: Semantic（意味のある名前）</div>
             </div>
             <div className="space-y-2">
-              <div className={`text-[12px] ${d ? 'text-emerald-300' : 'text-emerald-700'} font-mono flex items-center gap-2`}>
+              <div className={`text-[12px] ${d ? 'text-purple-300' : 'text-purple-700'} font-mono flex items-center gap-2`}>
                 <div className="w-8 h-8 rounded" style={{ background: '#7c3aed' }} />
                 color/primary = purple-500
               </div>
-              <div className={`text-[12px] ${d ? 'text-emerald-300' : 'text-emerald-700'} font-mono flex items-center gap-2`}>
+              <div className={`text-[12px] ${d ? 'text-purple-300' : 'text-purple-700'} font-mono flex items-center gap-2`}>
                 <div className="w-8 h-8 rounded" style={{ background: '#10b981' }} />
                 color/success = green-500
               </div>
-              <div className={`text-[12px] ${d ? 'text-emerald-300' : 'text-emerald-700'} font-mono flex items-center gap-2`}>
+              <div className={`text-[12px] ${d ? 'text-purple-300' : 'text-purple-700'} font-mono flex items-center gap-2`}>
                 <div className="w-8 h-8 rounded" style={{ background: '#f3f4f6' }} />
                 color/background = gray-100
               </div>
@@ -3070,9 +3406,9 @@ function VarApplySlide() {
           </div>
 
           {/* Arrow */}
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex flex-col items-center justify-center gap-2">
             <div className={`text-[12px] ${c.t5}`}>適用</div>
-            <ChevronRight className={`w-4 h-4 ${c.t5}`} />
+            <ArrowDown className={`w-4 h-4 ${c.t5}`} />
           </div>
 
           {/* UI Application */}
@@ -3110,7 +3446,7 @@ function VarApplySlide() {
 
         <div className={`text-[13px] ${c.t4} leading-relaxed space-y-3`}>
           <div>
-            バリアブルは、<strong>1つの名前に複数の値を持てる仕組み</strong>です。
+            Variablesは、<strong>1つの名前に複数の値を持てる仕組み</strong>です。
             ただし、その場で使われる値は1つだけで、
             どの値を使うかはモードやコンテキストによって切り替わります。
           </div>
@@ -3132,7 +3468,7 @@ function VarApplySlide() {
         <div className="w-full rounded-2xl overflow-hidden relative">
           <ExpandableImage
             src={`${import.meta.env.BASE_URL}images/variable-mode.gif`}
-            alt="バリアブルのモード切り替え"
+            alt="Variablesのモード切り替え"
           />
           <div
             className="absolute bottom-2 right-2 px-2 py-1 rounded text-[12px]"
@@ -3143,6 +3479,24 @@ function VarApplySlide() {
           >
             出典：Figma公式
           </div>
+        </div>
+      </div>
+
+      <div
+        className="rounded-xl p-5"
+        style={{
+          background: d ? 'rgba(168,85,247,0.08)' : 'rgba(168,85,247,0.06)',
+          border: `2px solid ${d ? 'rgba(168,85,247,0.3)' : 'rgba(168,85,247,0.2)'}`,
+        }}
+      >
+        <div className={`text-[14px] ${c.t2} font-bold mb-3`}>
+          重要ポイント
+        </div>
+        <div className={`text-[14px] ${c.t3} leading-relaxed`}>
+          Variablesを使うときは、<strong className="text-purple-400">色そのものの名前で管理するのではなく、役割の名前で管理する</strong>
+        </div>
+        <div className={`text-[13px] ${c.t4} mt-2`}>
+          例：「purple」「blue」ではなく → 「primary」「success」で管理
         </div>
       </div>
 
@@ -3158,7 +3512,7 @@ function VarAliasSlide() {
   return (
     <div className="space-y-10">
       <Msg>トークンの<strong>エイリアス</strong>を使うと、デザインシステムを効率よく育てられる</Msg>
-      <Points items={["エイリアス = あるトークンが別のトークンの値を引き継ぐこと","元の値を変えると、参照している全てのトークンも自動更新される","スタイルと違い、バリアブルは他のバリアブルを参照できる"]} />
+      <Points items={["エイリアス = あるトークンが別のトークンの値を引き継ぐこと","元の値を変えると、参照している全てのトークンも自動更新される","スタイルと違い、Variablesは他のVariablesを参照できる"]} />
 
       <div className={`text-[14px] ${c.t4} leading-relaxed`}>
         Figmaの記事では、デザイントークンを<strong>「再利用できる値」</strong>、エイリアシングを<strong>「あるトークンが、別のトークンの値を引き継ぐこと」</strong>と説明しています。
@@ -3216,13 +3570,13 @@ function VarAliasSlide() {
       </div>
 
       <div className="space-y-4">
-        <div className={`text-[14px] ${c.t2} font-semibold`}>2. スタイルとバリアブルの違い</div>
+        <div className={`text-[14px] ${c.t2} font-semibold`}>2. スタイルとVariablesの違い</div>
         <div className={`text-[13px] ${c.t4} leading-relaxed space-y-3`}>
           <div>
-            <strong>スタイルはこのエイリアスに対応していません</strong>。スタイルは、他のスタイルやバリアブルを"参照してつながる"しくみが弱いです。
+            <strong>スタイルはこのエイリアスに対応していません</strong>。スタイルは、他のスタイルやVariablesを"参照してつながる"しくみが弱いです。
           </div>
           <div>
-            一方で<strong>バリアブルは、他のバリアブルを参照できる</strong>ので、もっと大きくて整理された仕組みを作れます。
+            一方で<strong>Variablesは、他のVariablesを参照できる</strong>ので、もっと大きくて整理された仕組みを作れます。
           </div>
         </div>
 
@@ -3262,7 +3616,7 @@ function VarAliasSlide() {
                     borderTopRightRadius: '8px',
                   }}
                 >
-                  バリアブル
+                  Variables
                 </th>
               </tr>
             </thead>
@@ -3431,13 +3785,13 @@ function VarAliasSlide() {
       >
         <div className={`text-[13px] ${c.t4} leading-relaxed space-y-3`}>
           <div>
-            つまりバリアブルは、<strong>「まず共通のルールを作って、必要なところへつなげる」</strong>のが得意です。
+            つまりVariablesは、<strong>「まず共通のルールを作って、必要なところへつなげる」</strong>のが得意です。
           </div>
           <div>
             そのおかげで、デザインが大きくなっても、変更しやすく、壊れにくく、管理もしやすい仕組みを作れます。
           </div>
           <div className={`text-[12px] ${c.t5}`}>
-            Figmaの記事でも、バリアブルはエイリアシングによって複雑で拡張可能なトークン構造を支え、更新や管理を効率的にできると説明されています。
+            Figmaの記事でも、Variablesはエイリアシングによって複雑で拡張可能なトークン構造を支え、更新や管理を効率的にできると説明されています。
           </div>
         </div>
       </div>
@@ -3454,7 +3808,7 @@ function LibBasicsSlide() {
   return (
     <div className="space-y-10">
       <Msg>ライブラリはアセット置き場ではなく、<strong>チームの共通言語</strong></Msg>
-      <Points items={["コンポーネント、スタイル、バリアブルを共有する","一貫性を保ちやすくする","新しく入った人が判断基準を理解しやすくなる"]} />
+      <Points items={["コンポーネント、スタイル、Variablesを共有する","一貫性を保ちやすくする","新しく入った人が判断基準を理解しやすくなる"]} />
       <Vis>
         <Label>1つのライブラリから複数ファイルへ</Label>
         <div className="flex flex-col items-center gap-4">
@@ -3492,181 +3846,43 @@ function LibPublishSlide() {
 
       <div className="w-full">
         <div className="grid grid-cols-2 gap-8">
-          {/* Publish Library Modal (Figma UI Mock) */}
+          {/* Publish Library */}
           <div className="space-y-3">
             <div className="text-[13px] text-purple-400 mb-2 font-medium">1. Publish Library（公開）</div>
             <div
               className="rounded-2xl overflow-hidden"
               style={{
-                background: d ? '#2c2c2c' : '#f5f5f5',
-                border: `1px solid ${d ? '#3c3c3c' : '#e0e0e0'}`,
-                boxShadow: d ? '0 8px 32px rgba(0,0,0,0.4)' : '0 8px 32px rgba(0,0,0,0.1)'
+                border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+                boxShadow: d
+                  ? '0 8px 32px rgba(168,85,247,0.15)'
+                  : '0 8px 32px rgba(168,85,247,0.12)'
               }}
             >
-              {/* Modal Header */}
-              <div
-                className="px-4 py-3 flex items-center justify-between"
-                style={{
-                  background: d ? '#1e1e1e' : '#ffffff',
-                  borderBottom: `1px solid ${d ? '#3c3c3c' : '#e0e0e0'}`
-                }}
-              >
-                <div className={`text-[13px] font-semibold ${d ? 'text-white' : 'text-gray-900'}`}>
-                  Publish library
-                </div>
-                <div className="w-3 h-3 rounded-full bg-gray-500" />
-              </div>
-
-              {/* Changes List */}
-              <div className="p-4 space-y-2">
-                <div className={`text-[12px] ${d ? 'text-gray-400' : 'text-gray-600'} mb-3`}>
-                  3 changes will be published
-                </div>
-
-                {[
-                  { type: 'Modified', icon: '🔄', name: 'Button', color: d ? '#60a5fa' : '#3b82f6' },
-                  { type: 'Added', icon: '✨', name: 'Alert', color: d ? '#34d399' : '#10b981' },
-                  { type: 'Modified', icon: '🔄', name: 'color/primary', color: d ? '#60a5fa' : '#3b82f6' },
-                ].map((change, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-2 px-2 py-1.5 rounded"
-                    style={{ background: d ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)' }}
-                  >
-                    <span className="text-[14px]">{change.icon}</span>
-                    <span className={`text-[12px] ${d ? 'text-gray-300' : 'text-gray-700'}`}>
-                      {change.name}
-                    </span>
-                    <span
-                      className="text-[12px] px-1.5 py-0.5 rounded ml-auto"
-                      style={{
-                        background: change.color + '20',
-                        color: change.color
-                      }}
-                    >
-                      {change.type}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Description Field */}
-              <div className="px-4 pb-4">
-                <div className={`text-[12px] ${d ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
-                  Describe your changes
-                </div>
-                <div
-                  className="rounded px-3 py-2 text-[12px]"
-                  style={{
-                    background: d ? '#1e1e1e' : '#ffffff',
-                    border: `1px solid ${d ? '#3c3c3c' : '#d0d0d0'}`,
-                    color: d ? '#a0a0a0' : '#666666'
-                  }}
-                >
-                  Buttonのpaddingを調整<br />
-                  Alertコンポーネントを追加
-                </div>
-              </div>
-
-              {/* Publish Button */}
-              <div className="px-4 pb-4">
-                <div
-                  className="w-full py-2 rounded-lg text-[13px] font-medium text-white text-center cursor-pointer"
-                  style={{
-                    background: '#7c3aed',
-                    boxShadow: '0 2px 8px rgba(124,58,237,0.3)'
-                  }}
-                >
-                  Publish library
-                </div>
-              </div>
+              <img
+                src={`${import.meta.env.BASE_URL}images/publish-library.png`}
+                alt="Publish Library"
+                className="w-full"
+              />
             </div>
           </div>
 
-          {/* Update Library Panel (Figma UI Mock) */}
+          {/* Update Library */}
           <div className="space-y-3">
             <div className={`text-[13px] ${d ? 'text-blue-400' : 'text-blue-600'} mb-2 font-medium`}>2. Update Library（取り込み）</div>
             <div
               className="rounded-2xl overflow-hidden"
               style={{
-                background: d ? '#2c2c2c' : '#f5f5f5',
-                border: `1px solid ${d ? '#3c3c3c' : '#e0e0e0'}`,
-                boxShadow: d ? '0 8px 32px rgba(0,0,0,0.4)' : '0 8px 32px rgba(0,0,0,0.1)'
+                border: `2px solid ${d ? 'rgba(59,130,246,0.2)' : 'rgba(59,130,246,0.15)'}`,
+                boxShadow: d
+                  ? '0 8px 32px rgba(59,130,246,0.15)'
+                  : '0 8px 32px rgba(59,130,246,0.12)'
               }}
             >
-              {/* Panel Header */}
-              <div
-                className="px-4 py-3"
-                style={{
-                  background: d ? '#1e1e1e' : '#ffffff',
-                  borderBottom: `1px solid ${d ? '#3c3c3c' : '#e0e0e0'}`
-                }}
-              >
-                <div className={`text-[13px] font-semibold ${d ? 'text-white' : 'text-gray-900'}`}>
-                  Library updates available
-                </div>
-                <div className={`text-[12px] ${d ? 'text-gray-400' : 'text-gray-600'} mt-1`}>
-                  Design System Library
-                </div>
-              </div>
-
-              {/* Update List */}
-              <div className="p-4 space-y-2">
-                {[
-                  { checked: true, type: 'Button', desc: 'Buttonのpaddingを調整', instances: 12 },
-                  { checked: true, type: 'Alert', desc: 'Alertコンポーネントを追加', instances: 0 },
-                  { checked: false, type: 'color/primary', desc: '色を変更', instances: 48 },
-                ].map((update, i) => (
-                  <div
-                    key={i}
-                    className="flex items-start gap-2 px-2 py-2 rounded"
-                    style={{ background: d ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)' }}
-                  >
-                    <div
-                      className="w-4 h-4 rounded flex items-center justify-center shrink-0 mt-0.5"
-                      style={{
-                        background: update.checked ? '#7c3aed' : (d ? '#3c3c3c' : '#d0d0d0'),
-                        border: `1px solid ${update.checked ? '#7c3aed' : (d ? '#4c4c4c' : '#b0b0b0')}`
-                      }}
-                    >
-                      {update.checked && <CheckCircle className="w-3 h-3 text-white" />}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className={`text-[12px] font-medium ${d ? 'text-gray-300' : 'text-gray-700'}`}>
-                        {update.type}
-                      </div>
-                      <div className={`text-[12px] ${d ? 'text-gray-500' : 'text-gray-500'} mt-0.5`}>
-                        {update.desc}
-                      </div>
-                      <div className={`text-[12px] ${d ? 'text-gray-600' : 'text-gray-400'} mt-1`}>
-                        {update.instances} instances
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Update Button */}
-              <div className="px-4 pb-4 flex gap-2">
-                <div
-                  className="flex-1 py-2 rounded-lg text-[12px] font-medium text-center cursor-pointer"
-                  style={{
-                    background: d ? '#3c3c3c' : '#e0e0e0',
-                    color: d ? '#a0a0a0' : '#666666'
-                  }}
-                >
-                  Review
-                </div>
-                <div
-                  className="flex-1 py-2 rounded-lg text-[12px] font-medium text-white text-center cursor-pointer"
-                  style={{
-                    background: '#7c3aed',
-                    boxShadow: '0 2px 8px rgba(124,58,237,0.3)'
-                  }}
-                >
-                  Update
-                </div>
-              </div>
+              <img
+                src={`${import.meta.env.BASE_URL}images/update-library.png`}
+                alt="Update Library"
+                className="w-full"
+              />
             </div>
           </div>
         </div>
@@ -3730,7 +3946,7 @@ function TokenBasicsSlide() {
   return (
     <div className="space-y-10">
       <Msg>トークンは、値に名前をつけることではなく、<strong>判断を再利用できる形にする</strong>こと</Msg>
-      <Points items={["Primitive / Semantic / Component の3階層で設計する","トークン = 概念。バリアブル = Figma上での実装手段"]} />
+      <Points items={["Primitive / Semantic / Component の3階層で設計する","トークン = 概念。Variables = Figma上での実装手段"]} />
       <Vis>
         <Label>トークン階層のツリー</Label>
         <div className="space-y-3">
@@ -3756,7 +3972,7 @@ function TokenBasicsSlide() {
           ))}
         </div>
       </Vis>
-      <Tip>Figmaのバリアブルは、トークンの「実装手段」。概念を先に整理してからFigmaに落とす</Tip>
+      <Tip>FigmaのVariablesは、トークンの「実装手段」。概念を先に整理してからFigmaに落とす</Tip>
     </div>
   );
 }
@@ -3773,10 +3989,10 @@ function TokenSemanticSlide() {
         <div className="space-y-5">
           {[
             { title: "✍️ Text", items: [
-              { name: "default", hex: "#F9FAFB" },{ name: "subtle", hex: "#9CA3AF" },{ name: "disabled", hex: "#4B5563" },{ name: "inverse", hex: "#111827" },{ name: "link", hex: "#3B82F6" },{ name: "error", hex: "#EF4444" },
+              { name: "default", hex: "#F9FAFB" },{ name: "secondary", hex: "#9CA3AF" },{ name: "disabled", hex: "#4B5563" },{ name: "inverse", hex: "#111827" },{ name: "link", hex: "#3B82F6" },{ name: "error", hex: "#EF4444" },
             ]},
             { title: "🖼 Background", items: [
-              { name: "canvas", hex: "#0C0C18" },{ name: "surface", hex: "#16132A" },{ name: "elevated", hex: "#1E1B2E" },{ name: "primary", hex: "#7C3AED" },{ name: "error", hex: "#450A0A" },{ name: "success", hex: "#052E16" },
+              { name: "primary", hex: "#0C0C18" },{ name: "surface", hex: "#16132A" },{ name: "elevated", hex: "#1E1B2E" },{ name: "accent", hex: "#7C3AED" },{ name: "error", hex: "#450A0A" },{ name: "success", hex: "#052E16" },
             ]},
             { title: "🔲 Border", items: [
               { name: "default", hex: "#374151" },{ name: "strong", hex: "#6B7280" },{ name: "focus", hex: "#A855F7" },{ name: "error", hex: "#EF4444" },
@@ -3917,128 +4133,154 @@ function TokenTypoSlide() {
   );
 }
 
-function AlRealExampleSlide() {
+function ResponsiveBasicsSlide() {
   const theme = useTheme();
   const c = tc(theme);
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>実際のカードコンポーネントで<strong>Auto Layoutの威力</strong>を確認する</Msg>
-      <Points items={["画像・タイトル・説明文・ボタンを持つカード","文言変更や画像サイズ変更に自動対応","一度構造を作れば、あとは中身を変えるだけ"]} />
+      <Msg>画面サイズが変わっても<strong>意図した見た目を保つ</strong>仕組みを理解する</Msg>
+      <Points items={["Auto Layoutは要素同士の関係、Constraintsは親に対する配置","画面サイズに応じてレイアウトを調整する考え方を持つ","PC/Tablet/SPで何を変えて、何を保つかを設計する"]} />
 
-      <div className="w-full">
-        <div className="grid grid-cols-2 gap-8">
-          {/* 失敗例 */}
-          <div className="space-y-3">
-            <div className={`text-[13px] text-rose-400 mb-2 font-medium flex items-center gap-2`}>
-              <XCircle className="w-4 h-4" />
-              <span>失敗例：手動配置</span>
-            </div>
+      {/* Constraintsの基本 */}
+      <div className="space-y-4">
+        <div className={`text-[14px] ${c.t2} font-semibold`}>Constraints（制約）の基本</div>
+        <div className={`text-[13px] ${c.t4} leading-relaxed`}>
+          Auto Layoutではない通常のFrameでは、子要素の配置を親フレームに対してどう固定するかを設定できます。
+        </div>
+
+        <div className="grid grid-cols-3 gap-4">
+          {/* Left & Top */}
+          <div
+            className="rounded-xl p-4 space-y-3"
+            style={{
+              background: d ? 'rgba(168,85,247,0.06)' : 'rgba(168,85,247,0.04)',
+              border: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+            }}
+          >
+            <div className="text-[13px] text-purple-400 font-semibold">Left & Top</div>
             <div
-              className="h-[380px] rounded-2xl p-5 relative"
+              className="w-full h-24 rounded relative"
               style={{
-                background: c.sub,
-                border: `1px solid ${c.bd1}`,
-                boxShadow: d ? '0 4px 24px rgba(0,0,0,0.2)' : '0 4px 24px rgba(0,0,0,0.06)'
+                background: d ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)',
+                border: `1px dashed ${c.bd1}`
               }}
             >
-              {/* 画像部分 */}
-              <div className={`absolute top-5 left-5 right-5 h-32 rounded-lg ${c.b2}`} />
-
-              {/* タイトル */}
-              <div className={`absolute top-[156px] left-5 text-[15px] ${c.t2} font-semibold`}>
-                商品名がここに入る
-              </div>
-
-              {/* 説明文 */}
-              <div className={`absolute top-[184px] left-5 right-5 text-[14px] ${c.t4} leading-relaxed`}>
-                この商品の説明文がここに表示されます。
-              </div>
-
-              {/* 価格 */}
-              <div className={`absolute top-[232px] left-5 text-[18px] ${c.t2} font-bold`}>
-                ¥2,980
-              </div>
-
-              {/* ボタン */}
-              <div className={`absolute bottom-5 left-5 right-5 h-10 ${c.b1} rounded-lg flex items-center justify-center text-[13px] ${c.t3} font-medium`}>
-                カートに追加
-              </div>
-
-              {/* 警告マーク */}
-              <div className="absolute top-[210px] right-5">
-                <AlertTriangle className="w-5 h-5 text-rose-400" />
-              </div>
+              <div className="absolute top-2 left-2 w-8 h-8 rounded bg-purple-500/40" />
             </div>
-            <div className={`text-[12px] text-rose-400 text-center`}>
-              文言が増えると重なって崩壊 💥
+            <div className={`text-[11px] ${c.t5}`}>左上に固定</div>
+          </div>
+
+          {/* Center */}
+          <div
+            className="rounded-xl p-4 space-y-3"
+            style={{
+              background: d ? 'rgba(168,85,247,0.06)' : 'rgba(168,85,247,0.04)',
+              border: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+            }}
+          >
+            <div className="text-[13px] text-purple-400 font-semibold">Center</div>
+            <div
+              className="w-full h-24 rounded relative"
+              style={{
+                background: d ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)',
+                border: `1px dashed ${c.bd1}`
+              }}
+            >
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded bg-purple-500/40" />
+            </div>
+            <div className={`text-[11px] ${c.t5}`}>中央に固定</div>
+          </div>
+
+          {/* Scale */}
+          <div
+            className="rounded-xl p-4 space-y-3"
+            style={{
+              background: d ? 'rgba(168,85,247,0.06)' : 'rgba(168,85,247,0.04)',
+              border: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
+            }}
+          >
+            <div className="text-[13px] text-purple-400 font-semibold">Scale</div>
+            <div
+              className="w-full h-24 rounded relative"
+              style={{
+                background: d ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)',
+                border: `1px dashed ${c.bd1}`
+              }}
+            >
+              <div className="absolute inset-2 rounded bg-purple-500/40" />
+            </div>
+            <div className={`text-[11px] ${c.t5}`}>親に合わせて伸縮</div>
+          </div>
+        </div>
+
+        {/* Constraints実例 */}
+        <div className="flex gap-6 mt-6 items-start">
+          {/* 元のコンポーネント */}
+          <div className="space-y-3 flex-shrink-0">
+            <div className={`text-[13px] ${c.t2} font-semibold`}>元のコンポーネント</div>
+            <div className="rounded-xl overflow-hidden">
+              <img
+                src={`${import.meta.env.BASE_URL}images/constraints-component.svg`}
+                alt="Constraints元のコンポーネント"
+                style={{ width: 'auto', height: 'auto' }}
+              />
             </div>
           </div>
 
-          {/* 成功例 */}
-          <div className="space-y-3">
-            <div className="text-[13px] text-purple-400 mb-2 font-medium flex items-center gap-2">
-              <CheckCircle className="w-4 h-4" />
-              <span>成功例：Auto Layout</span>
+          {/* NG例 */}
+          <div className="space-y-3 flex-1">
+            <div className="flex items-center gap-2 text-[13px] text-rose-400 font-medium">
+              <XCircle className="w-4 h-4" />
+              <span>NG例：Constraintsなし</span>
             </div>
             <div
-              className="h-[380px] rounded-2xl p-5 flex flex-col gap-3"
+              className="rounded-xl overflow-hidden"
               style={{
-                background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
-                border: `2px solid ${d ? 'rgba(168,85,247,0.25)' : 'rgba(168,85,247,0.2)'}`,
-                boxShadow: d
-                  ? '0 8px 32px rgba(168,85,247,0.2), 0 0 0 1px rgba(168,85,247,0.1) inset'
-                  : '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(255,255,255,0.6) inset'
+                border: `2px solid ${d ? 'rgba(244,63,94,0.2)' : 'rgba(244,63,94,0.15)'}`,
               }}
             >
-              {/* 画像部分 */}
-              <div
-                className="w-full h-32 rounded-lg shrink-0"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(168,85,247,0.3), rgba(168,85,247,0.1))',
-                  border: `1px solid ${d ? 'rgba(168,85,247,0.3)' : 'rgba(168,85,247,0.2)'}`
-                }}
+              <img
+                src={`${import.meta.env.BASE_URL}images/constraints-ng.svg`}
+                alt="ConstraintsNG例"
+                className="w-full"
               />
-
-              {/* コンテンツ */}
-              <div className="flex-1 flex flex-col gap-2">
-                <div className={`text-[15px] ${d ? 'text-purple-200' : 'text-purple-700'} font-semibold`}>
-                  商品名がここに入る
-                </div>
-                <div className={`text-[12px] ${d ? c.t4 : 'text-purple-600'} leading-relaxed flex-1`}>
-                  この商品の説明文がここに表示されます。文量が増えても自動的にレイアウトが調整されます。
-                </div>
-                <div className={`text-[18px] ${d ? 'text-purple-200' : 'text-purple-700'} font-bold`}>
-                  ¥2,980
-                </div>
-              </div>
-
-              {/* ボタン */}
-              <div
-                className="w-full h-10 rounded-lg flex items-center justify-center text-[13px] text-white font-medium shrink-0"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(168,85,247,0.6), rgba(168,85,247,0.5))',
-                  boxShadow: '0 4px 12px rgba(168,85,247,0.3)'
-                }}
-              >
-                カートに追加
-              </div>
-
-              {/* スペーシング表示 */}
-              <div className="absolute left-1 top-5 bottom-5 flex flex-col justify-around items-start">
-                <div className="text-[8px] text-purple-400/50 font-mono">12</div>
-                <div className="text-[8px] text-purple-400/50 font-mono">8</div>
-                <div className="text-[8px] text-purple-400/50 font-mono">12</div>
-              </div>
             </div>
-            <div className="text-[12px] text-purple-400 text-center font-medium">
-              文言が変わっても構造を維持 ✨
+          </div>
+
+          {/* OK例 */}
+          <div className="space-y-3 flex-1">
+            <div className="flex items-center gap-2 text-[13px] text-emerald-400 font-medium">
+              <CheckCircle className="w-4 h-4" />
+              <span>OK例：Constraintsあり</span>
+            </div>
+            <div
+              className="rounded-xl overflow-hidden"
+              style={{
+                border: `2px solid ${d ? 'rgba(16,185,129,0.2)' : 'rgba(16,185,129,0.15)'}`,
+              }}
+            >
+              <img
+                src={`${import.meta.env.BASE_URL}images/constraints-ok.svg`}
+                alt="ConstraintsOK例"
+                className="w-full"
+              />
             </div>
           </div>
         </div>
       </div>
 
-      <Tip>カードのような複合コンポーネントこそ、Auto Layoutの真価が発揮される</Tip>
+      {/* Auto Layout × Constraints */}
+      <div className="rounded-xl p-5" style={{ background: c.glass, border: c.glassBd }}>
+        <div className={`text-[13px] ${c.t2} font-semibold mb-3`}>使い分けのポイント</div>
+        <div className={`text-[13px] ${c.t4} space-y-2`}>
+          <div>• <strong>Auto Layout:</strong> リスト・ボタン・カードなど、要素同士の関係を管理</div>
+          <div>• <strong>Constraints:</strong> ヘッダー・背景・装飾など、親フレームに対する配置を管理</div>
+          <div>• <strong>組み合わせ:</strong> 両方を適切に使うことで、柔軟で壊れにくいデザインになる</div>
+        </div>
+      </div>
+
+      <Tip>画面サイズが変わったとき、何が伸びて、何が固定されるべきかを考える</Tip>
     </div>
   );
 }
@@ -4050,7 +4292,7 @@ function CompRealExampleSlide() {
   return (
     <div className="space-y-10">
       <Msg>実際のボタンシステムで<strong>コンポーネント設計</strong>を理解する</Msg>
-      <Points items={["Primary / Secondary / Danger の3つの階層","Default / Hover / Disabled の3つの状態","size（Small / Medium / Large）をバリアントで管理"]} />
+      <Points items={["Primary / Secondary / Danger の3つの階層","Default / Hover / Disabled の3つの状態","size（Small / Medium / Large）をVariantsで管理"]} />
 
       <div
         className="w-full rounded-2xl p-8"
@@ -4178,7 +4420,7 @@ function CompRealExampleSlide() {
           <div className={`text-[14px] ${c.t4} space-y-2`}>
             <div>• 階層（Primary/Secondary/Tertiary）で役割を明確に</div>
             <div>• 全ての状態（Hover/Active/Disabled）を設計する</div>
-            <div>• バリアントで統一的にサイズ管理する</div>
+            <div>• Variantsで統一的にサイズ管理する</div>
           </div>
         </div>
       </div>
@@ -4197,6 +4439,33 @@ function CompRealExampleSlide() {
             alt="LYでのDesign Systemの一例"
           />
         </div>
+
+        {/* Figmaリンク */}
+        <div className="mt-4">
+          <a
+            href="https://www.figma.com/design/bNkniCx4HN8WFfBudDeMcf/Agent-i-Design-System?node-id=22454-41805&t=vPv4Y7woITFJhde9-4"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-[13px] font-medium transition-all"
+            style={{
+              background: d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)',
+              border: `1px solid ${d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.15)'}`,
+              color: d ? '#93c5fd' : '#2563eb',
+              textDecoration: 'none'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = d ? 'rgba(59,130,246,0.15)' : 'rgba(59,130,246,0.1)';
+              e.currentTarget.style.borderColor = d ? 'rgba(59,130,246,0.35)' : 'rgba(59,130,246,0.25)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)';
+              e.currentTarget.style.borderColor = d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.15)';
+            }}
+          >
+            <Link2 className="w-3.5 h-3.5" />
+            実際のFigmaコンポーネント
+          </a>
+        </div>
       </div>
 
       <Tip>ボタンは「色」ではなく「階層」と「状態」で設計する</Tip>
@@ -4210,82 +4479,59 @@ function VarRealExampleSlide() {
   const d = theme === "dark";
   return (
     <div className="space-y-10">
-      <Msg>実際のカラーシステムで<strong>バリアブルの価値</strong>を体感する</Msg>
+      <Msg>実際のカラーシステムで<strong>Variablesの価値</strong>を体感する</Msg>
       <Points items={["Primitive（生の値）→ Semantic（意味のある名前）の2層構造","Primary / Success / Warning / Error の4つのセマンティックカラー","Light / Dark モードに対応"]} />
 
-      <div
-        className="w-full rounded-2xl p-8 space-y-6"
-        style={{
-          background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
-          border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
-          boxShadow: d
-            ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
-            : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
-        }}
-      >
-        {/* Primitive tokens */}
-        <div>
-          <div className="text-[12px] text-purple-400 uppercase tracking-wider font-medium mb-3">Primitive Tokens（基礎値）</div>
-          <div className="grid grid-cols-5 gap-3">
-            {[
-              { name: 'purple-500', hex: '#a855f7', bg: '#a855f7' },
-              { name: 'green-500', hex: '#22c55e', bg: '#22c55e' },
-              { name: 'amber-500', hex: '#f59e0b', bg: '#f59e0b' },
-              { name: 'red-500', hex: '#ef4444', bg: '#ef4444' },
-              { name: 'gray-500', hex: '#6b7280', bg: '#6b7280' },
-            ].map((token) => (
-              <div key={token.name} className="space-y-2">
-                <div
-                  className="w-full h-16 rounded-lg"
-                  style={{
-                    background: token.bg,
-                    boxShadow: `0 4px 12px ${token.bg}40`
-                  }}
-                />
-                <div className={`text-[12px] ${c.t5} font-mono text-center`}>{token.name}</div>
-              </div>
-            ))}
+      <div className="space-y-4">
+        <div className="w-full rounded-2xl overflow-hidden relative">
+          <div className="relative" style={{ height: '550px', overflow: 'hidden' }}>
+            <img
+              src={`${import.meta.env.BASE_URL}images/color-system-example.png`}
+              alt="カラーシステムの例"
+              className="w-full"
+            />
+            {/* グラデーションオーバーレイ */}
+            <div
+              className="absolute bottom-0 left-0 right-0 h-32"
+              style={{
+                background: d
+                  ? 'linear-gradient(to bottom, transparent, #262335 90%)'
+                  : 'linear-gradient(to bottom, transparent, #FDFDFD 90%)'
+              }}
+            />
+          </div>
+          {/* 省略表現 */}
+          <div className="text-center py-2">
+            <div className={`text-[14px] ${c.t4} font-medium`}>...</div>
+            <div className={`text-[12px] ${c.t5} mt-1`}>続きはFigmaで確認できます</div>
           </div>
         </div>
 
-        {/* Arrow */}
+        {/* Figmaリンク */}
         <div className="flex justify-center">
-          <ArrowDown className="w-6 h-6 text-purple-400" />
-        </div>
-
-        {/* Semantic tokens */}
-        <div>
-          <div className="text-[12px] text-purple-400 uppercase tracking-wider font-medium mb-3">Semantic Tokens（意味のある名前）</div>
-          <div className="grid grid-cols-4 gap-4">
-            {[
-              { name: 'Primary', desc: 'ブランドカラー', primitive: 'purple-500', bg: '#a855f7', text: 'white' },
-              { name: 'Success', desc: '成功・完了', primitive: 'green-500', bg: '#22c55e', text: 'white' },
-              { name: 'Warning', desc: '注意・警告', primitive: 'amber-500', bg: '#f59e0b', text: 'white' },
-              { name: 'Error', desc: 'エラー・危険', primitive: 'red-500', bg: '#ef4444', text: 'white' },
-            ].map((token) => (
-              <div
-                key={token.name}
-                className="rounded-xl p-4"
-                style={{
-                  background: d ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.5)',
-                  border: `1px solid ${d ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)'}`
-                }}
-              >
-                <div
-                  className="w-full h-20 rounded-lg flex items-center justify-center text-[14px] font-semibold mb-3"
-                  style={{
-                    background: token.bg,
-                    color: token.text,
-                    boxShadow: `0 4px 12px ${token.bg}40`
-                  }}
-                >
-                  {token.name}
-                </div>
-                <div className={`text-[12px] ${c.t4} text-center mb-1`}>{token.desc}</div>
-                <div className={`text-[9px] ${c.t5} text-center font-mono`}>= {token.primitive}</div>
-              </div>
-            ))}
-          </div>
+          <a
+            href="https://www.figma.com/design/bNkniCx4HN8WFfBudDeMcf/Agent-i-Design-System?node-id=20604-11435&t=vPv4Y7woITFJhde9-4"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-[13px] font-medium transition-all"
+            style={{
+              background: d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)',
+              border: `1px solid ${d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.15)'}`,
+              color: d ? '#93c5fd' : '#2563eb',
+              textDecoration: 'none'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = d ? 'rgba(59,130,246,0.15)' : 'rgba(59,130,246,0.1)';
+              e.currentTarget.style.borderColor = d ? 'rgba(59,130,246,0.35)' : 'rgba(59,130,246,0.25)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)';
+              e.currentTarget.style.borderColor = d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.15)';
+            }}
+          >
+            <Link2 className="w-3.5 h-3.5" />
+            実際のFigmaコンポーネント
+          </a>
         </div>
       </div>
 
@@ -4411,11 +4657,30 @@ function SummarySlide() {
           ))}
         </div>
       </Vis>
-      <div className="text-white rounded-2xl px-8 py-6 text-center" style={{ background: "linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)" }}>
-        <div className="text-[17px] leading-relaxed max-w-lg mx-auto">
-          「きれいに作れること」より<br />
-          <strong className="text-[19px]">「変更・共有・運用に耐えられること」</strong><br />
-          が、実務では強いデザイン
+      {/* カード風 + グラデーション背景 */}
+      <div className="relative rounded-3xl p-1" style={{ background: "linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)" }}>
+        {/* 外側のグロー */}
+        <div className="absolute inset-0 rounded-3xl blur-xl opacity-20" style={{ background: "linear-gradient(135deg, #7c3aed, #c084fc)" }} />
+
+        {/* 内側のカード */}
+        <div
+          className="relative rounded-3xl px-8 py-8 text-center"
+          style={{
+            background: d
+              ? "linear-gradient(135deg, rgba(17,24,39,0.95) 0%, rgba(31,41,55,0.95) 100%)"
+              : "linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(249,250,251,0.98) 100%)",
+            boxShadow: d
+              ? "0 20px 60px rgba(124,58,237,0.3), inset 0 1px 0 rgba(255,255,255,0.05)"
+              : "0 20px 60px rgba(124,58,237,0.15), inset 0 1px 0 rgba(255,255,255,0.8)"
+          }}
+        >
+          <div className={`text-[17px] leading-relaxed max-w-lg mx-auto ${d ? 'text-gray-100' : 'text-gray-900'}`}>
+            「きれいに作れること」より<br />
+            <strong className={`text-[19px] ${d ? 'text-purple-300' : 'text-purple-700'}`}>
+              「変更・共有・運用に耐えられること」
+            </strong><br />
+            が、実務では強いデザイン
+          </div>
         </div>
       </div>
     </div>
@@ -4435,11 +4700,15 @@ function PracticeIntroSlide() {
 
   return (
     <div className="space-y-8">
-      <div className="text-center space-y-3">
-        <div className="text-[13px] text-purple-400 tracking-widest uppercase">Figma研修 基本課題</div>
-        <h2 className={`text-[28px] ${c.t1} leading-tight`} style={{ fontWeight: 800 }}>
-          モバイルオーダーUI<br />コンポーネント作成
-        </h2>
+      <div className="space-y-3">
+        <div className="flex items-center gap-4">
+          <div className="flex-shrink-0">
+            <Smartphone className="w-10 h-10 text-purple-400" />
+          </div>
+          <h2 className={`text-[28px] ${c.t1} leading-tight`} style={{ fontWeight: 800 }}>
+            モバイルオーダーUI<br />コンポーネント作成
+          </h2>
+        </div>
         <p className={`text-[13px] ${c.t4}`}>Auto Layout / Component / Instance / State を手を動かして理解する</p>
       </div>
 
@@ -4646,7 +4915,7 @@ function PracticeOverviewSlide() {
           </div>
         </div>
         <div className={`text-[14px] ${c.t3} leading-relaxed mt-6 mb-4`}>
-          コンテンツ間のマージンや角丸もバリアブルを使ってみましょう！
+          コンテンツ間のマージンや角丸もVariablesを使ってみましょう！
         </div>
         <div className="space-y-6">
           <div>
@@ -4733,7 +5002,7 @@ function PracticeRequiredScreensSlide() {
               <div className={`text-[14px] ${c.t1} font-semibold`}>作る想定のUIエレメント</div>
             </div>
             <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
-              <Point>カテゴリタブ</Point>
+              <Point>商品カテゴリの切り替えタブ</Point>
               <Point>商品カード</Point>
               <Point>価格表示</Point>
               <Point>状態ラベル / バッジ</Point>
@@ -4995,6 +5264,168 @@ function PracticeSummarySlide() {
   );
 }
 
+// 7. 実践課題：既存UIを新デザインシステムへ移行
+function PracticeMigrationSlide() {
+  const theme = useTheme();
+  const c = tc(theme);
+  const d = theme === "dark";
+
+  return (
+    <div className="space-y-8">
+      {/* タイトル */}
+      <div className="space-y-2">
+        <h2 className={`text-[24px] ${c.t1} font-bold`}>実践課題：既存UIを新デザインシステムへ移行する</h2>
+        <p className={`text-[15px] text-purple-400 font-medium`}>見た目を似せるのではなく、ルールに基づいて再設計する</p>
+      </div>
+
+      {/* 課題説明 */}
+      <div className={`text-[14px] ${c.t2} leading-relaxed`}>
+        実務では、既存の画面を新しいデザインシステムに載せ替える場面がよくあります。<br />
+        この課題では、旧デザインの画面を、コンポーネント・セマンティックカラー・タイポグラフィ・余白ルールなど、新デザインシステムを活用して再設計します。<br />
+        単なる見た目の模倣ではなく、「どこをどう整理すべきか」を考えながら取り組んでください。
+      </div>
+
+      {/* Figmaリンク */}
+      <a
+        href="https://www.figma.com/design/Lzxkw6F9BxPWo8DoTEU5Ul/%E6%96%B0%E5%8D%92%E3%83%87%E3%82%B6%E3%82%A4%E3%83%8A%E3%83%BC%E7%A0%94%E4%BF%AE_Day1-5-1-?node-id=4057-13206&t=anEt3oDM4VKXbPJh-4"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-[13px] font-medium transition-all"
+        style={{
+          background: d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)',
+          border: `1px solid ${d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.15)'}`,
+          color: d ? '#93c5fd' : '#2563eb',
+          textDecoration: 'none'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.background = d ? 'rgba(59,130,246,0.15)' : 'rgba(59,130,246,0.1)';
+          e.currentTarget.style.borderColor = d ? 'rgba(59,130,246,0.35)' : 'rgba(59,130,246,0.25)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.background = d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)';
+          e.currentTarget.style.borderColor = d ? 'rgba(59,130,246,0.25)' : 'rgba(59,130,246,0.15)';
+        }}
+      >
+        <Link2 className="w-4 h-4" />
+        Figmaで課題を開く
+      </a>
+
+      {/* Agent i Design System 追加の案内 */}
+      <div
+        className="rounded-xl p-4"
+        style={{
+          background: d ? 'rgba(168,85,247,0.08)' : 'rgba(168,85,247,0.06)',
+          border: `1px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`
+        }}
+      >
+        <div className="flex items-center gap-2 mb-2">
+          <Palette className="w-4 h-4 text-purple-400" />
+          <div className={`text-[13px] ${c.t1} font-semibold`}>Agent i Design Systemを使用します</div>
+        </div>
+        <div className={`text-[13px] ${c.t3} leading-relaxed`}>
+          この課題では、Agent i Design SystemのAssetを使用します。<br />
+          追加方法は <strong className="text-purple-400">P32（課題概要）</strong> を参照してください。
+        </div>
+      </div>
+
+      {/* Before / After */}
+      <div className="grid grid-cols-2 gap-6 max-w-3xl mx-auto">
+        <div className="space-y-3">
+          <div className={`text-[13px] ${c.t3} font-semibold`}>移行前（既存デザイン）</div>
+          <div
+            className="rounded-xl overflow-hidden relative"
+            style={{
+              height: '700px'
+            }}
+          >
+            <img
+              src={`${import.meta.env.BASE_URL}images/migration-before.png`}
+              alt="移行前のUI"
+              className="w-full"
+            />
+            {/* グラデーションオーバーレイ */}
+            <div
+              className="absolute bottom-0 left-0 right-0 h-20"
+              style={{
+                background: d
+                  ? 'linear-gradient(to bottom, transparent, #262335 90%)'
+                  : 'linear-gradient(to bottom, transparent, #FDFDFD 90%)'
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <div className={`text-[13px] text-purple-400 font-semibold`}>移行後（新デザインシステム適用）</div>
+          <div
+            className="rounded-xl overflow-hidden relative"
+            style={{
+              height: '700px'
+            }}
+          >
+            <img
+              src={`${import.meta.env.BASE_URL}images/migration-after.svg`}
+              alt="移行後のUI"
+              className="w-full"
+            />
+            {/* グラデーションオーバーレイ */}
+            <div
+              className="absolute bottom-0 left-0 right-0 h-20"
+              style={{
+                background: d
+                  ? 'linear-gradient(to bottom, transparent, #262335 90%)'
+                  : 'linear-gradient(to bottom, transparent, #FDFDFD 90%)'
+              }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* 意識してほしいこと & チェックポイント */}
+      <div className="grid grid-cols-2 gap-6">
+        <Vis className="space-y-3">
+          <div className="flex items-center gap-2">
+            <Target className="w-4 h-4 text-purple-400" />
+            <div className={`text-[14px] ${c.t1} font-semibold`}>この課題で意識してほしいこと</div>
+          </div>
+          <ul className="space-y-1.5">
+            <Point>既存コンポーネントを活用し、新規作成は最小限に</Point>
+            <Point>セマンティックカラーを使って色の意味を整理</Point>
+            <Point>タイポグラフィで情報の優先順位を表現</Point>
+            <Point>余白ルールを守り、視覚的なリズムを作る</Point>
+          </ul>
+        </Vis>
+
+        <Vis className="space-y-3">
+          <div className="flex items-center gap-2">
+            <CheckCircle className="w-4 h-4 text-purple-400" />
+            <div className={`text-[14px] ${c.t1} font-semibold`}>チェックポイント</div>
+          </div>
+          <ul className="space-y-1.5">
+            <Point>既存コンポーネントを適切に選択・活用できているか</Point>
+            <Point>セマンティックカラーで色の意味を整理できているか</Point>
+            <Point>タイポグラフィで情報の優先順位を表現できているか</Point>
+          </ul>
+        </Vis>
+      </div>
+
+      {/* 補足 */}
+      <div
+        className="rounded-xl p-4"
+        style={{
+          background: d ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)',
+          border: `1px solid ${d ? 'rgba(59,130,246,0.2)' : 'rgba(59,130,246,0.15)'}`
+        }}
+      >
+        <div className={`text-[13px] ${c.t2} leading-relaxed`}>
+          📌 この課題では、見た目の完全再現ではなく、<strong>実務的な判断を学ぶこと</strong>が目的です。<br />
+          既存コンポーネントを活用できる部分は使い、不足している部分は移行前の意図を汲み取りながら、新デザインシステムのルールに沿って再設計してください🏃🏻‍♀️
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ═══ Slides ═══ */
 export const slides: Slide[] = [
   {
@@ -5007,7 +5438,7 @@ export const slides: Slide[] = [
 新卒のうちは、どうしても"きれいに作ること"とか、"指示通りに作ること"に意識が向きやすいと思います。もちろんそれも大事です。
 でも実務では、それだけだと足りません。なぜかというと、デザインは作って終わりではなくて、あとから必ず変更が入るからです。文言が変わったり、要素が増えたり、状態が追加されたり、別画面にも展開されたりします。
 そのときに必要なのが、壊れにくい設計です。
-今日はそのために、レイアウトシステム、コンポーネント、トークンやバリアブルという3つの観点から、Figmaをどう使うと実務に強い設計になるのかを見ていきます。`
+今日はそのために、レイアウトシステム、コンポーネント、トークンやVariablesという3つの観点から、Figmaをどう使うと実務に強い設計になるのかを見ていきます。`
   },
   {
     id: "goal",
@@ -5079,19 +5510,19 @@ export const slides: Slide[] = [
     title: "タイムスケジュール",
     message: "Day1 - 5/1のスケジュール",
     content: <ScheduleSlide />,
-  },
-  {
-    id: "al-basics",
-    section: "auto-layout",
-    title: "Auto Layoutの基本",
-    message: "Auto Layoutは整列機能ではなく、要素同士の関係をルールにする機能",
-    content: <AlBasicsSlide />,
-    speakerNotes: `ここからレイアウトの話に入ります。
-レイアウトって、見た目を整えるためのものだと思われやすいんですけど、実務での本質はそこだけじゃありません。
-レイアウトは、要素と要素の関係を定義するためのものです。
-この要素は縦に並ぶのか、横に並ぶのか。間隔はいくつか。親に対してどう広がるのか。テキストが増えたらどこが伸びるのか。
-こういう関係性を、感覚で置くのではなく、ルールとして持つのがレイアウト設計です。
-なので、レイアウトをちゃんと組むというのは、きれいに整列することではなくて、"変化に耐える関係性を作ること"だと思ってください。`
+    speakerNotes: `今日のスケジュールを確認しましょう。
+
+まず11時から12時までがFigma講習です。今から1時間、基本的な機能と考え方を学んでいきます。
+
+12時から13時は昼休憩です。
+
+13時から13時15分まで、課題の説明をします。
+
+そして13時15分から16時45分まで、約3時間半かけて課題制作に取り組んでもらいます。この時間が今日のメインです。
+
+最後に16時45分から17時まで、みんなの成果物を見ながら講評を行います。
+
+では早速、Figmaの話に入っていきましょう。`
   },
   {
     id: "al-apply",
@@ -5100,13 +5531,33 @@ export const slides: Slide[] = [
     starred: true,
     message: "Auto Layoutは構造を持った配置ルールで柔軟なデザインを実現",
     content: <AlApplySlide />,
-    speakerNotes: `そのレイアウト設計で、すごく重要なのがオートレイアウトです。
-オートレイアウトは、よく"便利な整列機能"みたいに覚えられがちなんですけど、実際にはもっと重要な役割があります。
-それは、要素同士の関係を定義することです。
-手で並べると、その瞬間は整って見えます。でも文言が変わったり要素が増えたりすると、すぐ崩れます。
-一方でオートレイアウトを使うと、縦並び・横並び・間隔・内側余白などが構造として持てるので、変更が入っても整いやすいです。
-つまり、手で整えるのは"今だけ整える"で、オートレイアウトで組むのは"変わっても整うようにする"です。
-この違いがすごく大きいです。`
+    speakerNotes: `最初のテーマは、Auto Layoutです。
+
+Auto Layoutは、Figmaの中でも特に重要な機能なんですが、よく誤解されやすい機能でもあります。
+
+多くの人は、Auto Layoutを「要素をきれいに整列させる機能」だと思っています。確かにそういう側面もあるんですが、実はそれだけじゃありません。
+
+Auto Layoutの本質は、要素同士の関係をルールとして定義する機能です。横に並べるのか、縦に並べるのか。間隔はどれくらいか。親要素に対してどう広がるのか。こういったルールを決めることで、内容が変わっても壊れないデザインが作れます。
+
+つまり、Auto Layoutは整列ツールではなく、変化に強いレイアウトを作るための設計ツールなんです。
+
+では、スライドを見ていきましょう。
+
+まず、どこに適用すべきかです。左側に「適用すべき」場面を示しています。ボタン、リスト1行、カード全体など、構造的な単位には積極的に使いましょう。
+
+一方で右側、「無理に使わなくてよい」場面もあります。装飾的なビジュアルや重なり合う要素には、無理に使う必要はありません。
+
+そして重要なのが、Group、Frame、Auto Layoutの使い分けです。Groupはまとめて移動するだけで構造はありません。Frameは領域とクリッピングのための箱です。Auto Layoutは並び・余白・伸縮ルールを持った構造があります。
+
+次に、手動整列とAuto Layoutの違いを見てみましょう。
+
+左側は手動整列です。要素の間に「関係」がありません。文言が変わると、手動で再調整が必要になります。
+
+右側はAuto Layoutです。余白と順序がルールになっているので、文言が変わっても自動で調整されます。
+
+そして最後に、具体例としてボタンを見てください。「保存」から「下書きを保存」にテキストが変わったとき、Auto Layoutを使っていればボタンの幅が自動で広がります。
+
+このように、Auto Layoutは今きれいに見えることだけでなく、変更に強い構造を作るための機能なんです。全部にかけるのではなく、意味のある単位で判断することが大切です。`
   },
   {
     id: "al-figma-ui",
@@ -5115,28 +5566,83 @@ export const slides: Slide[] = [
     starred: true,
     message: "方向・間隔・パディングの適切な設定で柔軟なレイアウトを実現",
     content: <AlFigmaUISlide />,
-    speakerNotes: `次に、余白の話をします。
+    speakerNotes: `次に、Auto Layoutの設定について具体的に見ていきます。
+
+Auto Layoutを適切に設定することで、横幅を変えてもレイアウトが崩れないカードや、コンテンツが増減しても壊れないリストなど、柔軟なデザインを作ることができます。
+
+まず画面を見てください。これは実際にAuto Layoutを使ったカードの例です。横幅を変えても、要素が適切に配置され続けているのがわかります。
+
+では、Figmaでどう設定するのか。右側に設定パネルを表示しています。
+
+主な設定項目は4つです。
+
+1つ目が「Direction」、縦向きか横向きかの設定です。要素を縦に並べるか、横に並べるかを決めます。
+
+2つ目が「Gap」、要素間の余白です。ボタンとボタンの間、カードとカードの間、こういった要素同士の間隔をここで統一します。
+
+3つ目が「Padding」、外枠との余白です。カードの中身が端にくっついているのか、少し離れているのか、この内側の余白を設定します。
+
+4つ目が「Alignment」と「Resizing」です。Alignmentは配置、左寄せ・中央・右寄せなど。Resizingは伸縮、内容に合わせて縮むのか、親要素に合わせて広がるのかを決めます。
+
 新卒のうちは、余白を"なんとなくいい感じ"で置いてしまうことが多いです。もちろん最初はそれでも作れます。
+
 でも実務で困るのは、画面ごとに余白の判断がズレていくことです。ある画面では16、別の画面では20、そのまた別では24、みたいなことが起こります。
+
 余白は、見た目の印象に関わるだけでなく、情報のまとまりや優先度にも関わります。
-なので、余白は感覚ではなくルールで持つことが大事です。
-内側の余白なのか、要素同士の間隔なのか、セクション間の余白なのか。この役割を分けて考えられるようになると、画面の設計がかなり安定します。`
+
+なので、余白は感覚ではなくルールで持つことが大事です。内側の余白なのか、要素同士の間隔なのか、セクション間の余白なのか。この役割を分けて考えられるようになると、画面の設計がかなり安定します。
+
+Figmaの設定パネルは、まさにこの「何を」「どう」設定するかを視覚的に表現しています。操作に慣れることも大事ですが、それ以上に、この設定が何を意味しているのかを理解することが重要です。`
   },
-  { id: "al-direction", section: "auto-layout", title: "Auto Layoutの適用", message: "コンテンツの変更や追加に応じて、レイアウトが自動で調整される", content: <AlDirectionSlide /> },
+  {
+    id: "al-direction",
+    section: "auto-layout",
+    title: "Auto Layoutの適用",
+    message: "コンテンツの変更や追加に応じて、レイアウトが自動で調整される",
+    content: <AlDirectionSlide />,
+    speakerNotes: `ここでは、Auto Layoutの細かい設定について触れておきます。ただ、これは実際に触りながら覚えていく部分なので、今日は「こういう設定があるんだな」くらいで大丈夫です。
+
+Auto Layoutには、方向の設定だけでなく、アライメント、つまり配置の設定もあります。
+
+たとえば、縦並びのレイアウトなら左寄せ・中央・右寄せ、横並びなら上・中央・下といった配置ができます。
+
+画面にFigma公式の画像を載せているので、気になる人は後で見ておいてください。
+
+重要なのは、Auto Layoutを使えば、要素が増えても減っても、設定した配置ルールが保たれるということです。
+
+細かい使い方は実際に手を動かしながら覚えていけばいいので、今は「配置の設定もできるんだな」という理解で十分です。`
+  },
   {
     id: "al-text",
     section: "auto-layout",
     title: "テキストの取り扱い",
-    starred: true,
     message: "テキストはもっとも変化しやすい要素なので、見た目より先に振る舞いを決める",
     content: <AlTextSlide />,
-    speakerNotes: `実務で本当に壊れやすいのが、テキストまわりです。
+    speakerNotes: `次に、テキストの取り扱いについて話します。実務で本当に壊れやすいのが、テキストまわりです。
+
 デザイン中は短い仮文が入っていることが多いので、その状態ではきれいに見えます。
-でも実際には、文言が長くなったり、補足が入ったり、エラーが表示されたり、翻訳で文字量が増えたりします。
-そのときに壊れるUIは、短い文言でしか成立しないUIです。
-なので、テキストは固定のものとして扱うのではなく、変化するものとして扱う必要があります。
-"この文章が2倍になっても大丈夫かな""1行じゃなくて2行になっても崩れないかな"という視点を持てると、かなり実務向きの設計になります。
-短文でしか成立しないUIは、実務ではかなり危ないです。`
+
+でも実際には、文言が長くなったり、補足が入ったり、エラーが表示されたり、翻訳で文字量が増えたりします。そのときに壊れるUIは、短い文言でしか成立しないUIです。
+
+スライドを見てください。同じカードで短文・長文・省略ありの3パターンを並べています。
+
+短文の場合は問題なく見えます。でも長文になると、カードの高さが伸びたり、レイアウトが崩れたりします。
+
+ここで重要なのが、テキストをどう扱うかを最初に決めておくことです。
+
+伸びてもよいのか、折り返してよいのか、省略してよいのか、他の要素を押し広げてよいのか。こういった振る舞いを先に決めます。
+
+そして、意味が違うテキストは分けることも大切です。
+
+下の例を見てください。左側はタイトルと説明文を1つのテキストレイヤーに詰め込んでいます。これだと個別に制御できません。
+
+右側は意味ごとに分割しています。タイトルと説明文を別のレイヤーにすることで、それぞれの振る舞いを個別に設定できます。
+
+省略も重要な設計です。省略は、見た目を合わせるためではなく、優先順位の設計です。「このテキストは全部見せなくても意味が伝わるか」「省略しても問題ないか」という判断が必要です。
+
+「今の文言で収まっている」だけでは設計ではありません。文言が変わることを想定して、テキストの振る舞いを設計しましょう。
+
+テキストは固定のものとして扱うのではなく、変化するものとして扱う。"この文章が2倍になっても大丈夫かな""1行じゃなくて2行になっても崩れないかな"という視点を持てると、かなり実務向きの設計になります。`
   },
   {
     id: "al-advanced",
@@ -5144,27 +5650,64 @@ export const slides: Slide[] = [
     title: "最小最大幅 / 比率維持 / 絶対位置",
     message: "可変レイアウトの中で、どこまで許容し、何を例外にするかを決める",
     content: <AlAdvancedSlide />,
-    speakerNotes: `ここで、サイズの考え方も整理しておきます。
-Figmaでは Hug、Fill、Fixed という振る舞いがあります。
-大事なのは、どれが正解かではなくて、その要素にどう振る舞ってほしいかです。
+    speakerNotes: `次に、可変レイアウトの応用的な話をします。
+
+Auto Layoutで可変にした後、「どこまで許容するか」「何を例外にするか」を決める必要があります。
+
+スライドを見てください。3つのパターンを示しています。
+
+まず1つ目が、最小幅と最大幅です。
+
+最小幅は、要素が小さくなりすぎて使えなくならないようにする下限です。たとえば、ボタンのテキストが短くても、タップしやすい最小幅を保つために使います。
+
+最大幅は、要素が広がりすぎて読みにくくならないようにする上限です。たとえば、テキストが横幅いっぱいに広がると読みづらいので、最大幅で制限します。
+
+2つ目が、比率維持です。
+
+画像やサムネイルは、縦横比を保つことが重要です。Figmaでは、画像に対してアスペクト比を設定することで、サイズが変わっても比率を維持できます。
+
+正方形の画像、16:9の動画サムネイル、4:3の商品画像など、用途に応じて比率を設定します。
+
+3つ目が、絶対位置です。
+
+Auto Layoutは基本的に順番に並べる機能ですが、絶対位置を使うとその流れから外れて自由に配置できます。
+
+これはレイアウトの例外処理として使います。たとえば、カードの右上にバッジを配置したり、モーダルの右上に閉じるボタンを配置したりする場合に有効です。
+
+ただし、多用すると逆に壊れやすくなります。本文や主要なボタンには使わず、あくまで補助的な要素に限定して使うべきです。
+
+Figmaでは Hug、Fill、Fixed という振る舞いがあります。大事なのは、どれが正解かではなくて、その要素にどう振る舞ってほしいかです。
+
 中身に合わせて伸びてほしいなら Hug。親の幅に合わせて広がってほしいなら Fill。サイズを固定して保ちたいなら Fixed。
-たとえば、ボタンのラベルが変わる可能性が高いなら、ボタン自体は Hug のほうが自然なことが多いです。
-逆に、一覧の中で横幅いっぱい使ってほしいカードなら Fill のほうが合うかもしれません。
+
 この"機能名"ではなく、"どんな振る舞いを期待するか"で考える癖がつくと、レイアウト設計がかなり強くなります。`
   },
   {
-    id: "al-real-example",
-    section: "auto-layout",
-    title: "実例：商品カード",
+    id: "responsive-basics",
+    section: "responsive",
+    title: "レスポンシブ対応の基本",
     starred: true,
-    message: "実際のカードコンポーネントでAuto Layoutの威力を体感する",
-    content: <AlRealExampleSlide />,
-    speakerNotes: `ここまでのレイアウトの話が、実務で何に効くかもはっきりさせます。
-レイアウトシステムがちゃんとしていると、差し替えに強くなります。量産しやすくなります。レビューでも"見た目の感想"ではなく、"構造として妥当か"の話がしやすくなります。
-さらに、実装との会話もしやすくなります。
-なぜなら、要素の関係が整理されているので、エンジニアにも意図が伝わりやすいからです。
-つまりレイアウト設計は、きれいに見せるためだけではなくて、修正コストとコミュニケーションコストを下げるためにも重要です。
-ここまでが、壊れにくい設計の土台になる部分です。`
+    message: "画面サイズが変わっても意図した見た目を保つ",
+    content: <ResponsiveBasicsSlide />,
+    speakerNotes: `Auto Layoutで要素同士の関係を作れるようになったら、次は画面サイズへの対応を考えます。
+
+実務では、PCで作ったデザインがタブレットやスマホでどう見えるかを考える必要があります。
+
+ここで重要なのが、Constraints（制約）という考え方です。Auto Layoutが「要素同士の関係」を決めるのに対して、Constraintsは「親フレームに対する配置」を決めます。
+
+たとえば、ヘッダーのロゴは左上に固定したい、背景画像は画面全体に広げたい、モーダルは画面中央に配置したい、といった制御ができます。
+
+そして、画面幅が変わった時に、何を変えて何を保つかを設計します。
+
+スライドの図を見てください。左側がNG例、右側がOK例です。
+
+NG例では、PC用に固定幅で作ったデザインをそのままSPに持ち込んでいます。画面からはみ出したり、横スクロールが発生したり、要素が小さすぎて見づらくなったりしています。これは「PCで作ったものをそのまま縮小しただけ」の状態です。
+
+一方、OK例では、画面サイズに応じてレイアウトが適切に変化しています。横並びだった要素が縦並びになり、余白が調整され、タップしやすいサイズが保たれています。
+
+PCでは横並びのカードが、SPでは縦並びになる。メニューが横一列からハンバーガーメニューになる。こういった変化を、Auto LayoutとConstraintsを組み合わせて実現します。
+
+大事なのは、画面サイズが変わったとき、何が伸びて、何が固定されるべきかを考える視点です。これができると、様々なデバイスで壊れないデザインが作れるようになります。`
   },
   {
     id: "comp-basics",
@@ -5198,21 +5741,21 @@ Figmaでは Hug、Fill、Fixed という振る舞いがあります。
   {
     id: "comp-variants-properties",
     section: "components",
-    title: "バリアントのプロパティと値",
+    title: "Variantsのプロパティと値",
     starred: true,
     message: "プロパティ = 何を切り替えるか、値 = どういう状態があるか",
     content: <CompVariantsPropertiesSlide />,
-    speakerNotes: `次にバリアントです。
-バリアントは、似た部品を整理するための仕組みです。
+    speakerNotes: `次にVariantsです。
+Variantsは、似た部品を整理するための仕組みです。
 たとえばボタンには、通常状態、ホバー状態、無効状態、ローディング状態みたいな違いがありますよね。
 これを全部バラバラのコンポーネントとして持っていると、探しづらいし、増えたときに整理しにくいです。
-なので、"同じ部品の状態違い"としてまとめて管理します。これがバリアントです。
-大事なのは、バリアントを見た目違いの収納箱だと思わないことです。
+なので、"同じ部品の状態違い"としてまとめて管理します。これがVariantsです。
+大事なのは、Variantsを見た目違いの収納箱だと思わないことです。
 本当は、"この部品にはこういう状態がある"という設計を整理するためのものです。
 状態を設計するという視点で使えるようになると、かなり実務っぽい使い方になります。`
   },
-  { id: "comp-variants-create", section: "components", title: "バリアントの作成手順", message: "Figmaでバリアントを作成する実際の手順を理解する", content: <CompVariantsCreateSlide /> },
-  { id: "comp-slot", section: "components", title: "Slot（スロット）", starred: true, message: "Slotでコンポーネント内に他の要素を自由に差し込める", content: <CompSlotSlide /> },
+  { id: "comp-variants-create", section: "components", title: "Variantsの作成手順", message: "FigmaでVariantsを作成する実際の手順を理解する", content: <CompVariantsCreateSlide /> },
+  { id: "comp-slot", section: "components", title: "Slot（新機能）について", message: "Slotでコンポーネント内に他の要素を自由に差し込める", content: <CompSlotSlide /> },
   {
     id: "comp-real-example",
     section: "components",
@@ -5229,19 +5772,20 @@ Figmaでは Hug、Fill、Fixed という振る舞いがあります。
   {
     id: "var-basics",
     section: "variables",
-    title: "バリアブルの基本",
-    message: "スタイルは見た目のまとまり、バリアブルは再利用する値の源泉",
+    title: "Variablesの基本",
+    starred: true,
+    message: "スタイルは見た目のまとまり、Variablesは再利用する値の源泉",
     content: <VarBasicsSlide />,
-    speakerNotes: `Figmaでは、こうしたトークン的な考え方を運用しやすくするために、バリアブルがあります。
-バリアブルを使うと、色や数値を固定値ではなく、切り替え可能なルールとして持つことができます。
+    speakerNotes: `Figmaでは、こうしたトークン的な考え方を運用しやすくするために、Variablesがあります。
+Variablesを使うと、色や数値を固定値ではなく、切り替え可能なルールとして持つことができます。
 たとえば、ライトモードとダークモードで値を切り替えるとか、ブランドごとの差分を管理するとか、余白やサイズのルールをまとめて持つとか、そういうことがしやすくなります。
-つまり、バリアブルは"あとで変わるかもしれない値"を管理しやすくする仕組みです。
+つまり、Variablesは"あとで変わるかもしれない値"を管理しやすくする仕組みです。
 実務では、色や値って思った以上に変わります。
 だからこそ、最初から変化に強い持ち方をしておくことが大事です。`
   },
-  { id: "var-apply", section: "variables", title: "バリアブルの適用", starred: true, message: "バリアブルの価値は、値を持つことではなく、変更の経路を設計すること", content: <VarApplySlide /> },
-  { id: "var-alias", section: "variables", title: "トークンのエイリアス", starred: true, message: "トークンのエイリアスを使うと、デザインシステムを効率よく育てられる", content: <VarAliasSlide /> },
-  { id: "var-real-example", section: "variables", title: "実例：カラーシステム", starred: true, message: "実際のカラーシステムでバリアブルの価値を体感する", content: <VarRealExampleSlide /> },
+  { id: "var-apply", section: "variables", title: "Variablesの適用", starred: true, message: "Variablesの価値は、値を持つことではなく、変更の経路を設計すること", content: <VarApplySlide /> },
+  { id: "var-alias", section: "variables", title: "トークンのエイリアス", message: "トークンのエイリアスを使うと、デザインシステムを効率よく育てられる", content: <VarAliasSlide /> },
+  { id: "var-real-example", section: "variables", title: "実例：カラーシステム", message: "実際のカラーシステムでVariablesの価値を体感する", content: <VarRealExampleSlide /> },
   {
     id: "lib-basics",
     section: "library",
@@ -5252,14 +5796,14 @@ Figmaでは Hug、Fill、Fixed という振る舞いがあります。
 デザインシステムは、コンポーネント集ではありません。
 本当は、どんな構造で作るか、どんな部品をどう使うか、値をどう管理するか、誰が見ても同じ判断ができるか、まで含めた仕組みです。
 コンポーネントだけある状態だと、部品棚はあるけど使い方がそろっていない状態になりやすいです。
-そこにトークンやバリアブル、命名ルールや使い方のルールが加わって、初めてシステムになります。
+そこにトークンやVariables、命名ルールや使い方のルールが加わって、初めてシステムになります。
 なので、デザインシステムは"何が置いてあるか"だけでなく、"どう運用するか"まで含めて考える必要があります。`
   },
   { id: "lib-publish", section: "library", title: "ライブラリの公開・更新", message: "ライブラリ更新は、単なる修正ではなくチームへのリリース", content: <LibPublishSlide /> },
   {
     id: "token-basics",
     section: "tokens",
-    title: "デザイントークンの基本",
+    title: "デザイントークンの整理",
     message: "トークンは、値に名前をつけることではなく、判断を再利用できる形にすること",
     content: <TokenBasicsSlide />,
     speakerNotes: `ここから、値の管理の話に入ります。
@@ -5288,7 +5832,7 @@ Figmaでは Hug、Fill、Fixed という振る舞いがあります。
   { id: "token-hex", section: "tokens", title: "HEXカラーにトークンを適用する", message: "HEXをトークン化する時は、値を置き換えるのではなく、意味を読み替える", content: <TokenHexSlide /> },
   { id: "token-appearance", section: "tokens", title: "Light/Dark mode の切り替え", message: "AppearanceパネルからLight/Dark modeを切り替えられる", content: <TokenAppearanceSlide /> },
   { id: "token-typo", section: "tokens", title: "タイポグラフィについて", message: "タイポグラフィは文字サイズ表ではなく、情報の優先順位と読みやすさの設計", content: <TokenTypoSlide /> },
-  { id: "others-ds", section: "others", title: "その他のデザインシステム要素", message: "デザインシステムは色とコンポーネントだけではない", content: <OthersDsSlide /> },
+  { id: "others-ds", section: "others", title: "その他のデザインシステム要素", message: "色とタイポグラフィだけじゃない。余白・アイコン・角丸も設計対象", content: <OthersDsSlide /> },
   { id: "summary", section: "others", title: "まとめ", message: "Figmaの機能は、見た目を作るためではなく、運用できる構造を作るために使う", content: <SummarySlide /> },
   {
     id: "practice-intro",
@@ -5306,14 +5850,13 @@ Figmaでは Hug、Fill、Fixed という振る舞いがあります。
 この5つを考えるだけでも、設計の質はかなり変わります。
 機能を全部覚えていなくても、この視点があれば、Figmaの使い方がかなり実務寄りになります。`
   },
-  { id: "practice-overview", section: "practice", title: "課題概要", message: "モバイルオーダーUIコンポーネントを題材に、実践的な設計を学ぶ", content: <PracticeOverviewSlide /> },
-  { id: "practice-required-screens", section: "practice", title: "必須画面", starred: true, message: "商品一覧と商品詳細の作成ポイント", content: <PracticeRequiredScreensSlide /> },
+  { id: "practice-overview", section: "practice", title: "課題概要", starred: true, message: "モバイルオーダーUIコンポーネントを題材に、実践的な設計を学ぶ", content: <PracticeOverviewSlide /> },
+  { id: "practice-required-screens", section: "practice", title: "必須画面", message: "商品一覧と商品詳細の作成ポイント", content: <PracticeRequiredScreensSlide /> },
   { id: "practice-additional", section: "practice", title: "追加課題", message: "余力があれば店舗選択・カート・受け取り画面に挑戦", content: <PracticeAdditionalSlide /> },
   {
     id: "practice-summary",
     section: "practice",
     title: "完成イメージ",
-    starred: true,
     message: "今日大事なのは「完成度」より「構造」",
     content: <PracticeSummarySlide />,
     speakerNotes: `今日の内容を通して、一番持って帰ってほしいのは、上手いデザイナーほど"今の見た目"だけではなく、"変更されたあと"を見越して作っている、ということです。
@@ -5321,5 +5864,17 @@ Figmaでは Hug、Fill、Fixed という振る舞いがあります。
 でも実務では、それに加えて、直しやすい、展開しやすい、共有しやすい、壊れにくい、という価値がすごく大きいです。
 ぜひこれからFigmaを使うときは、"うまく描くためのツール"としてだけではなく、"壊れにくく設計するためのツール"として見てみてください。
 今日の講義が、その最初の視点を持つきっかけになったらうれしいです。ありがとうございました。`
+  },
+  {
+    id: "practice-migration",
+    section: "practice",
+    title: "実践課題：デザインシステム移行",
+    message: "見た目を似せるのではなく、ルールに基づいて再設計する",
+    content: <PracticeMigrationSlide />,
+    speakerNotes: `最後に、実務でよくある「既存UIを新デザインシステムに移行する」という課題を用意しました。
+これは単なる見た目の模倣ではなく、デザインシステムのルールを理解して、既存の画面を再設計する練習です。
+実務では、こういった移行作業は頻繁に発生します。その際に大事なのは、ただ似せることではなく、コンポーネント・カラー・タイポグラフィ・余白といったルールを使って、情報を整理し直すことです。
+Before / Afterを比較しながら、「どこをどう整理したか」「なぜそうしたか」を考えながら取り組んでみてください。
+この課題を通して、デザインシステムを実際に使う感覚を掴んでもらえたらと思います。`
   },
 ];

@@ -1,16 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import { slides, sectionList } from "./app/components/slide-data";
-import { ChevronLeft, ChevronRight, Clock, Monitor, Edit3, Star } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, Monitor, Edit3, Star, RefreshCw } from "lucide-react";
 import { ThemeContext } from "./app/components/theme-context";
 
 export default function PresenterView() {
   const [idx, setIdx] = useState(0);
-  const [startTime] = useState(Date.now());
+  const [startTime, setStartTime] = useState(Date.now());
   const [elapsed, setElapsed] = useState(0);
   const [channel] = useState(() => new BroadcastChannel('figma-presenter'));
   const [isMouseDown, setIsMouseDown] = useState(false);
   const [localLaser, setLocalLaser] = useState<{ x: number; y: number } | null>(null);
   const previewRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [editedNotes, setEditedNotes] = useState<Record<string, string>>({});
   const [isEditingNotes, setIsEditingNotes] = useState(false);
 
@@ -45,6 +46,19 @@ export default function PresenterView() {
     }
   };
 
+  // スクロール操作
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (!scrollContainerRef.current) return;
+
+    const container = scrollContainerRef.current;
+    const scrollTop = container.scrollTop + e.deltaY;
+    const scrollHeight = container.scrollHeight - container.clientHeight;
+    const scrollPercentage = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+
+    container.scrollTop = scrollTop;
+    channel.postMessage({ type: 'scroll', percentage: scrollPercentage });
+  };
+
   const total = slides.length;
   const currentSlide = slides[idx];
   const currentSection = sectionList.find((s) => s.id === currentSlide.section);
@@ -54,6 +68,11 @@ export default function PresenterView() {
     const targetIdx = Math.max(0, Math.min(total - 1, newIdx));
     setIdx(targetIdx);
     channel.postMessage({ type: 'navigate', index: targetIdx });
+  };
+
+  // タイマーリセット
+  const resetTimer = () => {
+    setStartTime(Date.now());
   };
 
   // キーボードショートカット
@@ -73,6 +92,24 @@ export default function PresenterView() {
     }, 1000);
     return () => clearInterval(timer);
   }, [startTime]);
+
+  // 本番側からのページ送り受信
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data.type === 'navigate') {
+        setIdx(event.data.index);
+      }
+    };
+    channel.addEventListener('message', handleMessage);
+    return () => channel.removeEventListener('message', handleMessage);
+  }, [channel]);
+
+  // ページが変わったらスクロールを一番上にリセット
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+  }, [idx]);
 
   // 編集した原稿をlocalStorageから復元
   useEffect(() => {
@@ -113,9 +150,18 @@ export default function PresenterView() {
             <h1 className="text-lg font-semibold">発表者ビュー</h1>
           </div>
           <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2 text-sm text-gray-400">
-              <Clock className="w-4 h-4" />
-              <span className="font-mono">{formatTime(elapsed)}</span>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 text-sm text-gray-400">
+                <Clock className="w-4 h-4" />
+                <span className="font-mono">{formatTime(elapsed)}</span>
+              </div>
+              <button
+                onClick={resetTimer}
+                className="px-2 py-1 bg-gray-700 hover:bg-gray-600 rounded text-xs text-gray-300 transition-colors"
+                title="タイマーをリセット"
+              >
+                <RefreshCw className="w-3 h-3" />
+              </button>
             </div>
             <div className="text-sm text-gray-400">
               {idx + 1} / {total}
@@ -185,7 +231,11 @@ export default function PresenterView() {
               >
                 <div className="w-full h-full">
                   <ThemeContext.Provider value="dark">
-                    <div className="w-full h-full bg-[#262335] p-12 overflow-auto">
+                    <div
+                      ref={scrollContainerRef}
+                      className="w-full h-full bg-[#262335] p-12 overflow-auto"
+                      onWheel={handleWheel}
+                    >
                       {currentSlide.content}
                     </div>
                   </ThemeContext.Provider>
@@ -221,7 +271,7 @@ export default function PresenterView() {
             <div className="bg-gray-800 rounded-xl border border-gray-700 p-6 flex-1 flex flex-col min-h-0">
               <h2 className="text-xl font-bold mb-4">{currentSlide.title}</h2>
 
-              <div className="flex-1 flex flex-col">
+              <div className="flex-1 flex flex-col min-h-0">
                 <div className="flex items-center justify-between mb-3">
                   <div className="text-sm font-semibold text-emerald-400">📝 読み上げ原稿</div>
                   <button
@@ -241,11 +291,11 @@ export default function PresenterView() {
                   <textarea
                     value={getCurrentNotes()}
                     onChange={(e) => saveNotes(currentSlide.id, e.target.value)}
-                    className="flex-1 text-sm leading-relaxed text-gray-300 whitespace-pre-line p-4 bg-gray-900/70 rounded-lg border border-gray-700 resize-none focus:outline-none focus:border-emerald-500"
+                    className="flex-1 min-h-0 text-sm leading-relaxed text-gray-300 whitespace-pre-line p-4 bg-gray-900/70 rounded-lg border border-gray-700 resize-none focus:outline-none focus:border-emerald-500 overflow-y-auto"
                     placeholder="読み上げ原稿を入力..."
                   />
                 ) : (
-                  <div className="flex-1 text-sm leading-relaxed text-gray-300 whitespace-pre-line p-4 bg-gray-900/70 rounded-lg border border-gray-700 overflow-y-auto">
+                  <div className="flex-1 min-h-0 text-sm leading-relaxed text-gray-300 whitespace-pre-line p-4 bg-gray-900/70 rounded-lg border border-gray-700 overflow-y-auto">
                     {getCurrentNotes() || '原稿がありません'}
                   </div>
                 )}
