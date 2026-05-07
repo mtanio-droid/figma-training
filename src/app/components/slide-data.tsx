@@ -5555,7 +5555,98 @@ function PracticeMigrationSlide() {
   );
 }
 
-// 9. 送り出しスライド
+// 9. 講評
+function FeedbackSlide() {
+  const theme = useTheme();
+  const c = tc(theme);
+  const d = theme === "dark";
+
+  return (
+    <div className="flex flex-col items-center justify-center h-full space-y-10">
+      {/* タイトル */}
+      <div className="text-center space-y-3">
+        <div className="text-[52px]">✨</div>
+        <h1 className={`text-[42px] ${c.t1} font-bold`}>今日の講評</h1>
+        <p className={`text-[16px] ${c.t3}`}>本当にお疲れ様でした！</p>
+      </div>
+
+      {/* メインコンテンツ */}
+      <div className="max-w-3xl w-full space-y-6">
+        {/* 良かった点 */}
+        <div
+          className="rounded-2xl p-6"
+          style={{
+            background: d
+              ? 'linear-gradient(135deg, rgba(16,185,129,0.12), rgba(5,150,105,0.08))'
+              : 'linear-gradient(135deg, rgba(16,185,129,0.08), rgba(5,150,105,0.04))',
+            border: `2px solid ${d ? 'rgba(16,185,129,0.3)' : 'rgba(16,185,129,0.2)'}`
+          }}
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <div className="text-[32px]">👏</div>
+            <div className={`text-[20px] ${c.t1} font-bold`}>良かった点</div>
+          </div>
+          <div className={`text-[15px] ${c.t2} leading-relaxed space-y-2 ml-11`}>
+            <div>• みなさんAuto Layoutはしっかり使えていました</div>
+            <div>• コンポーネントもきちんと作成できていました</div>
+          </div>
+        </div>
+
+        {/* おすすめポイント */}
+        <div
+          className="rounded-2xl p-6"
+          style={{
+            background: d
+              ? 'linear-gradient(135deg, rgba(168,85,247,0.12), rgba(139,92,246,0.08))'
+              : 'linear-gradient(135deg, rgba(168,85,247,0.08), rgba(139,92,246,0.04))',
+            border: `2px solid ${d ? 'rgba(168,85,247,0.3)' : 'rgba(168,85,247,0.2)'}`
+          }}
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <div className="text-[32px]">💡</div>
+            <div className={`text-[20px] ${c.t1} font-bold`}>おすすめポイント</div>
+          </div>
+          <div className={`text-[15px] ${c.t2} leading-relaxed space-y-4 ml-11`}>
+            <div>
+              <div className="font-semibold mb-1.5">📱 レスポンシブ対応の確認方法</div>
+              <div className={c.t3}>
+                レスポンシブ対応が少し漏れている箇所がありました。<strong>320px幅のフレームを隣に作って確認する</strong>方法もおすすめです。
+              </div>
+            </div>
+            <div>
+              <div className="font-semibold mb-1.5">✍️ 命名について</div>
+              <div className={c.t3}>
+                プロパティやレイヤーにも名前をつけてあげましょう。命名が難しければ<strong>AIに相談してもOK</strong>です。他の人にも伝わる名前を意識してみてください。
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* メッセージ */}
+        <div
+          className="rounded-2xl p-6 relative overflow-hidden"
+          style={{
+            background: d
+              ? 'linear-gradient(135deg, rgba(236,72,153,0.12), rgba(219,39,119,0.08))'
+              : 'linear-gradient(135deg, rgba(236,72,153,0.08), rgba(219,39,119,0.04))',
+            border: `2px solid ${d ? 'rgba(236,72,153,0.3)' : 'rgba(236,72,153,0.2)'}`
+          }}
+        >
+          <div className="flex items-start gap-3">
+            <div className="text-[32px] shrink-0">💬</div>
+            <div className={`text-[15px] ${c.t2} leading-relaxed`}>
+              時間があっという間で思ったように進まなかった方もいらっしゃると思いますが、<br />
+              Figmaで気になることや課題を見てほしい、業務について1on1したいなど、<strong>いつでも大歓迎です</strong>！<br />
+              お気軽に声をかけてください。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 10. 送り出しスライド
 function ClosingSlide() {
   const theme = useTheme();
   const c = tc(theme);
@@ -6071,6 +6162,18 @@ Variablesを使うと、色や数値を固定値ではなく、切り替え可�
 実務では、こういった移行作業は頻繁に発生します。その際に大事なのは、ただ似せることではなく、コンポーネント・カラー・タイポグラフィ・余白といったルールを使って、情報を整理し直すことです。
 Before / Afterを比較しながら、「どこをどう整理したか」「なぜそうしたか」を考えながら取り組んでみてください。
 この課題を通して、デザインシステムを実際に使う感覚を掴んでもらえたらと思います。`
+  },
+  {
+    id: "feedback",
+    section: "practice",
+    title: "今日の講評",
+    message: "良かった点とおすすめポイント",
+    content: <FeedbackSlide />,
+    speakerNotes: `それでは今日の講評をしていきます。
+まず全体的に良かった点として、みなさんAuto Layoutはしっかり使えていました。コンポーネント化もできていて、基本的な構造は理解できていると思います。
+いくつかおすすめポイントとして、レスポンシブ対応が少しもれていた方がいたので、320px幅のフレームを隣に作って確認する方法を試してみてください。
+あとはプロパティやレイヤーの命名ですね。命名が難しければAIに相談してもいいですし、他の人にも伝わる名前をつけることを意識してみてください。
+時間が足りなかった人もいると思いますが、Figmaのことや業務のことなど、1on1いつでも大歓迎なので気軽に声をかけてください。`
   },
   {
     id: "closing",
