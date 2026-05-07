@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { slides, sectionList } from "./components/slide-data";
 import { ThemeContext, type Theme } from "./components/theme-context";
-import { Star, ChevronLeft, ChevronRight, Menu, X, Layers, Component, Variable, Library, Paintbrush, LayoutGrid, Sun, Moon, Bookmark, BookmarkCheck, StickyNote, Trash2, Edit3, Plus, Eye, EyeOff, Target, Smartphone } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight, Menu, X, Layers, Component, Variable, Library, Paintbrush, LayoutGrid, Sun, Moon, Bookmark, BookmarkCheck, StickyNote, Trash2, Edit3, Plus, Target, Smartphone } from "lucide-react";
 
 interface Memo {
   id: string;
@@ -77,18 +77,11 @@ const t = {
   },
 };
 
-// パスワードをここで設定（本番運用では環境変数を推奨）
-const PASSWORD = "Figma2026!Design";
-
 function App() {
   const [idx, setIdx] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [bookmarkSidebarOpen, setBookmarkSidebarOpen] = useState(true);
   const [theme, setTheme] = useState<Theme>("dark");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [passwordInput, setPasswordInput] = useState("");
-  const [showPassword, setShowPassword] = useState(true);
-  const [error, setError] = useState("");
   const [bookmarks, setBookmarks] = useState<number[]>([]);
   const [memos, setMemos] = useState<Memo[]>([]);
   const [leftWidth, setLeftWidth] = useState(256); // 16rem = 256px
@@ -137,14 +130,6 @@ function App() {
     }
     return title;
   };
-
-  // 認証状態をlocalStorageから復元
-  useEffect(() => {
-    const auth = localStorage.getItem("figma-auth");
-    if (auth === "true") {
-      setIsAuthenticated(true);
-    }
-  }, []);
 
   // ブックマークをlocalStorageから復元
   useEffect(() => {
@@ -327,89 +312,6 @@ function App() {
       document.body.style.userSelect = "";
     };
   }, [isResizingRight]);
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (passwordInput === PASSWORD) {
-      localStorage.setItem("figma-auth", "true");
-      setIsAuthenticated(true);
-      setError("");
-    } else {
-      setError("パスワードが間違っています");
-      setPasswordInput("");
-    }
-  };
-
-  // 未認証の場合、ログイン画面を表示
-  if (!isAuthenticated) {
-    return (
-      <ThemeContext.Provider value={theme}>
-        <div
-          className="flex items-center justify-center h-screen"
-          style={{
-            fontFamily: "'Montserrat', 'Noto Sans JP', system-ui, sans-serif",
-            background: t.dark.bg,
-          }}
-        >
-          <div
-            className="w-full max-w-md p-8 rounded-2xl"
-            style={{
-              background: "rgba(18,16,30,0.8)",
-              backdropFilter: "blur(24px)",
-              WebkitBackdropFilter: "blur(24px)",
-              border: "1px solid rgba(255,255,255,0.06)",
-            }}
-          >
-            <h1 className="text-[24px] text-white font-bold mb-2">🎨 Figma基礎講座</h1>
-            <p className="text-[14px] text-gray-400 mb-6">新卒デザイナー向けコンテンツ</p>
-
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div>
-                <label htmlFor="password" className="block text-[13px] text-gray-300 mb-2">
-                  パスワード
-                </label>
-                <div className="relative">
-                  <input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    value={passwordInput}
-                    onChange={(e) => setPasswordInput(e.target.value)}
-                    className="w-full px-4 py-3 pr-12 rounded-lg text-white bg-white/5 border border-white/10 focus:border-purple-400 focus:outline-none transition"
-                    placeholder="パスワードを入力"
-                    autoFocus
-                    autoComplete="off"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200 transition"
-                    tabIndex={-1}
-                  >
-                    {showPassword ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
-                  </button>
-                </div>
-              </div>
-
-              {error && (
-                <p className="text-[13px] text-rose-400">{error}</p>
-              )}
-
-              <button
-                type="submit"
-                className="w-full px-4 py-3 rounded-lg text-white font-medium transition"
-                style={{
-                  background: "linear-gradient(135deg, #7c3aed, #a855f7)",
-                  animation: "hue-shift 8s ease-in-out infinite",
-                }}
-              >
-                Let's GO !
-              </button>
-            </form>
-          </div>
-        </div>
-      </ThemeContext.Provider>
-    );
-  }
 
   return (
     <ThemeContext.Provider value={theme}>
