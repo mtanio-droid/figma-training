@@ -5252,6 +5252,10 @@ function PracticeSummarySlide() {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
 // 8. 実践課題：既存UIを新デザインシステムへ移行
 function PracticeMigrationSlide() {
   const theme = useTheme();
