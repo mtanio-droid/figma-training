@@ -861,17 +861,7 @@ function InstructorSlide() {
                 2023年入社（現在4年目）
               </div>
 
-              <div className={`text-[12px] ${c.t3} leading-relaxed`}>
-                メディア・検索ドメインLY Agent・検索SBU<br />
-                デザインユニットUID2ディビジョン
-              </div>
-
-              <div className={`flex items-center gap-2 text-[13px] ${c.t3}`}>
-                <img src={`${import.meta.env.BASE_URL}slack-icon.png`} className="w-4 h-4" alt="Slack" />
-                <span className="font-mono font-medium">#times-mtanio</span>
-              </div>
-
-              <div className="space-y-2 mt-4">
+<div className="space-y-2 mt-4">
                 <div className={`flex items-center gap-2 text-[12px] font-semibold ${c.t2}`}>
                   <span className="text-[16px]">💼</span>
                   <span>仕事内容</span>
@@ -961,7 +951,6 @@ function ScheduleSlide() {
 
   const scheduleData = [
     { time: "11:00～12:00", activity: "📚 Figma講習", tag: "LECTURE", color: "purple" },
-    { time: "12:00～13:00", activity: "🍔 昼休憩", tag: "BREAK", color: "lightgray" },
     { time: "13:00～13:10", activity: "📋 課題説明", tag: "GUIDE", color: "pink" },
     { time: "13:10～16:45", activity: "🎨 課題制作", tag: "WORK", color: "purple" },
     { time: "16:45～17:00", activity: "💡 講評", tag: "OUTRO", color: "pink" },
@@ -5263,136 +5252,6 @@ function PracticeSummarySlide() {
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-// 7. 休憩タイマー
-function BreakTimerSlide() {
-  const theme = useTheme();
-  const c = tc(theme);
-  const d = theme === "dark";
-
-  const [timeLeft, setTimeLeft] = useState(3600); // 60分 = 3600秒
-  const [isRunning, setIsRunning] = useState(false);
-
-  useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
-
-    if (isRunning && timeLeft > 0) {
-      interval = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
-      }, 1000);
-    }
-
-    if (timeLeft === 0) {
-      setIsRunning(false);
-    }
-
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [isRunning, timeLeft]);
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const toggleTimer = () => {
-    setIsRunning(!isRunning);
-  };
-
-  const resetTimer = () => {
-    setTimeLeft(3600);
-    setIsRunning(false);
-  };
-
-  const progress = ((3600 - timeLeft) / 3600) * 100;
-
-  return (
-    <div className="flex flex-col items-center justify-center h-full space-y-12">
-      {/* タイトル */}
-      <div className="text-center space-y-3">
-        <div className="text-[64px]">🍱</div>
-        <h2 className={`text-[32px] ${c.t1} font-bold`}>ランチタイム</h2>
-        <p className={`text-[16px] ${c.t3}`}>12:00～13:00 ゆっくり休憩しましょう</p>
-      </div>
-
-      {/* タイマー表示 */}
-      <div className="relative">
-        {/* 円形プログレスバー */}
-        <svg width="280" height="280" className="transform -rotate-90">
-          <circle
-            cx="140"
-            cy="140"
-            r="120"
-            stroke={d ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}
-            strokeWidth="12"
-            fill="none"
-          />
-          <circle
-            cx="140"
-            cy="140"
-            r="120"
-            stroke={d ? '#a855f7' : '#7c3aed'}
-            strokeWidth="12"
-            fill="none"
-            strokeDasharray={`${2 * Math.PI * 120}`}
-            strokeDashoffset={`${2 * Math.PI * 120 * (1 - progress / 100)}`}
-            strokeLinecap="round"
-            style={{ transition: 'stroke-dashoffset 1s linear' }}
-          />
-        </svg>
-
-        {/* 時間表示 */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className={`text-[52px] font-mono font-bold ${timeLeft === 0 ? 'text-red-400' : c.t1}`}>
-            {formatTime(timeLeft)}
-          </div>
-        </div>
-      </div>
-
-      {/* コントロールボタン */}
-      <div className="flex items-center gap-4">
-        <button
-          onClick={toggleTimer}
-          className={`flex items-center gap-2 px-6 py-3 rounded-xl text-[15px] font-semibold transition-all ${
-            d
-              ? 'bg-purple-600 hover:bg-purple-500 text-white'
-              : 'bg-purple-600 hover:bg-purple-700 text-white'
-          }`}
-        >
-          {isRunning ? (
-            <>
-              <Pause className="w-5 h-5" />
-              一時停止
-            </>
-          ) : (
-            <>
-              <Play className="w-5 h-5" />
-              スタート
-            </>
-          )}
-        </button>
-
-        <button
-          onClick={resetTimer}
-          className={`flex items-center gap-2 px-6 py-3 rounded-xl text-[15px] font-semibold transition-all ${
-            d
-              ? 'bg-gray-700 hover:bg-gray-600 text-gray-300'
-              : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
-          }`}
-        >
-          <RefreshCw className="w-5 h-5" />
-          リセット
-        </button>
-      </div>
-    </div>
-  );
-}
-
 // 8. 実践課題：既存UIを新デザインシステムへ移行
 function PracticeMigrationSlide() {
   const theme = useTheme();
@@ -5770,15 +5629,13 @@ export const slides: Slide[] = [
     content: <InstructorSlide />,
     speakerNotes: `谷尾美亜です。2023年入社で、現在4年目になります。
 
-メディア・検索ドメイン、LY Agent・検索SBU、デザインユニットUID2ディビジョンに所属しています。
-
 出身は広島で、現在は東京に住んでいます。
 
 最近はAgent iのお買い物領域でUI/UXデザインをメインでやっていて、時々リサーチやったりバナー作ったりもしています。
 
 趣味はペットとお出かけと、かわいい全般です。
 
-何かあればSlackの #times-mtanio で気軽に声かけてください。よろしくお願いします！`
+よろしくお願いします！`
   },
   {
     id: "schedule",
@@ -5789,8 +5646,6 @@ export const slides: Slide[] = [
     speakerNotes: `今日のスケジュールを確認しましょう。
 
 まず11時から12時までがFigma講習です。今から1時間、基本的な機能と考え方を学んでいきます。
-
-12時から13時は昼休憩です。
 
 13時から13時15分まで、課題の説明をします。
 
@@ -6110,16 +5965,6 @@ Variablesを使うと、色や数値を固定値ではなく、切り替え可�
   { id: "token-typo", section: "tokens", title: "タイポグラフィについて", message: "タイポグラフィは文字サイズ表ではなく、情報の優先順位と読みやすさの設計", content: <TokenTypoSlide /> },
   { id: "others-ds", section: "others", title: "その他のデザインシステム要素", message: "色とタイポグラフィだけじゃない。余白・アイコン・角丸も設計対象", content: <OthersDsSlide /> },
   { id: "summary", section: "others", title: "まとめ", message: "Figmaの機能は、見た目を作るためではなく、運用できる構造を作るために使う", content: <SummarySlide /> },
-  {
-    id: "break-timer",
-    section: "others",
-    title: "ランチタイム",
-    message: "12:00～13:00 ゆっくり休憩しましょう",
-    content: <BreakTimerSlide />,
-    speakerNotes: `それではここでランチタイムを取ります。12時から13時までの1時間です。
-ゆっくり昼食を取って、午後からの課題制作に備えましょう。
-13時から課題の説明をして、実践に入っていきます。それではまた13時に！`
-  },
   {
     id: "practice-intro",
     section: "practice",
