@@ -5642,24 +5642,6 @@ export const slides: Slide[] = [
 よろしくお願いします！`
   },
   {
-    id: "schedule",
-    section: "intro",
-    title: "タイムスケジュール",
-    message: "Day1 - 5/1のスケジュール",
-    content: <ScheduleSlide />,
-    speakerNotes: `今日のスケジュールを確認しましょう。
-
-まず11時から12時までがFigma講習です。今から1時間、基本的な機能と考え方を学んでいきます。
-
-13時から13時15分まで、課題の説明をします。
-
-そして13時15分から16時45分まで、約3時間半かけて課題制作に取り組んでもらいます。この時間が今日のメインです。
-
-最後に16時45分から17時まで、みんなの成果物を見ながら講評を行います。
-
-では早速、Figmaの話に入っていきましょう。`
-  },
-  {
     id: "al-apply",
     section: "auto-layout",
     title: "Auto Layoutとは",
