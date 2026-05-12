@@ -2366,7 +2366,10 @@ function CompPropsSlide() {
                 border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
                 boxShadow: d
                   ? '0 8px 32px rgba(168,85,247,0.15), 0 0 0 1px rgba(168,85,247,0.1) inset'
-                  : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset'
+                  : '0 8px 32px rgba(168,85,247,0.12), 0 0 0 1px rgba(255,255,255,0.6) inset',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
               }}
             >
               {/* Actual Button Component */}
