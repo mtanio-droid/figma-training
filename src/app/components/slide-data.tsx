@@ -2359,7 +2359,7 @@ function CompPropsSlide() {
           {/* Button Preview - CSS Implementation */}
           <div className="flex items-center justify-start">
             <div
-              className="rounded-2xl p-16"
+              className="rounded-2xl p-4 sm:p-6 md:p-10 lg:p-16"
               style={{
                 background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
                 border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
@@ -2375,10 +2375,10 @@ function CompPropsSlide() {
                   flexDirection: 'row',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  padding: '0px 40px',
+                  padding: '12px clamp(20px, 5vw, 40px)',
                   position: 'relative',
-                  width: '300px',
-                  height: '64px',
+                  width: 'clamp(180px, 45vw, 300px)',
+                  minHeight: 'clamp(48px, 10vw, 64px)',
                   background: 'linear-gradient(46.94deg, #A83DEB 5.1%, #3083FD 92.36%)',
                   borderRadius: '12px',
                   border: 'none',
@@ -2403,15 +2403,15 @@ function CompPropsSlide() {
                   {/* Icon */}
                   <div
                     style={{
-                      width: '32px',
-                      height: '32px',
+                      width: 'clamp(24px, 5vw, 32px)',
+                      height: 'clamp(24px, 5vw, 32px)',
                       flex: 'none',
                       order: 0,
                       flexGrow: 0,
                       position: 'relative'
                     }}
                   >
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                    <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
                       <path
                         d="M12 4V20M4 12H20"
                         stroke="white"
@@ -2427,8 +2427,8 @@ function CompPropsSlide() {
                       fontFamily: "'Noto Sans JP', sans-serif",
                       fontStyle: 'normal',
                       fontWeight: 700,
-                      fontSize: '20px',
-                      lineHeight: '24px',
+                      fontSize: 'clamp(16px, 3.5vw, 20px)',
+                      lineHeight: '1.2',
                       display: 'flex',
                       alignItems: 'center',
                       textAlign: 'center',
