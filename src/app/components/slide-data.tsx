@@ -2381,7 +2381,7 @@ function CompPropsSlide() {
                   alignItems: 'center',
                   padding: 'clamp(8px, 1.5%, 12px) clamp(20px, 4%, 40px)',
                   position: 'relative',
-                  width: 'min(300px, 100%)',
+                  width: 'clamp(200px, 70%, 300px)',
                   minHeight: 'clamp(48px, 8%, 64px)',
                   background: 'linear-gradient(46.94deg, #A83DEB 5.1%, #3083FD 92.36%)',
                   borderRadius: '12px',
