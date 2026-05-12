@@ -2359,8 +2359,9 @@ function CompPropsSlide() {
           {/* Button Preview - CSS Implementation */}
           <div className="flex items-center justify-start">
             <div
-              className="rounded-2xl p-4 sm:p-6 md:p-10 lg:p-16"
+              className="rounded-2xl"
               style={{
+                padding: 'clamp(16px, 4%, 64px)',
                 background: d ? 'rgba(168,85,247,0.04)' : 'rgba(168,85,247,0.02)',
                 border: `2px solid ${d ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.15)'}`,
                 boxShadow: d
@@ -2375,10 +2376,10 @@ function CompPropsSlide() {
                   flexDirection: 'row',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  padding: '12px clamp(20px, 5vw, 40px)',
+                  padding: 'clamp(8px, 1.5%, 12px) clamp(20px, 4%, 40px)',
                   position: 'relative',
-                  width: 'clamp(180px, 45vw, 300px)',
-                  minHeight: 'clamp(48px, 10vw, 64px)',
+                  width: 'min(300px, 100%)',
+                  minHeight: 'clamp(48px, 8%, 64px)',
                   background: 'linear-gradient(46.94deg, #A83DEB 5.1%, #3083FD 92.36%)',
                   borderRadius: '12px',
                   border: 'none',
@@ -2403,8 +2404,8 @@ function CompPropsSlide() {
                   {/* Icon */}
                   <div
                     style={{
-                      width: 'clamp(24px, 5vw, 32px)',
-                      height: 'clamp(24px, 5vw, 32px)',
+                      width: 'clamp(24px, 3.5%, 32px)',
+                      height: 'clamp(24px, 3.5%, 32px)',
                       flex: 'none',
                       order: 0,
                       flexGrow: 0,
@@ -2427,7 +2428,7 @@ function CompPropsSlide() {
                       fontFamily: "'Noto Sans JP', sans-serif",
                       fontStyle: 'normal',
                       fontWeight: 700,
-                      fontSize: 'clamp(16px, 3.5vw, 20px)',
+                      fontSize: 'clamp(14px, 2.2%, 20px)',
                       lineHeight: '1.2',
                       display: 'flex',
                       alignItems: 'center',
@@ -2435,7 +2436,8 @@ function CompPropsSlide() {
                       color: '#FFFFFF',
                       flex: 'none',
                       order: 1,
-                      flexGrow: 0
+                      flexGrow: 0,
+                      whiteSpace: 'nowrap'
                     }}
                   >
                     追加する
