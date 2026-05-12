@@ -2357,7 +2357,7 @@ function CompPropsSlide() {
       <div className="w-full">
         <div className="grid grid-cols-2 gap-8">
           {/* Button Preview - CSS Implementation */}
-          <div className="flex items-center justify-start">
+          <div className="flex items-center justify-center">
             <div
               className="rounded-2xl"
               style={{
